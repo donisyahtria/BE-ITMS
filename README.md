@@ -17,7 +17,7 @@ git push -u origin main <br>
 # atau ketika push edit <br>
 git add . (ini untuk semua) <br>
 git add <namafile> (untuk push salah satu saja) <br>
-gitu commit -m "(jangan lupa kasih nama)" <br>
+git commit -m "(jangan lupa kasih nama)" <br>
 git branch -M main <br>
 git push -u origin main <br>
 

@@ -1,19 +1,19 @@
 import express from "express";
 import bodyParser, { json } from "body-parser";
 import cors from "cors";
-import joblevel from "./routes/getjoblevel"
-import addevent from "./routes/createevent"
-import jobfam from "./routes/getjobfamily"
-import headcom from "./routes/getheadcommit"
-import commite from "./routes/getcommit"
-import question from "./routes/getpertanyaan"
-import deadline from "./routes/createdeadline"
-import filterkaryawan from "./routes/getfiltertalentsource"
-import underperson from "./routes/filterunderpersonbyuserlogin"
-import getkomiteunit from "./routes/getatasanbykts"
-import updatebool from "./routes/updateboolkts"
-import talentprofile from "./routes/createtalentprofile"
-import carikomiteotomatis from "./routes/carikomiteunitotomatis"
+import addevent from "./routes/event/createevent"
+import deadline from "./routes/event/createdeadline"
+import headcom from "./routes/event/getheadcommit"
+import jobfam from "./routes/event/getjobfamily"
+import joblevel from "./routes/event/getjoblevel"
+import commite from "./routes/event/getcommit"
+import question from "./routes/event/getpertanyaan"
+import filterkaryawan from "./routes/kts/getfiltertalentsource"
+import underperson from "./routes/kts/filterunderpersonbyuserlogin"
+import getkomiteunit from "./routes/kts/getatasanbykts"
+import updatebool from "./routes/kts/updateboolkts"
+import talentprofile from "./routes/talentprofile/createtalentprofile"
+import carikomiteotomatis from "./routes/kts/carikomiteunitotomatis"
 
 const port = process.env.PORT || 3000;
 const app = express();

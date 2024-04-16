@@ -1,22 +1,23 @@
-import prisma from "../prisma/prisma";
+import prisma from "../../prisma/prisma";
 import express from "express";
 
 const router = express.Router();
 
-router.get("/getjobfamily", async (req, res) => {
-    const job_fam = req.job_fam
+router.get("/getjoblevel", async (req, res) => {
+    const tipe_komite = parseInt(req.query.tipe_komite)
     try {
-      const fam = await prisma.referensi_Rumpun_Jabatan
+      
+      const job = await prisma.parameter_Komite_Talent
       .findMany({
         where:  {
-            status_aktif: "y"
+          id_komite_talent: tipe_komite
         },
         select:{
           id:true,
-          nama_rumpun_jabatan:true
+          job_level:true
         }
       })
-      res.status(200).json({fam})
+      res.status(200).json({job})
     } catch (err) {
       console.log({ err });
       res.status(500).json({ message: "Internal server error", err });
