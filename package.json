@@ -1,0 +1,25 @@
+{
+  "name": "backend-itms",
+  "version": "1.0.0",
+  "description": "API Express ITMS",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "farhan",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.9.1",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.9",
+    "@babel/node": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "nodemon": "^3.0.3",
+    "prisma": "^5.9.1"
+  }
+}
