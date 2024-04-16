@@ -23,4 +23,5 @@ git push -u origin main <br>
 
 # cara cloning <br>
 klik button code --> pilih HTTPS --> copy url to clipboard <br>
+buka terminal --> plih directory untuk menyimpan cloning --> ketik seperti dibawah<br>
 git clone (paste link url nya tadi tanpa tanda kurung)
