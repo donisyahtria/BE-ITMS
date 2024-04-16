@@ -178,6 +178,7 @@ model Referensi_Komite_Talent {
   parametercluster       Parameter_Talent_Cluster[]
   parameterqualification Parameter_Talent_Qualification[]
   event                  Event_Talent[]
+  bobotsumbu  Parameter_Bobot_Sumbu[]
 }
 
 model Parameter_Talent_Qualification {
@@ -204,6 +205,17 @@ model Kriteria_Penilaian {
   nama_kriteria_penilaian String                     @db.VarChar(50)
   nilai                   Parameter_Talent_Cluster[]
   nilaiqualificaiton      Talent_Qualification[]
+  bobotsumbu Parameter_Bobot_Sumbu[]
+}
+
+model Parameter_Bobot_Sumbu {
+  id                    Int    @id @default(autoincrement())
+  id_komite_talent      Int    @db.Integer
+  id_kriteria_penilaian Int
+  bobot                 Float
+
+  idkomitetalent Referensi_Komite_Talent @relation(fields: [id_komite_talent], references: [id])
+  idkriteriapenilaian Kriteria_Penilaian @relation(fields: [id_kriteria_penilaian], references: [id_kriteria_penilaian])
 }
 
 // Bagian Event
@@ -308,11 +320,11 @@ model Kandidat_Talent_dan_Source {
   nippos             String   @db.Char(9)
   eventtalentid      Int
   status_talensource Boolean
-  komite_unit        String?   @db.Char(9)
+  komite_unit        String?  @db.Char(9)
   createdAt          DateTime @db.Timestamptz()
 
   relasiNippos     Karyawan     @relation("RelasiNippos", fields: [nippos], references: [nippos])
-  relasiKomiteUnit Karyawan?     @relation("RelasiKomiteUnit", fields: [komite_unit], references: [nippos])
+  relasiKomiteUnit Karyawan?    @relation("RelasiKomiteUnit", fields: [komite_unit], references: [nippos])
   idevent          Event_Talent @relation(fields: [eventtalentid], references: [id])
 }
 
