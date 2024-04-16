@@ -31,12 +31,12 @@ model Karyawan {
   nipposqualification Talent_Qualification[]
   nippostalentprofile Talent_Profile[]
   komitetalentevent   Komite_Talent_Event[]
-  nipposperformance Skor_Performance[]
-  nippostech        Skor_Technical[]
-  nipposlead        Skor_Leadership[]
-  nipposbumn        skor_BUMN[]
-  nipposLA          skor_LA[]
-  nippospotensi     skor_Potensi[]
+  nipposperformance   Skor_Performance[]
+  nippostech          Skor_Technical[]
+  nipposlead          Skor_Leadership[]
+  nipposbumn          skor_BUMN[]
+  nipposLA            skor_LA[]
+  nippospotensi       skor_Potensi[]
 
   jabatan          Referensi_Jabatan            @relation(fields: [kode_jabatan], references: [id])
   bagian           Referensi_Bagian             @relation(fields: [kode_bagian], references: [id])
@@ -315,11 +315,11 @@ model Kandidat_Talent_dan_Source {
   nippos             String   @db.Char(9)
   eventtalentid      Int
   status_talensource Boolean
-  komite_unit        String?   @db.Char(9)
+  komite_unit        String?  @db.Char(9)
   createdAt          DateTime @db.Timestamptz()
 
   relasiNippos     Karyawan     @relation("RelasiNippos", fields: [nippos], references: [nippos])
-  relasiKomiteUnit Karyawan?     @relation("RelasiKomiteUnit", fields: [komite_unit], references: [nippos])
+  relasiKomiteUnit Karyawan?    @relation("RelasiKomiteUnit", fields: [komite_unit], references: [nippos])
   idevent          Event_Talent @relation(fields: [eventtalentid], references: [id])
 }
 
@@ -337,109 +337,109 @@ model Talent_Profile {
 }
 
 model Skor_Performance {
-  id               Int      @id @default(autoincrement())
-  nippos           String   @db.Char(9)
-  skor             Float?
-  Berlaku_Mulai    DateTime? @db.Date
-  Berlaku_Hingga   DateTime? @db.Date
+  id             Int       @id @default(autoincrement())
+  nippos         String    @db.Char(9)
+  skor           Float?
+  Berlaku_Mulai  DateTime? @db.Date
+  Berlaku_Hingga DateTime? @db.Date
 
-  nipposkaryawan Karyawan     @relation(fields: [nippos], references: [nippos])
+  nipposkaryawan Karyawan @relation(fields: [nippos], references: [nippos])
 }
 
 model Jenis_Kompetensi {
-  id               Int      @id @default(autoincrement())
-  jenis_Kompetensi String   @db.VarChar(20)
+  id               Int    @id @default(autoincrement())
+  jenis_Kompetensi String @db.VarChar(20)
 
-  relasinama Referensi_Kompetensi_Technical[]
+  relasinama  Referensi_Kompetensi_Technical[]
   relasijenis Skor_Technical[]
-  }
+}
 
 model Referensi_Kompetensi_Technical {
-  id               Int      @id @default(autoincrement())
-  kodekomphardsoft String   @db.VarChar(10)
-  namakomphardsoft String   @db.VarChar(255)
-  desckomphardsoft String   @db.VarChar(1000)
+  id               Int    @id @default(autoincrement())
+  kodekomphardsoft String @db.VarChar(10)
+  namakomphardsoft String @db.VarChar(255)
+  desckomphardsoft String @db.VarChar(1000)
   kodejeniskomp    Int
 
-  relasiteknik Skor_Technical[]
-  relasihardsoft  Kompetensi_Hardsoft_Rumpun[]
+  relasiteknik   Skor_Technical[]
+  relasihardsoft Kompetensi_Hardsoft_Rumpun[]
 
-  jeniskomp Jenis_Kompetensi    @relation(fields: [kodejeniskomp], references: [id])
+  jeniskomp Jenis_Kompetensi @relation(fields: [kodejeniskomp], references: [id])
 }
 
 model Kompetensi_Hardsoft_Rumpun {
-  id                      Int      @id @default(autoincrement())
+  id                      Int @id @default(autoincrement())
   kode_rumpun_jabatan     Int
   id_kompetensi_technical Int
   Basic                   Int
   Intermediate            Int
   Advanced                Int
 
-  relasikode    Referensi_Rumpun_Jabatan   @relation(fields: [kode_rumpun_jabatan], references: [kode_rumpun_jabatan])
-  relasiidkomp  Referensi_Kompetensi_Technical    @relation(fields: [id_kompetensi_technical], references: [id])
+  relasikode   Referensi_Rumpun_Jabatan       @relation(fields: [kode_rumpun_jabatan], references: [kode_rumpun_jabatan])
+  relasiidkomp Referensi_Kompetensi_Technical @relation(fields: [id_kompetensi_technical], references: [id])
 }
 
 model Skor_Technical {
-  id               Int      @id @default(autoincrement())
-  nippos           String   @db.Char(9)
-  id_Kompetensi    Int
+  id                  Int      @id @default(autoincrement())
+  nippos              String   @db.Char(9)
+  id_Kompetensi       Int
   id_jenis_kompetensi Int
-  skor             Float
-  Berlaku_Mulai    DateTime @db.Date
-  Berlaku_Hingga   DateTime @db.Date
+  skor                Float
+  Berlaku_Mulai       DateTime @db.Date
+  Berlaku_Hingga      DateTime @db.Date
 
-  nipposkaryawan Karyawan     @relation(fields: [nippos], references: [nippos])
-  idkompetensitech Referensi_Kompetensi_Technical    @relation(fields:[id_Kompetensi], references: [id])
-  jeniskomp        Jenis_Kompetensi   @relation(fields: [id_jenis_kompetensi], references: [id])
+  nipposkaryawan   Karyawan                       @relation(fields: [nippos], references: [nippos])
+  idkompetensitech Referensi_Kompetensi_Technical @relation(fields: [id_Kompetensi], references: [id])
+  jeniskomp        Jenis_Kompetensi               @relation(fields: [id_jenis_kompetensi], references: [id])
 }
 
 model Referensi_Kompetensi_Leadership {
-  id               Int      @id @default(autoincrement())
-  kodekomplead String   @db.VarChar(10)
-  namakomplead String   @db.VarChar(255)
-  desckomphardlead String   @db.VarChar(1000)
+  id               Int    @id @default(autoincrement())
+  kodekomplead     String @db.VarChar(10)
+  namakomplead     String @db.VarChar(255)
+  desckomphardlead String @db.VarChar(1000)
 
-relasilead  Skor_Leadership[]
+  relasilead Skor_Leadership[]
 }
 
 model Skor_Leadership {
-  id               Int      @id @default(autoincrement())
-  nippos           String   @db.Char(9)
-  id_Kompetensi    Int
-  skor             Float
-  Berlaku_Mulai    DateTime @db.Date
-  Berlaku_Hingga   DateTime @db.Date
+  id             Int      @id @default(autoincrement())
+  nippos         String   @db.Char(9)
+  id_Kompetensi  Int
+  skor           Float
+  Berlaku_Mulai  DateTime @db.Date
+  Berlaku_Hingga DateTime @db.Date
 
-  nipposkaryawan Karyawan     @relation(fields: [nippos], references: [nippos])
-  idkompetensilead Referensi_Kompetensi_Leadership    @relation(fields:[id_Kompetensi], references: [id])
+  nipposkaryawan   Karyawan                        @relation(fields: [nippos], references: [nippos])
+  idkompetensilead Referensi_Kompetensi_Leadership @relation(fields: [id_Kompetensi], references: [id])
 }
 
 model skor_BUMN {
-  id               Int      @id @default(autoincrement())
-  nippos           String   @db.Char(9)
-  avg_skor         Float?
-  Berlaku_Mulai    DateTime? @db.Date
-  Berlaku_Hingga   DateTime? @db.Date
+  id             Int       @id @default(autoincrement())
+  nippos         String    @db.Char(9)
+  avg_skor       Float?
+  Berlaku_Mulai  DateTime? @db.Date
+  Berlaku_Hingga DateTime? @db.Date
 
-  relasinippos   Karyawan   @relation(fields: [nippos], references: [nippos])
+  relasinippos Karyawan @relation(fields: [nippos], references: [nippos])
 }
 
 model skor_LA {
-  id               Int      @id @default(autoincrement())
-  nippos           String   @db.Char(9)
-  skor              Float?
-  Berlaku_Mulai    DateTime? @db.Date
-  Berlaku_Hingga   DateTime? @db.Date
+  id             Int       @id @default(autoincrement())
+  nippos         String    @db.Char(9)
+  skor           Float?
+  Berlaku_Mulai  DateTime? @db.Date
+  Berlaku_Hingga DateTime? @db.Date
 
-  relasinippos   Karyawan   @relation(fields: [nippos], references: [nippos])
+  relasinippos Karyawan @relation(fields: [nippos], references: [nippos])
 }
 
 model skor_Potensi {
-  id               Int      @id @default(autoincrement())
-  nippos           String   @db.Char(9)
-  skor              Float?
-  Berlaku_Mulai    DateTime? @db.Date
-  Berlaku_Hingga   DateTime? @db.Date
+  id             Int       @id @default(autoincrement())
+  nippos         String    @db.Char(9)
+  skor           Float?
+  Berlaku_Mulai  DateTime? @db.Date
+  Berlaku_Hingga DateTime? @db.Date
 
-  relasinippos   Karyawan   @relation(fields: [nippos], references: [nippos])
+  relasinippos Karyawan @relation(fields: [nippos], references: [nippos])
 }
