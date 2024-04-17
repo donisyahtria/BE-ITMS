@@ -16,6 +16,7 @@ import talentprofile from "./routes/talentprofile/createtalentprofile"
 import carikomiteotomatis from "./routes/kts/carikomiteunitotomatis"
 import paktacommit from "./routes/talentprofile/updatepaktacommit"
 import tqualification from "./routes/qualification/createqualification"
+import skorperforma from "./routes/qualification/skorperforma"
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -44,6 +45,7 @@ app.use("/", talentprofile)
 app.use("/", carikomiteotomatis)
 app.use("/", paktacommit)
 app.use("/", tqualification)
+app.use("/", skorperforma)
 
 app.listen(port, () => {
     console.log(`server running on port ${port}`);

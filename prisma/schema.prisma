@@ -35,6 +35,7 @@ model Karyawan {
   nipposbumn        skor_BUMN[]
   nipposLA          skor_LA[]
   nippospotensi     skor_Potensi[]
+  nipposakhlak      skor_AKHLAK[]
 
   jabatan              Referensi_Jabatan            @relation(fields: [kode_jabatan], references: [id])
   bagian               Referensi_Bagian             @relation(fields: [kode_bagian], references: [id])
@@ -425,6 +426,16 @@ model skor_BUMN {
   id             Int       @id @default(autoincrement())
   nippos         String    @db.Char(9)
   avg_skor       Float?
+  Berlaku_Mulai  DateTime? @db.Date
+  Berlaku_Hingga DateTime? @db.Date
+
+  relasinippos Karyawan @relation(fields: [nippos], references: [nippos])
+}
+
+model skor_AKHLAK {
+  id             Int       @id @default(autoincrement())
+  nippos         String    @db.Char(9)
+  skor           Float?
   Berlaku_Mulai  DateTime? @db.Date
   Berlaku_Hingga DateTime? @db.Date
 
