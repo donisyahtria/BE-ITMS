@@ -197,7 +197,7 @@ model Parameter_Talent_Qualification {
   skor_minimal          Int
 
   idkomite Referensi_Komite_Talent @relation(fields: [id_komite_talent], references: [id])
-  idnilai Kriteria_Penilaian @relation(fields: [id_kriteria_penilaian], references: [id_kriteria_penilaian])
+  idnilai  Kriteria_Penilaian      @relation(fields: [id_kriteria_penilaian], references: [id_kriteria_penilaian])
 }
 
 model Parameter_Talent_Cluster {
@@ -211,11 +211,11 @@ model Parameter_Talent_Cluster {
 }
 
 model Kriteria_Penilaian {
-  id_kriteria_penilaian   Int                        @id @default(autoincrement())
-  nama_kriteria_penilaian String                     @db.VarChar(50)
+  id_kriteria_penilaian   Int                              @id @default(autoincrement())
+  nama_kriteria_penilaian String                           @db.VarChar(50)
   nilai                   Parameter_Talent_Cluster[]
   nilaiqualificaiton      Talent_Qualification[]
-  idkriteria Parameter_Talent_Qualification[]
+  idkriteria              Parameter_Talent_Qualification[]
 }
 
 // Bagian Event
@@ -307,6 +307,7 @@ model Talent_Qualification {
   komite_unit           String?   @db.Char(9)
   id_kriteria_penilaian Int
   skor                  Int?
+  lulus                 Boolean
   berlaku_mulai         DateTime? @db.Date
   berlaku_hingga        DateTime? @db.Date
   createdAt             DateTime  @db.Timestamptz()
