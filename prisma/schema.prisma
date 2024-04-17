@@ -26,26 +26,28 @@ model Karyawan {
   status_hukdis     String  @db.Char(1)
   email             String? @db.VarChar(255)
 
-  nipposrole          Role_Karyawan[]
-  nipposevent         Event_Talent[]
-  nipposqualification Talent_Qualification[]
-  nippostalentprofile Talent_Profile[]
-  komitetalentevent   Komite_Talent_Event[]
-  nipposperformance   Skor_Performance[]
-  nippostech          Skor_Technical[]
-  nipposlead          Skor_Leadership[]
-  nipposbumn          skor_BUMN[]
-  nipposLA            skor_LA[]
-  nippospotensi       skor_Potensi[]
+  nipposrole        Role_Karyawan[]
+  nipposevent       Event_Talent[]
+  komitetalentevent Komite_Talent_Event[]
+  nipposperformance Skor_Performance[]
+  nippostech        Skor_Technical[]
+  nipposlead        Skor_Leadership[]
+  nipposbumn        skor_BUMN[]
+  nipposLA          skor_LA[]
+  nippospotensi     skor_Potensi[]
 
-  jabatan          Referensi_Jabatan            @relation(fields: [kode_jabatan], references: [id])
-  bagian           Referensi_Bagian             @relation(fields: [kode_bagian], references: [id])
-  rumpun           Referensi_Rumpun_Jabatan?    @relation(fields: [rumpun_jabatan], references: [kode_rumpun_jabatan])
-  nopend           Referensi_Kantor?            @relation(fields: [kode_nopend], references: [nopend])
-  tipejabatan      Tipe_Jabatan                 @relation(fields: [tipe_jabatan], references: [id])
-  status           Status_Kerja                 @relation(fields: [kode_status_kerja], references: [id])
-  RelasiNippos     Kandidat_Talent_dan_Source[] @relation("RelasiNippos")
-  RelasiKomiteUnit Kandidat_Talent_dan_Source[] @relation("RelasiKomiteUnit")
+  jabatan              Referensi_Jabatan            @relation(fields: [kode_jabatan], references: [id])
+  bagian               Referensi_Bagian             @relation(fields: [kode_bagian], references: [id])
+  rumpun               Referensi_Rumpun_Jabatan?    @relation(fields: [rumpun_jabatan], references: [kode_rumpun_jabatan])
+  nopend               Referensi_Kantor?            @relation(fields: [kode_nopend], references: [nopend])
+  tipejabatan          Tipe_Jabatan                 @relation(fields: [tipe_jabatan], references: [id])
+  status               Status_Kerja                 @relation(fields: [kode_status_kerja], references: [id])
+  RelasiNippos         Kandidat_Talent_dan_Source[] @relation("RelasiNippos")
+  RelasiKomiteUnit     Kandidat_Talent_dan_Source[] @relation("RelasiKomiteUnit")
+  RelasiNipposProf     Talent_Profile[]             @relation("RelasiNippos")
+  RelasiKomiteUnitProf Talent_Profile[]             @relation("RelasiKomiteUnit")
+  RelasiNipposQual     Talent_Qualification[]       @relation("RelasiNippos")
+  RelasiKomiteUnitQual Talent_Qualification[]       @relation("RelasiKomiteUnit")
 }
 
 model Referensi_Kantor {
@@ -194,6 +196,7 @@ model Parameter_Talent_Qualification {
   skor_minimal          Int
 
   idkomite Referensi_Komite_Talent @relation(fields: [id_komite_talent], references: [id])
+  idnilai Kriteria_Penilaian @relation(fields: [id_kriteria_penilaian], references: [id_kriteria_penilaian])
 }
 
 model Parameter_Talent_Cluster {
@@ -211,6 +214,7 @@ model Kriteria_Penilaian {
   nama_kriteria_penilaian String                     @db.VarChar(50)
   nilai                   Parameter_Talent_Cluster[]
   nilaiqualificaiton      Talent_Qualification[]
+  idkriteria Parameter_Talent_Qualification[]
 }
 
 // Bagian Event
@@ -296,18 +300,20 @@ model Deadline_Event_Step {
 }
 
 model Talent_Qualification {
-  id                    Int      @id @default(autoincrement())
-  nippos                String   @db.Char(9)
-  eventtalenid          Int
+  id                    Int       @id @default(autoincrement())
+  nippos                String    @db.Char(9)
+  eventtalentid         Int
+  komite_unit           String?   @db.Char(9)
   id_kriteria_penilaian Int
-  skor                  Int
-  berlaku_mulai         DateTime @db.Date
-  berlaku_hingga        DateTime @db.Date
-  createdAt             DateTime @db.Timestamptz()
+  skor                  Int?
+  berlaku_mulai         DateTime? @db.Date
+  berlaku_hingga        DateTime? @db.Date
+  createdAt             DateTime  @db.Timestamptz()
 
-  nipposkaryawan Karyawan           @relation(fields: [nippos], references: [nippos])
-  idevent        Event_Talent       @relation(fields: [eventtalenid], references: [id])
-  idnilai        Kriteria_Penilaian @relation(fields: [id_kriteria_penilaian], references: [id_kriteria_penilaian])
+  relasiNippos     Karyawan           @relation("RelasiNippos", fields: [nippos], references: [nippos])
+  relasiKomiteUnit Karyawan?          @relation("RelasiKomiteUnit", fields: [komite_unit], references: [nippos])
+  idevent          Event_Talent       @relation(fields: [eventtalentid], references: [id])
+  idnilai          Kriteria_Penilaian @relation(fields: [id_kriteria_penilaian], references: [id_kriteria_penilaian])
 }
 
 model Kandidat_Talent_dan_Source {
@@ -327,13 +333,14 @@ model Talent_Profile {
   id               Int      @id @default(autoincrement())
   nippos           String   @db.Char(9)
   eventtalentid    Int
-  komite_unit      String   @db.Char(9)
+  komite_unit      String?  @db.Char(9)
   pakta_integritas Boolean
   commitmenletter  Boolean
   createdAt        DateTime @db.Timestamptz()
 
-  nipposkaryawan Karyawan     @relation(fields: [nippos], references: [nippos])
-  idevent        Event_Talent @relation(fields: [eventtalentid], references: [id])
+  relasiNippos     Karyawan     @relation("RelasiNippos", fields: [nippos], references: [nippos])
+  relasiKomiteUnit Karyawan?    @relation("RelasiKomiteUnit", fields: [komite_unit], references: [nippos])
+  idevent          Event_Talent @relation(fields: [eventtalentid], references: [id])
 }
 
 model Skor_Performance {

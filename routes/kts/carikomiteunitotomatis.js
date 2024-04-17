@@ -3,11 +3,13 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/cariotomatis", async (req, res) => {
+router.post("/cariotomatis", async (req, res) => {
   try {
 
     const ambilNippos = await prisma.kandidat_Talent_dan_Source.findMany({
         select: {
+            id:true,
+            nippos:true,
             relasiNippos:{
                 select:{
                     kode_bagian:true,
@@ -20,7 +22,7 @@ router.get("/cariotomatis", async (req, res) => {
 
     let atasan = await Promise.all(
         ambilNippos.map( async (data) => {
-            const cariAtasan = await prisma.karyawan.findMany({
+            let cariAtasan = await prisma.karyawan.findFirst({
               where: {
                     jabatan: {
                         jabatas: {
@@ -39,13 +41,34 @@ router.get("/cariotomatis", async (req, res) => {
                     kode_nopend: data.relasiNippos.kode_nopend
                 },
             });
-            return cariAtasan
+            return {
+              karyawan : {
+                id: data.id,
+                nippos: data.nippos
+              },
+              atasan: cariAtasan
+            }
         }) 
     ) 
 
     const finalData = [].concat(...atasan);
 
-    res.status(200).json(finalData);
+    const masukKomite = await Promise.all(
+        finalData.map(async (filter) => {
+          if (filter.atasan) {
+            await prisma.kandidat_Talent_dan_Source.update({
+              where: {
+                id: filter.karyawan.id,
+              },
+              data: {
+                relasiKomiteUnit: { connect: { nippos: filter.atasan.nippos } },
+              },
+            });
+          }
+        })
+      );
+
+    res.status(200).json("Berhasil");
   } catch (err) {
     console.log({ err });
     res.status(500).json({ message: "Internal server error", err });
