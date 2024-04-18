@@ -32,6 +32,7 @@ router.post("/createqualification", async (req, res) => {
         skor: 0,
         berlaku_mulai: null,
         berlaku_hingga: null,
+        status: false,
         komite_unit: status.komite_unit,
         createdAt: new Date(),
       })),

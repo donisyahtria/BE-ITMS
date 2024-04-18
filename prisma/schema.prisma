@@ -309,6 +309,7 @@ model Talent_Qualification {
   skor                  Int?
   berlaku_mulai         DateTime? @db.Date
   berlaku_hingga        DateTime? @db.Date
+  status                Boolean
   createdAt             DateTime  @db.Timestamptz()
 
   relasiNippos     Karyawan           @relation("RelasiNippos", fields: [nippos], references: [nippos])
