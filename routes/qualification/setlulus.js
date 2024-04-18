@@ -3,7 +3,7 @@ import express from "express";
 
 const router = express.Router();
 
-router.post("/updateskorperform", async (req, res) => {
+router.post("/setlulus", async (req, res) => {
   try {
 
     const ambilNippos = await prisma.talent_Qualification.findMany({
