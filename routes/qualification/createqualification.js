@@ -12,9 +12,13 @@ router.post("/createqualification", async (req, res) => {
       },
     });
 
+    const eventids = activeStatuses.map(status => status.eventtalentid)
+
     const tipeKomite = await prisma.event_Talent.findFirst({
       where: {
-        id: activeStatuses.eventtalentid,
+        id: {
+          in: eventids
+        }
       },
     });
 

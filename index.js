@@ -16,9 +16,10 @@ import talentprofile from "./routes/talentprofile/createtalentprofile"
 import carikomiteotomatis from "./routes/kts/carikomiteunitotomatis"
 import paktacommit from "./routes/talentprofile/updatepaktacommit"
 import tqualification from "./routes/qualification/createqualification"
-import skorperforma from "./routes/qualification/skorkt2"
 import skorkt1 from "./routes/qualification/skorkt1"
 import comparenilai from "./routes/qualification/comparenilaikt1"
+import tdays from "./routes/days/createtalentdays"
+import updatedays from "./routes/days/updatenilai"
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -47,9 +48,10 @@ app.use("/", talentprofile)
 app.use("/", carikomiteotomatis)
 app.use("/", paktacommit)
 app.use("/", tqualification)
-app.use("/", skorperforma)
 app.use("/", skorkt1)
 app.use("/", comparenilai)
+app.use("/", tdays)
+app.use("/", updatedays)
 
 app.listen(port, () => {
     console.log(`server running on port ${port}`);

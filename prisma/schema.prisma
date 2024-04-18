@@ -49,6 +49,8 @@ model Karyawan {
   RelasiKomiteUnitProf Talent_Profile[]             @relation("RelasiKomiteUnit")
   RelasiNipposQual     Talent_Qualification[]       @relation("RelasiNippos")
   RelasiKomiteUnitQual Talent_Qualification[]       @relation("RelasiKomiteUnit")
+  RelasiNipposDays     Talent_Days[]                @relation("RelasiNippos")
+  RelasiKomiteUnitDays Talent_Days[]                @relation("RelasiKomiteUnit")
 }
 
 model Referensi_Kantor {
@@ -240,6 +242,7 @@ model Event_Talent {
   kandidat          Kandidat_Talent_dan_Source[]
   profile           Talent_Profile[]
   komitetalentevent Komite_Talent_Event[]
+  tdays             Talent_Days[]
 
   tipekomite  Referensi_Komite_Talent  @relation(fields: [tipe_komite_talent], references: [id])
   nipposketua Karyawan                 @relation(fields: [nippos_ketua_komite], references: [nippos])
@@ -270,6 +273,7 @@ model Referensi_Pertanyaan {
   pertanyaan String @db.VarChar(255)
 
   event Event_Pertanyaan[]
+  days  Talent_Days[]
 }
 
 model Event_Status {
@@ -307,10 +311,9 @@ model Talent_Qualification {
   komite_unit           String?   @db.Char(9)
   id_kriteria_penilaian Int
   skor                  Int?
-  lulus                 Boolean
+  status                Boolean
   berlaku_mulai         DateTime? @db.Date
   berlaku_hingga        DateTime? @db.Date
-  status                Boolean
   createdAt             DateTime  @db.Timestamptz()
 
   relasiNippos     Karyawan           @relation("RelasiNippos", fields: [nippos], references: [nippos])
@@ -462,4 +465,19 @@ model skor_Potensi {
   Berlaku_Hingga DateTime? @db.Date
 
   relasinippos Karyawan @relation(fields: [nippos], references: [nippos])
+}
+
+model Talent_Days {
+  id            Int      @id @default(autoincrement())
+  nippos        String   @db.Char(9)
+  eventtalentid Int
+  id_pertanyaan  Int
+  komite_unit   String?  @db.Char(9)
+  skor          Float?
+  createdAt     DateTime @db.Timestamptz()
+
+  relasiNippos     Karyawan             @relation("RelasiNippos", fields: [nippos], references: [nippos])
+  relasiKomiteUnit Karyawan?            @relation("RelasiKomiteUnit", fields: [komite_unit], references: [nippos])
+  idevent          Event_Talent         @relation(fields: [eventtalentid], references: [id])
+  idtanya          Referensi_Pertanyaan @relation(fields: [id_pertanyaan], references: [id])
 }
