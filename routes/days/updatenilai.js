@@ -7,7 +7,8 @@ router.post("/updateskordays", async (req, res) => {
   try {
     const masukSkorDays = await prisma.talent_Days.update({
       where: {
-        id: req.body.id,
+        nippos: req.body.nippos,
+        Id_pertanyaan: req.body.pertanyaan
       },
       data: {
         skor: req.body.skor,

@@ -9,7 +9,7 @@ router.post("/comparenilai", async (req, res) => {
       distinct: ['nippos']
     })
 
-    const kkmbumn = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm bumn
+    const kkmbumn1 = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm bumn
       where: {
         AND: [
           { id_komite_talent: 1 },
@@ -18,7 +18,7 @@ router.post("/comparenilai", async (req, res) => {
       }
     })
 
-    const kkmperformance = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm performance
+    const kkmperformance1 = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm performance
       where: {
         AND: [
           { id_komite_talent: 1 },
@@ -27,7 +27,7 @@ router.post("/comparenilai", async (req, res) => {
       }
     })
 
-    const kkmakhlak = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm akhlak
+    const kkmakhlak1 = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm akhlak
       where: {
         AND: [
           { id_komite_talent: 1 },
@@ -36,11 +36,20 @@ router.post("/comparenilai", async (req, res) => {
       }
     })
 
-    const kkmla = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm learningagility
+    const kkmla1 = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm learningagility
       where: {
         AND: [
           { id_komite_talent: 1 },
           { id_kriteria_penilaian: 7 }
+        ]
+      }
+    })
+
+    const kkmlead2 = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm learningagility
+      where: {
+        AND: [
+          { id_komite_talent: 2 },
+          { id_kriteria_penilaian: 2 }
         ]
       }
     })
@@ -97,11 +106,24 @@ router.post("/comparenilai", async (req, res) => {
       return users
     }
 
+    async function luluslead(nilai) { //ambil karyawan yang lolos learning agility
+      const users = await prisma.talent_Qualification.findMany({
+        where: {
+          id_kriteria_penilaian: 2,
+          skor: {
+            gte: nilai // Get users with age greater than the specified value
+          }
+        }
+      });
+      // console.log(users);
+      return users
+    }    
     // list nama yang lulus masing masing skor
-    const lulus_bumn = await lulusbumn(kkmbumn.skor_minimal);
-    const lulus_performance = await lulusperformance(kkmperformance.skor_minimal);
-    const lulus_akhlak = await lulusakhlak(kkmakhlak.skor_minimal);
-    const lulus_la = await lulusla(kkmla.skor_minimal);
+    const lulus_bumn = await lulusbumn(kkmbumn1.skor_minimal);
+    const lulus_performance = await lulusperformance(kkmperformance1.skor_minimal);
+    const lulus_akhlak = await lulusakhlak(kkmakhlak1.skor_minimal);
+    const lulus_la = await lulusla(kkmla1.skor_minimal);
+    const lulus_lead = await luluslead(kkmlead2.skor_minimal);
 
     lulus_bumn.map(async (lulus) => (
       await prisma.talent_Qualification.updateMany({
@@ -159,33 +181,20 @@ router.post("/comparenilai", async (req, res) => {
       })
     ))
 
-
-    // const comparebumn = await Promise.all(
-    //     ambilNippos.map(async (nippos) => {
-    //         const nilaibumn = await prisma.talent_Qualification.findFirst({
-    //             where:{
-    //                 AND:[
-    //                     {nippos: nippos.nippos},
-    //                     {id_kriteria_penilaian: 1}
-    //                 ]
-    //             },
-    //             select:{
-    //                 skor:true
-    //             }
-    //         })
-    //         nilaibumn.map(async (bumn) =>{
-    //             const gantistatus = await prisma.talent_Qualification.updateMany({
-    //                 where:{
-    //                     AND:[
-    //                         {nippos: nippos.nippos},
-    //                         {id_kriteria_penilaian}
-    //                     ]
-    //                 }
-
-    //                 }
-    //             )
-    //         })}))
-
+    lulus_lead.map(async (lulus) => (
+      await prisma.talent_Qualification.updateMany({
+        where: {
+          AND: [
+            { nippos: lulus.nippos },
+            { id_kriteria_penilaian: 2 }
+          ]
+        },
+        data: {
+          status: true
+        }
+      })
+    ))
+    
     res.status(200).json({ message: "done" });
   } catch (error) {
     console.error("Error:", error);

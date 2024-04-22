@@ -51,6 +51,10 @@ model Karyawan {
   RelasiKomiteUnitQual Talent_Qualification[]       @relation("RelasiKomiteUnit")
   RelasiNipposDays     Talent_Days[]                @relation("RelasiNippos")
   RelasiKomiteUnitDays Talent_Days[]                @relation("RelasiKomiteUnit")
+  RelasiNipposCluster   Talent_Cluster[]            @relation("RelasiNippos")
+  RelasiKomiteUnitCluster Talent_Cluster[]          @relation("RelasiKomiteUnit")
+  relasiketuakomite        Talent_Cluster[]         @relation("relasiketuatalent")
+
 }
 
 model Referensi_Kantor {
@@ -146,6 +150,7 @@ model Referensi_Rumpun_Jabatan {
   rumpunkaryawan Karyawan[]
   rumpunevent    Event_Talent[]
   rumpunteknik   Kompetensi_Hardsoft_Rumpun[]
+  refpool        talent_pool[]
 }
 
 model Underperson_Komite_Unit {
@@ -243,6 +248,8 @@ model Event_Talent {
   profile           Talent_Profile[]
   komitetalentevent Komite_Talent_Event[]
   tdays             Talent_Days[]
+  eventcluster      Talent_Cluster[]
+  pool              talent_pool[]
 
   tipekomite  Referensi_Komite_Talent  @relation(fields: [tipe_komite_talent], references: [id])
   nipposketua Karyawan                 @relation(fields: [nippos_ketua_komite], references: [nippos])
@@ -410,7 +417,7 @@ model Referensi_Kompetensi_Leadership {
   id               Int    @id @default(autoincrement())
   kodekomplead     String @db.VarChar(10)
   namakomplead     String @db.VarChar(255)
-  desckomphardlead String @db.VarChar(1000)
+  desckomplead String @db.VarChar(1000)
 
   relasilead Skor_Leadership[]
 }
@@ -481,3 +488,62 @@ model Talent_Days {
   idevent          Event_Talent         @relation(fields: [eventtalentid], references: [id])
   idtanya          Referensi_Pertanyaan @relation(fields: [id_pertanyaan], references: [id])
 }
+
+model Talent_Cluster {
+  id                    Int      @id @default(autoincrement())
+  nippos                String   @db.Char(9)
+  eventtalentid         Int
+  Skor_Capacity_Axis    Float?
+  Capacity_Axis         String?  @db.Char(1)
+  Skor_Performance_Axis Float?
+  Performance_Axis      String? @db.Char(1)
+  Id_Matriks_Kategori_Awal Int?
+  Id_Matriks_Kategori_Akhir Int?
+  createdAt             DateTime @db.Timestamptz()
+  ketua_komite_talent   String   @db.Char(9)
+  komite_unit           String?  @db.Char(9)
+
+  relasiNippos      Karyawan             @relation("RelasiNippos", fields: [nippos], references: [nippos])
+  relasiKomiteUnit  Karyawan?            @relation("RelasiKomiteUnit", fields: [komite_unit], references: [nippos])
+  relasiketuakomite Karyawan?            @relation("relasiketuatalent", fields: [ketua_komite_talent], references: [nippos])
+  relasimatriksawal matriks_kategori?    @relation("matriksawal", fields: [Id_Matriks_Kategori_Awal], references: [Id])
+  relasimatriksakhir matriks_kategori?   @relation("matriksakhir", fields: [Id_Matriks_Kategori_Akhir],references: [Id])
+  idevent           Event_Talent         @relation(fields: [eventtalentid], references: [id])
+ }
+
+ model matriks_kategori {
+  Id                    Int     @id   @default(autoincrement())
+  Nama_Matriks_Kategori String  @db.VarChar(20)
+  Capacity_Axis         String  @db.Char(1)
+  Performance_Axis      String  @db.Char(1)
+
+  refpool           talent_pool[]
+
+  relasimatriksawal Talent_Cluster[]      @relation("matriksawal")
+  relasimatriksakhir Talent_Cluster[]     @relation("matriksakhir")
+ }
+
+ model parameter_batas_sumbu{
+  id            Int    @id @default(autoincrement())
+  Axis          String @db.VarChar(15)
+  L             Float
+  M             Float
+  H             Float
+ }
+
+ model talent_pool {
+  Id            Int   @id @default(autoincrement())
+  nippos        String @db.Char(9)
+  leveljabatan  String @db.Char(2)
+  rumpunjabatan Int
+  eventtalentid Int
+  statustalent  Boolean
+  dibuat_pada   DateTime
+  id_matriks_kategori Int
+  Berlaku_Mulai DateTime
+  Berlaku_Hingga DateTime
+
+  relasievent     Event_Talent    @relation(fields: [eventtalentid], references: [id])  
+  refrumpun       Referensi_Rumpun_Jabatan @relation(fields: [rumpunjabatan], references: [kode_rumpun_jabatan])
+  refmatriks      matriks_kategori  @relation(fields: [id_matriks_kategori], references:[Id])
+ }
