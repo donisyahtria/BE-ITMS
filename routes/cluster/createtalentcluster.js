@@ -3,7 +3,7 @@ import prisma from "../../prisma/prisma";
 
 const router = express.Router();
 
-router.post("/createqual", async (req, res) => {
+router.post("/createcluster", async (req, res) => {
   try {
     const persons = await prisma.$queryRaw`
     SELECT td.nippos, td.eventtalentid, et.nippos_ketua_komite

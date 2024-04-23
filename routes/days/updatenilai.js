@@ -10,14 +10,14 @@ router.post("/skordays", async (req, res) => {
 
     const masukSkorDays = skor.map(async (nilai) => {
       await prisma.talent_Days.updateMany({
-        where: {
+      where: {
           nippos: nippos,
-          id_pertanyaan: parseInt(1,2,3),
-        },
-        data: {
-          skor: parseFloat(nilai)
-        },
-      });
+          id_pertanyaan: nilai.pertanyaan,
+      },
+      data: {
+          skor: parseFloat(nilai.skor)
+      },
+    });console.log(masukSkorDays);
     });
 
     await Promise.all(masukSkorDays);

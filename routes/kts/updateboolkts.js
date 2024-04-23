@@ -3,11 +3,11 @@ import express from "express";
 
 const router = express.Router();
 
-router.post("/updatebool", async (req, res) => {
+router.post("/updatestatussource", async (req, res) => {
   try {
     const masukKomite = await prisma.kandidat_Talent_dan_Source.update({
       where: {
-        id: req.body.id,
+        nippos: req.body.nippos,
       },
       data: {
         status_talensource: req.body.status_talensource,
