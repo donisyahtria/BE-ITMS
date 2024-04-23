@@ -26,6 +26,10 @@ import hitungcluster from "./routes/cluster/hitungcluster"
 import createpool    from "./routes/Pool/createtalentpool"
 import createqualalt from "./routes/qualification/createqual_alt"
 import skordays from "./routes/days/updatenilai"
+import detailnilai from "./routes/days/getdetailnilai"
+import getalldays from "./routes/days/getalldays"
+import getallkts from "./routes/kts/getallkts"
+import getallprofile from "./routes/talentprofile/getallprofile"
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -56,6 +60,7 @@ app.use("/", getkomiteunit)
 app.use("/", updatebool)
 app.use("/", talentprofile)
 app.use("/", carikomiteotomatis)
+app.use("/", getallkts)
 
 // Profile
 app.use("/", paktacommit)
@@ -68,9 +73,12 @@ app.use("/", createqual)
 app.use("/", hitungcluster)
 app.use("/", createpool)
 app.use("/", createqualalt)
+app.use("/", getallprofile)
 
 // Days
 app.use("/", skordays)
+app.use("/", detailnilai)
+app.use("/", getalldays)
 
 app.listen(port, () => {
     console.log(`server running on port ${port}`);
