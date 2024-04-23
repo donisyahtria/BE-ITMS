@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser, { json } from "body-parser";
 import cors from "cors";
+import getevent from "./routes/event/getallevent"
 import addevent from "./routes/event/createevent"
 import deadline from "./routes/event/createdeadline"
 import headcom from "./routes/event/getheadcommit"
@@ -37,6 +38,8 @@ app.use(cors({
     })
 );
 
+// Event
+app.use("/",getevent)
 app.use("/", joblevel)
 app.use("/", jobfam)
 app.use("/", addevent)
@@ -44,12 +47,16 @@ app.use("/", headcom)
 app.use("/", commite)
 app.use("/", question)
 app.use("/", deadline)
+
+// KTS
 app.use("/", filterkaryawan)
 app.use("/", underperson)
 app.use("/", getkomiteunit)
 app.use("/", updatebool)
 app.use("/", talentprofile)
 app.use("/", carikomiteotomatis)
+
+// Profile
 app.use("/", paktacommit)
 app.use("/", tqualification)
 app.use("/", skorkt1)
