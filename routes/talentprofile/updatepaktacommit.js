@@ -7,7 +7,7 @@ router.post("/updatepaktacommit", async (req, res) => {
   try {
     const masukProfile = await prisma.talent_Profile.update({
       where: {
-        id: req.body.id,
+        id: req.body.id
       },
       data: {
         pakta_integritas: req.body.pakta_integritas,

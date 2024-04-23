@@ -38,7 +38,7 @@ router.post("/cariotomatis", async (req, res) => {
                         },
                         },
                     },
-                    kode_nopend: data.relasiNippos.kode_nopend
+                    //kode_nopend: data.relasiNippos.kode_nopend
                 },
             });
             return {

@@ -21,7 +21,7 @@ router.post("/comparenilai", async (req, res) => {
     const kkmperformance1 = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm performance
       where: {
         AND: [
-          { id_komite_talent: 1 },
+          { id_komite_talent: req.body.komite_talent },
           { id_kriteria_penilaian: 5 }
         ]
       }
@@ -30,7 +30,7 @@ router.post("/comparenilai", async (req, res) => {
     const kkmakhlak1 = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm akhlak
       where: {
         AND: [
-          { id_komite_talent: 1 },
+          { id_komite_talent: req.body.komite_talent },
           { id_kriteria_penilaian: 6 }
         ]
       }
@@ -39,7 +39,7 @@ router.post("/comparenilai", async (req, res) => {
     const kkmla1 = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm learningagility
       where: {
         AND: [
-          { id_komite_talent: 1 },
+          { id_komite_talent: req.body.komite_talent },
           { id_kriteria_penilaian: 7 }
         ]
       }
