@@ -25,6 +25,7 @@ import createqual from "./routes/cluster/createtalentcluster"
 import hitungcluster from "./routes/cluster/hitungcluster"
 import createpool    from "./routes/Pool/createtalentpool"
 import createqualalt from "./routes/qualification/createqual_alt"
+import skordays from "./routes/days/updatenilai"
 
 const port = process.env.PORT || 3000;
 const app = express();
@@ -67,6 +68,9 @@ app.use("/", createqual)
 app.use("/", hitungcluster)
 app.use("/", createpool)
 app.use("/", createqualalt)
+
+// Days
+app.use("/", skordays)
 
 app.listen(port, () => {
     console.log(`server running on port ${port}`);
