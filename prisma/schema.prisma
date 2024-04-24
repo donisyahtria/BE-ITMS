@@ -317,7 +317,7 @@ model Talent_Qualification {
   eventtalentid         Int
   komite_unit           String?   @db.Char(9)
   id_kriteria_penilaian Int
-  skor                  Int?
+  skor                  Float?
   status                Boolean
   berlaku_mulai         DateTime? @db.Date
   berlaku_hingga        DateTime? @db.Date

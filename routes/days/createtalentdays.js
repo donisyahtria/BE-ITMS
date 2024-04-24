@@ -11,6 +11,7 @@ router.post("/createtdays", async (req, res) => {
     RIGHT JOIN "Event_Pertanyaan" ep
     ON tq.eventtalentid = ep.eventid
     WHERE tq.status = true
+    AND tq.id_kriteria_penilaian != 8
     GROUP BY tq.nippos, tq.eventtalentid ,ep.id_pertanyaan, tq.komite_unit
     HAVING COUNT(*) = 4;`;
     console.log(persons);

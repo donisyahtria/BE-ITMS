@@ -5,17 +5,38 @@ const router = express.Router();
 
 router.post("/updateskorcluster", async (req, res) => {
   try {
+    const updatenilaidays = await prisma.$queryRaw`
+    select nippos, avg(skor) as skor
+    FROM "Talent_Days" td
+    group by nippos`
+
+    updatenilaidays.map(async (days) => {
+      const updatedays = await prisma.talent_Qualification.updateMany({
+        where: {
+            nippos: days.nippos,
+            id_kriteria_penilaian: 8
+        },
+        data:{
+          skor: days.skor,
+          status: true
+        }
+      })
+    })
+    
     const nilai_capacity = await prisma.$queryRaw`
 SELECT 
     nippos,
-    AVG(normalized_score) AS skobot
+    sum(normalized_score) AS skobot
 FROM (
     SELECT 
         nippos,
         tipe_komite_talent,
         id_kriteria_penilaian,
         skor,
-        (((skor::float - skor_minimal) / (5 - skor_minimal)) * 5) AS normalized_score,
+        CASE
+            WHEN id_kriteria_penilaian = 8 THEN (skor::float*bobot)
+            ELSE ((((skor::float - skor_minimal) / (5 - skor_minimal)) * 5)*bobot) 
+            END AS normalized_score,
         skor_minimal
     FROM (
         SELECT 
@@ -23,6 +44,7 @@ FROM (
             et.tipe_komite_talent,
             tq.id_kriteria_penilaian,
             tq.skor,
+            ptc.bobot,
             ptq.skor_minimal,
             COUNT(*) OVER (PARTITION BY tq.nippos) AS nippos_count
         FROM 
@@ -121,3 +143,4 @@ AND tc."Performance_Axis"  = mk."Performance_Axis";`
 });
 
 export default router;
+

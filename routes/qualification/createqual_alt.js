@@ -20,14 +20,14 @@ router.post("/createqualificationquery", async (req, res) => {
             on tp.eventtalentid = et.id 
             JOIN 
                 "Kriteria_Penilaian" c ON 
-                (et.tipe_komite_talent = 1 and c.id_kriteria_penilaian in (1,5,6,7) or
+                (et.tipe_komite_talent = 1 and c.id_kriteria_penilaian in (1,5,6,7, 8) or
                 (et.tipe_komite_talent = 2 and
                 (
-                    (k.tipe_jabatan = 1 AND c.id_kriteria_penilaian  IN (2, 5, 6, 7)) OR
-                    (k.tipe_jabatan = 2 AND c.id_kriteria_penilaian  IN (3, 5, 6, 7))
+                    (k.tipe_jabatan = 1 AND c.id_kriteria_penilaian  IN (2, 5, 6, 7, 8)) OR
+                    (k.tipe_jabatan = 2 AND c.id_kriteria_penilaian  IN (3, 5, 6, 7, 8))
                     )
                     ) or 
-                (et.tipe_komite_talent = 3 and c.id_kriteria_penilaian in (4,5,6,7))
+                (et.tipe_komite_talent = 3 and c.id_kriteria_penilaian in (4,5,6,7, 8))
                 )
             where tp.pakta_integritas =true and tp.commitmenletter =true
             ORDER BY 
@@ -44,7 +44,6 @@ router.post("/createqualificationquery", async (req, res) => {
                     id_kriteria_penilaian: row.id_kriteria_penilaian
                 }
             });
-            console.log(existingRow);
         
             if (!existingRow) {
                 const masukqual = await prisma.talent_Qualification.create({
