@@ -68,9 +68,12 @@ app.use("/", createqual)
 app.use("/", hitungcluster)
 app.use("/", createpool)
 app.use("/", createqualalt)
+app.use("/", getallprofile)
 
 // Days
 app.use("/", skordays)
+app.use("/", detailnilai)
+app.use("/", getalldays)
 
 app.listen(port, () => {
     console.log(`server running on port ${port}`);
