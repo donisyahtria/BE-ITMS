@@ -28,6 +28,9 @@ import createqualalt from "./routes/qualification/createqual_alt"
 import skordays from "./routes/days/updatenilai"
 import joblevelfilter from "./routes/kts/getjoblevelfilter"
 import hapusevent       from "./routes/event/hapusevent"
+import getallprofile    from "./routes/talentprofile/createtalentprofile"
+import detailnilai      from "./routes/days/getdetailnilai"
+import getalldays       from "./routes/days/getalldays"
 
 const port = process.env.PORT || 4000;
 const app = express();
