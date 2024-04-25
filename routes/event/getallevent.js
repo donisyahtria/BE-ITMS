@@ -21,7 +21,8 @@ router.get("/getallevent", async (req, res) => {
                 }
             },
             tanggal_mulai: true,
-            tanggal_selesai: true
+            tanggal_selesai: true,
+            evenstatus_id: true
         }
     });
     res.status(200).json({ event });

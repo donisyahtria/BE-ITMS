@@ -26,6 +26,15 @@ router.post("/createdeadline", async (req, res) => {
       },
     });
 
+    const updatestatusevent = await prisma.event_Talent.update({
+      where:{
+        id: req.body.event_id
+      },
+      data:{
+        evenstatus_id: req.body.status
+      }
+    })
+
     res.status(200).json(createdead);
   } catch (error) {
     console.log(error);

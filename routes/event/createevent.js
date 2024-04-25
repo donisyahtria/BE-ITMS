@@ -43,7 +43,7 @@ router.post("/addevent", async (req, res) => {
             });
         });
 
-        const nippos = req.body.nippos;
+        const nippos = req.body.nippos_komite;
         const komitetalentevent = nippos.map(async (nip) => {
             await prisma.komite_Talent_Event.create({
                 data: {

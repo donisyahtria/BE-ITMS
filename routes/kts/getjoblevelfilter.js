@@ -3,20 +3,20 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/getjobfamily", async (req, res) => {
-    const job_fam = req.job_fam
+router.get("/getjoblevelfilter", async (req, res) => {
+    const idevent = req.idevent
     try {
-      const fam = await prisma.referensi_Rumpun_Jabatan
-      .findMany({
+      const jl = await prisma.job_Level_Event.findMany({
         where:  {
-            status_aktif: "y"
+            idevent: idevent
         },
         select:{
-          kode_rumpun_jabatan:true,
-          nama_rumpun_jabatan:true
+          level_jabatan: true
         }
-      })
-      res.status(200).json({fam})
+    })
+    const result = jl.map(item => item.level_jabatan.toLowerCase());
+
+      res.status(200).json({result})
     } catch (err) {
       console.log({ err });
       res.status(500).json({ message: "Internal server error", err });

@@ -13,11 +13,13 @@ router.get("/getjoblevel", async (req, res) => {
           id_komite_talent: tipe_komite
         },
         select:{
-          id:true,
           job_level:true
         }
       })
-      res.status(200).json({job})
+
+      const job_level = job.map(job => job.job_level)
+    
+      res.status(200).json({job_level})
     } catch (err) {
       console.log({ err });
       res.status(500).json({ message: "Internal server error", err });

@@ -26,17 +26,15 @@ import hitungcluster from "./routes/cluster/hitungcluster"
 import createpool    from "./routes/Pool/createtalentpool"
 import createqualalt from "./routes/qualification/createqual_alt"
 import skordays from "./routes/days/updatenilai"
+import joblevelfilter from "./routes/kts/getjoblevelfilter"
+import hapusevent       from "./routes/event/hapusevent"
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cors({
-        origin: "http://localhost:5173",
-        methods: "GET, POST, PUT, HEAD, PATCH, DELETE",
-        credentials:true
-    })
+app.use(cors()
 );
 
 // Event
@@ -48,6 +46,7 @@ app.use("/", headcom)
 app.use("/", commite)
 app.use("/", question)
 app.use("/", deadline)
+app.use("/", hapusevent)
 
 // KTS
 app.use("/", filterkaryawan)
@@ -56,6 +55,7 @@ app.use("/", getkomiteunit)
 app.use("/", updatebool)
 app.use("/", talentprofile)
 app.use("/", carikomiteotomatis)
+app.use("/", joblevelfilter)
 
 // Profile
 app.use("/", paktacommit)
