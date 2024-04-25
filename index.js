@@ -10,7 +10,6 @@ import joblevel from "./routes/event/getjoblevel"
 import commite from "./routes/event/getcommit"
 import question from "./routes/event/getpertanyaan"
 import filterkaryawan from "./routes/kts/getfiltertalentsource"
-import underperson from "./routes/kts/filterunderpersonbyuserlogin"
 import getkomiteunit from "./routes/kts/getatasanbykts"
 import updatebool from "./routes/kts/updateboolkts"
 import talentprofile from "./routes/talentprofile/createtalentprofile"
@@ -53,7 +52,6 @@ app.use("/", hapusevent)
 
 // KTS
 app.use("/", filterkaryawan)
-app.use("/", underperson)
 app.use("/", getkomiteunit)
 app.use("/", updatebool)
 app.use("/", talentprofile)

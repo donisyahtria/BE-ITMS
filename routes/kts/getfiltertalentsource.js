@@ -30,21 +30,32 @@ router.post("/getfilterkaryawan", async (req, res) => {
       },
     });
 
-    const masukKandidat = await Promise.all(
-      hasilFilterEvent.map(async (filter) => {
-        await prisma.kandidat_Talent_dan_Source.create({
-          data: {
-            relasiNippos: {connect:{nippos: filter.nippos,}},
-            idevent: {connect:{id: eventid}},
-            status_talensource: false,
-            createdAt: new Date(),
-            // relasiKomiteUnit: {connect:{nippos: null}},
-          },
-        });
-      })
-    );
+    for (const row of hasilFilterEvent) {
+      // Check if the event_id exists in the insertedEventIds table
+      const existingRow = await prisma.kandidat_Talent_dan_Source.findFirst({
+        where: {
+          eventtalentid: eventid,
+          nippos: row.nippos
+        }
+      });
+      // console.log(existingRow);
+      
+          if (!existingRow) {
+                await prisma.kandidat_Talent_dan_Source.create({
+                  data: {
+                    relasiNippos: {connect:{nippos: row.nippos,}},
+                    idevent: {connect:{id: eventid}},
+                    status_talensource: false,
+                    createdAt: new Date(),
+                    // relasiKomiteUnit: {connect:{nippos: null}},
+                  },
+                });
+            ;
+          }}
 
-    res.status(200).json({hasilFilterEvent,masukKandidat});
+
+
+    res.status(200).json({hasilFilterEvent});
   } catch (err) {
     console.log({ err });
     res.status(500).json({ message: "Internal server error", err });
