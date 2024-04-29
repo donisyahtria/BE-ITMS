@@ -19,6 +19,7 @@ router.get("/getoneevent", async (req, res) => {
                     tipe_komite_talent: true
                 }
             },
+            kode_rumpun_jabatan:true,
             rumpun:{
                 select:{
                     nama_rumpun_jabatan: true
