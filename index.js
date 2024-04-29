@@ -30,10 +30,6 @@ import hapusevent       from "./routes/event/hapusevent"
 import getallprofile    from "./routes/talentprofile/createtalentprofile"
 import detailnilai      from "./routes/days/getdetailnilai"
 import getalldays       from "./routes/days/getalldays"
-import getoneevent      from "./routes/event/getoneevent"
-import updatedeadline   from "./routes/event/updatedeadline"
-import getsourcefalse        from "./routes/kts/getkandidatfalse"
-import getsourcetrue        from "./routes/kts/getkandidattrue"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -42,8 +38,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors()
 );
-
-app.use("/", updatedeadline)
 
 // Event
 app.use("/",getevent)
@@ -55,7 +49,6 @@ app.use("/", commite)
 app.use("/", question)
 app.use("/", deadline)
 app.use("/", hapusevent)
-app.use("/", getoneevent)
 
 // KTS
 app.use("/", filterkaryawan)
@@ -64,28 +57,25 @@ app.use("/", updatebool)
 app.use("/", talentprofile)
 app.use("/", carikomiteotomatis)
 app.use("/", joblevelfilter)
-app.use("/", getsourcefalse)
-app.use("/", getsourcetrue)
-
 
 // Profile
-app.use("/", paktacommit)
-app.use("/", tqualification)
-app.use("/", skorkt1)
-app.use("/", comparenilai)
-app.use("/", tdays)
-app.use("/", updatedays)
-app.use("/", createqual)
-app.use("/", hitungcluster)
-app.use("/", createpool)
-app.use("/", createqualalt)
-app.use("/", getallprofile)
+app.use("/", paktacommit);
+app.use("/", tqualification);
+app.use("/", skorkt1);
+app.use("/", comparenilai);
+app.use("/", tdays);
+app.use("/", updatedays);
+app.use("/", createqual);
+app.use("/", hitungcluster);
+app.use("/", createpool);
+app.use("/", createqualalt);
+app.use("/", getallprofile);
 
 // Days
-app.use("/", skordays)
-app.use("/", detailnilai)
-app.use("/", getalldays)
+app.use("/", skordays);
+app.use("/", detailnilai);
+app.use("/", getalldays);
 
 app.listen(port, () => {
-    console.log(`server running on port ${port}`);
+  console.log(`server running on port ${port}`);
 });
