@@ -32,6 +32,8 @@ import detailnilai from "./routes/days/getdetailnilai";
 import getalldays from "./routes/days/getalldays";
 import loginadmin from "./routes/login/login";
 import getkaryawan from "./routes/login/getkaryawan";
+import geteventbykaryawan from "./routes/event/geteventbykaryawan"
+import geteventbykomite from "./routes/event/geteventbykomite"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -46,6 +48,8 @@ app.use("/", getkaryawan);
 
 // Event
 app.use("/", getevent);
+app.use("/",geteventbykaryawan)
+app.use("/",geteventbykomite)
 app.use("/", joblevel);
 app.use("/", jobfam);
 app.use("/", addevent);
