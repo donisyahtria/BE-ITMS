@@ -25,6 +25,7 @@ model Karyawan {
   kode_status_kerja Int
   status_hukdis     String  @db.Char(1)
   email             String? @db.VarChar(255)
+  password          String? @db.VarChar(15)
 
   nipposrole        Role_Karyawan[]
   nipposevent       Event_Talent[]

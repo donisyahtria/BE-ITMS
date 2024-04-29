@@ -32,6 +32,8 @@ import detailnilai      from "./routes/days/getdetailnilai"
 import getalldays       from "./routes/days/getalldays"
 import getoneevent      from "./routes/event/getoneevent"
 import updatedeadline   from "./routes/event/updatedeadline"
+import getsourcefalse        from "./routes/kts/getkandidatfalse"
+import getsourcetrue        from "./routes/kts/getkandidattrue"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -62,6 +64,9 @@ app.use("/", updatebool)
 app.use("/", talentprofile)
 app.use("/", carikomiteotomatis)
 app.use("/", joblevelfilter)
+app.use("/", getsourcefalse)
+app.use("/", getsourcetrue)
+
 
 // Profile
 app.use("/", paktacommit)
