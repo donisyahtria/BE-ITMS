@@ -1,20 +1,33 @@
 import prisma from "../../prisma/prisma";
 import express from "express";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
 router.post("/loginadmin", async (req, res) => {
-    const username = req.body.nippos;
-    const password = req.body.password
+  const username = req.body.nippos;
+  const password = req.body.password;
+  
+  try {
     const user = await prisma.karyawan.findUnique({
       where: {
-        nippos: username,
+        nippos: username
       }
     });
-  
-    const token = jwt.sign({ user }, process.env.JWT_SECRET);
-    res.json({ message: "Login successful", token});
-  });
 
-  export default router;
+    if (!user || user.password !== password) {
+      // Jika user tidak ditemukan atau password salah
+      return res.status(401).json({ message: "Username or password is incorrect" });
+    }
+
+    // Jika username dan password cocok, buat token JWT
+    const token = jwt.sign({ user }, process.env.JWT_SECRET);
+    res.json({ message: "Login successful", token });
+  } catch (error) {
+    // Tangani kesalahan lain yang mungkin terjadi saat mengakses database
+    console.error("Error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+export default router;
