@@ -21,7 +21,7 @@ from "Talent_Qualification" tq
 join "Karyawan" k on k.nippos = tq.nippos 
 join "Referensi_Jabatan" rj on rj.id = k.kode_jabatan
 join "Referensi_Bagian" rb on rb.id = k.kode_bagian
-join "Referensi_Rumpun_Jabatan" rrj on rrj.id = k.rumpun_jabatan
+join "Referensi_Rumpun_Jabatan" rrj on rrj.kode_rumpun_jabatan = k.rumpun_jabatan
 join "Referensi_Kantor" rk on rk.nopend = k.kode_nopend
 left join(	select tq.nippos, tq.skor
 			from "Talent_Qualification" tq

@@ -44,6 +44,7 @@ import gettalentsource from "./routes/kts/gettalentsource"
 import getbelumlengkap from "./routes/talentprofile/getbelumlengkap"
 import getlengkap from "./routes/talentprofile/getlengkap"
 import getqualification from "./routes/qualification/getqualification"
+import gettalentpool from "./routes/Pool/gettalentpool"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -116,6 +117,9 @@ app.use("/", getlengkap);
 
 // Qualification
 app.use("/", getqualification);
+
+// Pool
+app.use("/", gettalentpool);
 
 // Days
 app.use("/", skordays);

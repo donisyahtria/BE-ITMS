@@ -18,7 +18,7 @@ router.get("/getbelumlengkap", async (req, res) => {
   left join "Karyawan" k2 on k2.nippos = tp.komite_unit 
   join "Referensi_Jabatan" rj on rj.id = k.kode_jabatan
   join "Referensi_Bagian" rb on rb.id = k.kode_bagian
-  join "Referensi_Rumpun_Jabatan" rrj on rrj.id = k.rumpun_jabatan
+  join "Referensi_Rumpun_Jabatan" rrj on rrj.kode_rumpun_jabatan = k.rumpun_jabatan
   where tp.commitmenletter is false or tp.pakta_integritas is false;
     `
     res.status(200).json({ Message : detail });

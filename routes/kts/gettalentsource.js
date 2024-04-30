@@ -11,7 +11,7 @@ router.get("/gettalentsource", async (req, res) => {
     join "Karyawan" k3 on k3.nippos = k.komite_unit
     join "Referensi_Jabatan" rj on rj.id = k2.kode_jabatan
     join "Referensi_Bagian" rb on rb.id = k2.kode_bagian
-    join "Referensi_Rumpun_Jabatan" rrj on rrj.id = k2.rumpun_jabatan
+    join "Referensi_Rumpun_Jabatan" rrj on rrj.kode_rumpun_jabatan = k2.rumpun_jabatan
     join "Referensi_Kantor" rk on rk.nopend = k2.kode_nopend;
     `
     res.status(200).json({ Message : detail });
