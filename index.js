@@ -27,7 +27,7 @@ import createqualalt from "./routes/qualification/createqual_alt"
 import skordays from "./routes/days/updatenilai"
 import joblevelfilter from "./routes/kts/getjoblevelfilter"
 import hapusevent       from "./routes/event/hapusevent"
-import getallprofile    from "./routes/talentprofile/createtalentprofile"
+import createprofile    from "./routes/talentprofile/createtalentprofile"
 import detailnilai      from "./routes/days/getdetailnilai"
 import getalldays       from "./routes/days/getalldays"
 import getoneevent      from "./routes/event/getoneevent"
@@ -36,39 +36,11 @@ import getsourcefalse        from "./routes/kts/getkandidatfalse"
 import getsourcetrue        from "./routes/kts/getkandidattrue"
 import getkomiteunitlist from "./routes/kts/getkomitelist"
 import getjoblevelactive from "./routes/event/getactivejoblevel"
-import getevent from "./routes/event/getallevent";
-import addevent from "./routes/event/createevent";
-import deadline from "./routes/event/createdeadline";
-import headcom from "./routes/event/getheadcommit";
-import jobfam from "./routes/event/getjobfamily";
-import joblevel from "./routes/event/getjoblevel";
-import commite from "./routes/event/getcommit";
-import question from "./routes/event/getpertanyaan";
-import filterkaryawan from "./routes/kts/getfiltertalentsource";
-import getkomiteunit from "./routes/kts/getatasanbykts";
-import updatebool from "./routes/kts/updateboolkts";
-import talentprofile from "./routes/talentprofile/createtalentprofile";
-import carikomiteotomatis from "./routes/kts/carikomiteunitotomatis";
-import paktacommit from "./routes/talentprofile/updatepaktacommit";
-import tqualification from "./routes/qualification/createqualification";
-import skorkt1 from "./routes/qualification/skorkt1";
-import comparenilai from "./routes/qualification/comparenilaikt1";
-import tdays from "./routes/days/createtalentdays";
-import updatedays from "./routes/days/updatenilai";
-import createqual from "./routes/cluster/createtalentcluster";
-import hitungcluster from "./routes/cluster/hitungcluster";
-import createpool from "./routes/Pool/createtalentpool";
-import createqualalt from "./routes/qualification/createqual_alt";
-import skordays from "./routes/days/updatenilai";
-import joblevelfilter from "./routes/kts/getjoblevelfilter";
-import hapusevent from "./routes/event/hapusevent";
-import getallprofile from "./routes/talentprofile/createtalentprofile";
-import detailnilai from "./routes/days/getdetailnilai";
-import getalldays from "./routes/days/getalldays";
 import loginadmin from "./routes/login/login";
 import getkaryawan from "./routes/login/getkaryawan";
 import geteventbykaryawan from "./routes/event/geteventbykaryawan"
 import geteventbykomite from "./routes/event/geteventbykomite"
+import gettalentsource from "./routes/kts/gettalentsource"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -115,6 +87,7 @@ app.use("/", joblevelfilter)
 app.use("/", getsourcefalse)
 app.use("/", getsourcetrue)
 app.use("/", getkomiteunitlist)
+app.use("/", gettalentsource)
 
 app.use("/", filterkaryawan);
 app.use("/", getkomiteunit);
@@ -134,7 +107,7 @@ app.use("/", createqual);
 app.use("/", hitungcluster);
 app.use("/", createpool);
 app.use("/", createqualalt);
-app.use("/", getallprofile);
+app.use("/", createprofile);
 
 // Days
 app.use("/", skordays);
