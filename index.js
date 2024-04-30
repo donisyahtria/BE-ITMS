@@ -41,6 +41,9 @@ import getkaryawan from "./routes/login/getkaryawan";
 import geteventbykaryawan from "./routes/event/geteventbykaryawan"
 import geteventbykomite from "./routes/event/geteventbykomite"
 import gettalentsource from "./routes/kts/gettalentsource"
+import getbelumlengkap from "./routes/talentprofile/getbelumlengkap"
+import getlengkap from "./routes/talentprofile/getlengkap"
+import getqualification from "./routes/qualification/getqualification"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -108,6 +111,11 @@ app.use("/", hitungcluster);
 app.use("/", createpool);
 app.use("/", createqualalt);
 app.use("/", createprofile);
+app.use("/", getbelumlengkap);
+app.use("/", getlengkap);
+
+// Qualification
+app.use("/", getqualification);
 
 // Days
 app.use("/", skordays);
