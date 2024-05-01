@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.get("/getqualification", async (req, res) => {
   try {
+	const eventid = parseInt(req.query.eventtalentid)
     const detail = await prisma.$queryRaw`
     select distinct 
 	k.nama as "Nama",
@@ -13,12 +14,14 @@ router.get("/getqualification", async (req, res) => {
 	k.job_level as "Job Level", 
 	rrj.nama_rumpun_jabatan as "Rumpun Jabatan", 
 	rk.nama_kantor as "Nama Kantor",
+	k2.nama as "Komite Unit",
 	psy.skor as "Competency/Psychotest",
 	pms.skor as "PMS",
 	akhlak.skor as "AKHLAK",
 	la.skor as "Learning Agility"
 from "Talent_Qualification" tq
-join "Karyawan" k on k.nippos = tq.nippos 
+join "Karyawan" k on k.nippos = tq.nippos
+left join "Karyawan" k2 on tq.komite_unit = k2.nippos
 join "Referensi_Jabatan" rj on rj.id = k.kode_jabatan
 join "Referensi_Bagian" rb on rb.id = k.kode_bagian
 join "Referensi_Rumpun_Jabatan" rrj on rrj.kode_rumpun_jabatan = k.rumpun_jabatan
@@ -34,9 +37,10 @@ left join(	select tq.nippos, tq.skor
 			where tq.id_kriteria_penilaian = 6) as akhlak on tq.nippos = akhlak.nippos
 left join(	select tq.nippos, tq.skor
 			from "Talent_Qualification" tq
-			where tq.id_kriteria_penilaian = 7) as la on tq.nippos = la.nippos;
+			where tq.id_kriteria_penilaian = 7) as la on tq.nippos = la.nippos
+Where       tq.eventtalentid = ${eventid};
     `
-    res.status(200).json({ Message : detail });
+    res.status(200).json(detail);
   } catch (err) {
     console.log({ err });
     res.status(500).json({ message: "Internal server error", err });

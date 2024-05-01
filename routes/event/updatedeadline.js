@@ -6,7 +6,7 @@ const router = express.Router();
 router.post("/updatedeadline", async (req, res) => {
   try {
     const event_id = req.body.eventid;
-    const status   = req.body.status;
+    const status   = parseInt(req.body.status);
     const date     = req.body.date;
 
     let deadlineFieldToUpdate;
@@ -55,7 +55,7 @@ const updatestatusevent = await prisma.event_Talent.updateMany({
 
     
 
-    res.status(200).json({message: "done"});
+    res.status(200).json(updatestatusevent);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal Server Error" });

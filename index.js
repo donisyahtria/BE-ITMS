@@ -57,6 +57,9 @@ app.use(cors());
 app.use("/", loginadmin);
 app.use("/", getkaryawan);
 
+//general
+app.use("/", updatedeadline)
+
 // Event
 app.use("/",getevent)
 app.use("/", joblevel)

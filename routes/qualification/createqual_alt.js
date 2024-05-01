@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.post("/createqualificationquery", async (req, res) => {
     try {
+        const event_id = parseInt(req.body.eventtalentid)
         const lolosprofile = await prisma.$queryRaw`
             SELECT 
                 tp.nippos,
@@ -30,6 +31,7 @@ router.post("/createqualificationquery", async (req, res) => {
                 (et.tipe_komite_talent = 3 and c.id_kriteria_penilaian in (4,5,6,7, 8))
                 )
             where tp.pakta_integritas =true and tp.commitmenletter =true
+            and tp.eventtalentid =${event_id} 
             ORDER BY 
                 tp.nippos , c.id_kriteria_penilaian ;`
         

@@ -4,6 +4,7 @@ import express from "express";
 const router = express.Router();
 
 router.get("/getbelumlengkap", async (req, res) => {
+  const eventid = parseInt(req.query.eventtalentid)
   try {
     const detail = await prisma.$queryRaw`select k.nama as "Nama", 
     k.nippos as "Nippos", 
@@ -19,9 +20,10 @@ router.get("/getbelumlengkap", async (req, res) => {
   join "Referensi_Jabatan" rj on rj.id = k.kode_jabatan
   join "Referensi_Bagian" rb on rb.id = k.kode_bagian
   join "Referensi_Rumpun_Jabatan" rrj on rrj.kode_rumpun_jabatan = k.rumpun_jabatan
-  where tp.commitmenletter is false or tp.pakta_integritas is false;
+  where tp.commitmenletter is false or tp.pakta_integritas is false
+  AND tp.eventtalentid = ${eventid};
     `
-    res.status(200).json({ Message : detail });
+    res.status(200).json(detail);
   } catch (err) {
     console.log({ err });
     res.status(500).json({ message: "Internal server error", err });

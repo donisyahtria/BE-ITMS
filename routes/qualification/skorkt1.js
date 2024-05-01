@@ -3,7 +3,7 @@ import express from "express";
 
 const router = express.Router();
 
-router.post("/updateskorkt1", async (req, res) => {
+router.post("/updateskor", async (req, res) => {
     try {
 
         const ambilNippos = await prisma.talent_Qualification.findMany({
@@ -90,6 +90,30 @@ router.post("/updateskorkt1", async (req, res) => {
              WHERE sb.nippos is not null
              GROUP BY sb.nippos, sb.avg_skor`
             ;
+
+            const masukNilaiPotensi = await Promise.all(
+                ambilNippos.map(async (filter) => {
+                    const nilaipotensi = await prisma.skor_Potensi.findFirst({
+                        where: {
+                            nippos: filter.nippos,
+                        }
+                    });
+                    const nilai = await prisma.talent_Qualification.updateMany({
+                        where: {
+                            AND: [
+                                { nippos: filter.nippos },
+                                { id_kriteria_penilaian: 4 }
+                            ]
+                        },
+                        data: {
+                            skor: nilaipotensi.skor,
+                            berlaku_mulai: nilaipotensi.Berlaku_Mulai,
+                            berlaku_hingga: nilaipotensi.Berlaku_Hingga
+                        }
+                    })
+                    return nilai
+                })
+            );
 
         const masukNilaibumn = await Promise.all(
             nilaibumn.map(async (filter) => (
@@ -211,7 +235,7 @@ const masukNilaitechnical = await Promise.all(
     )
 )
 
-        res.status(200).json({ masukNilaiPerformance, masukNilaiLA, masukNilaiakhlak, masukNilaibumn });
+        res.status(200).json({ message: "done" });
     } catch (err) {
         console.log({ err });
         res.status(500).json({ message: "Internal server error", err });
