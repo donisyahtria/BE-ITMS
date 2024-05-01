@@ -5,23 +5,24 @@ const router = express.Router();
 
 router.post("/createtdays", async (req, res) => {
   try {
+    const eventid = parseInt(req.body.eventtalentid)
     const persons = await prisma.$queryRaw`
     SELECT tq.nippos, tq.eventtalentid ,ep.id_pertanyaan, tq.komite_unit
     FROM "Talent_Qualification" tq
     RIGHT JOIN "Event_Pertanyaan" ep
     ON tq.eventtalentid = ep.eventid
-    WHERE tq.status = true
+    WHERE tq.eventtalentid = ${eventid} 
+    AND tq.status = true
     AND tq.id_kriteria_penilaian != 8
     GROUP BY tq.nippos, tq.eventtalentid ,ep.id_pertanyaan, tq.komite_unit
     HAVING COUNT(*) = 4;`;
     console.log(persons);
 
     for (const row of persons) {
-      const eventId = row.eventtalentid;
       // Check if the event_id exists in the insertedEventIds table
       const existingRow = await prisma.talent_Days.findFirst({
         where: {
-          eventtalentid: eventId,
+          eventtalentid: eventid,
           nippos: row.nippos,
           id_pertanyaan: row.id_pertanyaan
         }

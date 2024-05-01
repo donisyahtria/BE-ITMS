@@ -14,6 +14,7 @@ router.get("/getoneevent", async (req, res) => {
             id: true,
             nama_event:true,
             deskripsi: true,
+            tipe_komite_talent:true,
             tipekomite:{
                 select:{
                     tipe_komite_talent: true

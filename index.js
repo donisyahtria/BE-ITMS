@@ -43,8 +43,10 @@ import geteventbykomite from "./routes/event/geteventbykomite"
 import gettalentsource from "./routes/kts/gettalentsource"
 import getbelumlengkap from "./routes/talentprofile/getbelumlengkap"
 import getlengkap from "./routes/talentprofile/getlengkap"
+import getquallolos   from "./routes/qualification/getqualificationlolos"
 import getqualification from "./routes/qualification/getqualification"
 import gettalentpool from "./routes/Pool/gettalentpool"
+import getkkm         from "./routes/qualification/getnilaiminimal"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -120,6 +122,8 @@ app.use("/", getlengkap);
 
 // Qualification
 app.use("/", getqualification);
+app.use("/", getquallolos)
+app.use("/", getkkm)
 
 // Pool
 app.use("/", gettalentpool);
