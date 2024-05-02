@@ -47,6 +47,8 @@ import getquallolos   from "./routes/qualification/getqualificationlolos"
 import getqualification from "./routes/qualification/getqualification"
 import gettalentpool from "./routes/Pool/gettalentpool"
 import getkkm         from "./routes/qualification/getnilaiminimal"
+import gettabledayskaryawan from "./routes/days/getdaystable"
+import gettabledaysbpj from "./routes/days/getdaysbpj"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -127,11 +129,13 @@ app.use("/", getkkm)
 
 // Pool
 app.use("/", gettalentpool);
+app.use("/", gettabledayskaryawan);
 
 // Days
 app.use("/", skordays);
 app.use("/", detailnilai);
 app.use("/", getalldays);
+app.use("/", gettabledaysbpj)
 
 app.listen(port, () => {
   console.log(`server running on port ${port}`);

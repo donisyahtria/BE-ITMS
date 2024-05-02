@@ -5,11 +5,13 @@ const router = express.Router();
 
 router.post("/createcluster", async (req, res) => {
   try {
+    const eventid = parseInt(req.body.eventtalentid)
     const persons = await prisma.$queryRaw`
     SELECT td.nippos, td.eventtalentid, et.nippos_ketua_komite
     FROM "Talent_Days" td
     LEFT JOIN "Event_Talent" et
     ON td.eventtalentid = et.id
+    where td.event_id = ${eventid}
     GROUP BY td.nippos, td.eventtalentid ,et.nippos_ketua_komite;`;
 
 for (const row of persons) {

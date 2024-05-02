@@ -38,7 +38,8 @@ router.post("/createtdays", async (req, res) => {
 ,
             id_pertanyaan: row.id_pertanyaan,
             createdAt: new Date(),
-            eventtalentid: row.eventtalentid
+            eventtalentid: row.eventtalentid,
+            status: false
           },
         });
       }}
