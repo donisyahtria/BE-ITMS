@@ -436,6 +436,7 @@ model Talent_Days {
   id_pertanyaan    Int
   komite_unit      String?              @db.Char(9)
   skor             Float?
+  status           Boolean
   createdAt        DateTime             @db.Timestamptz(6)
   idevent          Event_Talent         @relation(fields: [eventtalentid], references: [id])
   idtanya          Referensi_Pertanyaan @relation(fields: [id_pertanyaan], references: [id])
