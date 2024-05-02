@@ -137,6 +137,10 @@ app.use("/", detailnilai);
 app.use("/", getalldays);
 app.use("/", gettabledaysbpj)
 
+// app.get("/*", (req,res)=>{
+//     res.status(200).json({message: 'Welcome To ITMS Back-End'})
+// })
+
 app.listen(port, () => {
   console.log(`server running on port ${port}`);
 });
