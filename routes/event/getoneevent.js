@@ -3,13 +3,18 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/getallevent", async (req, res) => {
+router.get("/getoneevent", async (req, res) => {
   try {
-    const event = await prisma.event_Talent.findMany({
+    const eventid = parseInt(req.query.id)
+    const event = await prisma.event_Talent.findFirst({
+        where:{
+            id: eventid
+        },
         select:{
             id: true,
             nama_event:true,
             deskripsi: true,
+            tipe_komite_talent:true,
             tipekomite:{
                 select:{
                     tipe_komite_talent: true

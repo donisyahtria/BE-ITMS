@@ -27,17 +27,40 @@ import createqualalt from "./routes/qualification/createqual_alt"
 import skordays from "./routes/days/updatenilai"
 import joblevelfilter from "./routes/kts/getjoblevelfilter"
 import hapusevent       from "./routes/event/hapusevent"
-import getallprofile    from "./routes/talentprofile/createtalentprofile"
+import createprofile    from "./routes/talentprofile/createtalentprofile"
 import detailnilai      from "./routes/days/getdetailnilai"
 import getalldays       from "./routes/days/getalldays"
+import getoneevent      from "./routes/event/getoneevent"
+import updatedeadline   from "./routes/event/updatedeadline"
+import getsourcefalse        from "./routes/kts/getkandidatfalse"
+import getsourcetrue        from "./routes/kts/getkandidattrue"
+import getkomiteunitlist from "./routes/kts/getkomitelist"
+import getjoblevelactive from "./routes/event/getactivejoblevel"
+import loginadmin from "./routes/login/login";
+import getkaryawan from "./routes/login/getkaryawan";
+import geteventbykaryawan from "./routes/event/geteventbykaryawan"
+import geteventbykomite from "./routes/event/geteventbykomite"
+import gettalentsource from "./routes/kts/gettalentsource"
+import getbelumlengkap from "./routes/talentprofile/getbelumlengkap"
+import getlengkap from "./routes/talentprofile/getlengkap"
+import getquallolos   from "./routes/qualification/getqualificationlolos"
+import getqualification from "./routes/qualification/getqualification"
+import gettalentpool from "./routes/Pool/gettalentpool"
+import getkkm         from "./routes/qualification/getnilaiminimal"
 
 const port = process.env.PORT || 4000;
 const app = express();
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(cors()
-);
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+
+// Login
+app.use("/", loginadmin);
+app.use("/", getkaryawan);
+
+//general
+app.use("/", updatedeadline)
 
 // Event
 app.use("/",getevent)
@@ -49,6 +72,19 @@ app.use("/", commite)
 app.use("/", question)
 app.use("/", deadline)
 app.use("/", hapusevent)
+app.use("/", getoneevent)
+app.use("/", getjoblevelactive)
+app.use("/", getevent);
+app.use("/",geteventbykaryawan)
+app.use("/",geteventbykomite)
+app.use("/", joblevel);
+app.use("/", jobfam);
+app.use("/", addevent);
+app.use("/", headcom);
+app.use("/", commite);
+app.use("/", question);
+app.use("/", deadline);
+app.use("/", hapusevent);
 
 // KTS
 app.use("/", filterkaryawan)
@@ -57,29 +93,50 @@ app.use("/", updatebool)
 app.use("/", talentprofile)
 app.use("/", carikomiteotomatis)
 app.use("/", joblevelfilter)
+app.use("/", getsourcefalse)
+app.use("/", getsourcetrue)
+app.use("/", getkomiteunitlist)
+app.use("/", gettalentsource)
+
+app.use("/", filterkaryawan);
+app.use("/", getkomiteunit);
+app.use("/", updatebool);
+app.use("/", talentprofile);
+app.use("/", carikomiteotomatis);
+app.use("/", joblevelfilter);
 
 // Profile
-app.use("/", paktacommit)
-app.use("/", tqualification)
-app.use("/", skorkt1)
-app.use("/", comparenilai)
-app.use("/", tdays)
-app.use("/", updatedays)
-app.use("/", createqual)
-app.use("/", hitungcluster)
-app.use("/", createpool)
-app.use("/", createqualalt)
-app.use("/", getallprofile)
+app.use("/", paktacommit);
+app.use("/", tqualification);
+app.use("/", skorkt1);
+app.use("/", comparenilai);
+app.use("/", tdays);
+app.use("/", updatedays);
+app.use("/", createqual);
+app.use("/", hitungcluster);
+app.use("/", createpool);
+app.use("/", createqualalt);
+app.use("/", createprofile);
+app.use("/", getbelumlengkap);
+app.use("/", getlengkap);
+
+// Qualification
+app.use("/", getqualification);
+app.use("/", getquallolos)
+app.use("/", getkkm)
+
+// Pool
+app.use("/", gettalentpool);
 
 // Days
-app.use("/", skordays)
-app.use("/", detailnilai)
-app.use("/", getalldays)
+app.use("/", skordays);
+app.use("/", detailnilai);
+app.use("/", getalldays);
 
 // app.get("/*", (req,res)=>{
 //     res.status(200).json({message: 'Welcome To ITMS Back-End'})
 // })
 
 app.listen(port, () => {
-    console.log(`server running on port ${port}`);
+  console.log(`server running on port ${port}`);
 });

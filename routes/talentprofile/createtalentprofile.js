@@ -5,9 +5,11 @@ const router = express.Router();
 
 router.post("/createtalentprofile", async (req, res) => {
   try {
+    const eventid = parseInt(req.body.eventtalentid)
     const activeStatuses = await prisma.kandidat_Talent_dan_Source.findMany({
       where: {
         status_talensource: true,
+        eventtalentid: eventid
       },
     });
 

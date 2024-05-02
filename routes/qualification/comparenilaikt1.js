@@ -54,6 +54,24 @@ router.post("/comparenilai", async (req, res) => {
       }
     })
 
+    const kkmtech2 = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm learningagility
+      where: {
+        AND: [
+          { id_komite_talent: 2 },
+          { id_kriteria_penilaian: 3 }
+        ]
+      }
+    })
+
+    const kkmpotensi3 = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm learningagility
+      where: {
+        AND: [
+          { id_komite_talent: 3 },
+          { id_kriteria_penilaian: 4 }
+        ]
+      }
+    })
+
     async function lulusbumn(nilai) { //ambil karyawan yang lolos bumn
       const users = await prisma.talent_Qualification.findMany({
         where: {
@@ -117,6 +135,32 @@ router.post("/comparenilai", async (req, res) => {
       });
       // console.log(users);
       return users
+    }
+    
+    async function lulustechnical(nilai) { //ambil karyawan yang lolos learning agility
+      const users = await prisma.talent_Qualification.findMany({
+        where: {
+          id_kriteria_penilaian: 3,
+          skor: {
+            gte: nilai // Get users with age greater than the specified value
+          }
+        }
+      });
+      // console.log(users);
+      return users
+    }
+    
+    async function luluspotensi(nilai) { //ambil karyawan yang lolos learning agility
+      const users = await prisma.talent_Qualification.findMany({
+        where: {
+          id_kriteria_penilaian: 4,
+          skor: {
+            gte: nilai // Get users with age greater than the specified value
+          }
+        }
+      });
+      // console.log(users);
+      return users
     }    
     // list nama yang lulus masing masing skor
     const lulus_bumn = await lulusbumn(kkmbumn1.skor_minimal);
@@ -124,6 +168,8 @@ router.post("/comparenilai", async (req, res) => {
     const lulus_akhlak = await lulusakhlak(kkmakhlak1.skor_minimal);
     const lulus_la = await lulusla(kkmla1.skor_minimal);
     const lulus_lead = await luluslead(kkmlead2.skor_minimal);
+    const lulus_tech = await lulustechnical(kkmtech2.skor_minimal);
+    const lulus_potensi = await luluspotensi(kkmpotensi3.skor_minimal);
 
     lulus_bumn.map(async (lulus) => (
       await prisma.talent_Qualification.updateMany({
@@ -194,7 +240,35 @@ router.post("/comparenilai", async (req, res) => {
         }
       })
     ))
-    
+
+    lulus_tech.map(async (lulus) => (
+      await prisma.talent_Qualification.updateMany({
+        where: {
+          AND: [
+            { nippos: lulus.nippos },
+            { id_kriteria_penilaian: 3 }
+          ]
+        },
+        data: {
+          status: true
+        }
+      })
+    ))
+
+    lulus_potensi.map(async (lulus) => (
+      await prisma.talent_Qualification.updateMany({
+        where: {
+          AND: [
+            { nippos: lulus.nippos },
+            { id_kriteria_penilaian: 4 }
+          ]
+        },
+        data: {
+          status: true
+        }
+      })
+    ))
+
     res.status(200).json({ message: "done" });
   } catch (error) {
     console.error("Error:", error);
