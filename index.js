@@ -49,6 +49,7 @@ import gettalentpool from "./routes/Pool/gettalentpool"
 import getkkm         from "./routes/qualification/getnilaiminimal"
 import gettabledayskaryawan from "./routes/days/getdaystable"
 import gettabledaysbpj from "./routes/days/getdaysbpj"
+import clustertable from "./routes/cluster/clustertable"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -126,6 +127,9 @@ app.use("/", getlengkap);
 app.use("/", getqualification);
 app.use("/", getquallolos)
 app.use("/", getkkm)
+
+//Cluster
+app.use("/", clustertable)
 
 // Pool
 app.use("/", gettalentpool);

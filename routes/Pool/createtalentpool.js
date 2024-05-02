@@ -5,6 +5,7 @@ const router = express.Router();
 
 router.post("/createpool", async (req, res) => {
   try {
+    const eventid = parseInt(req.query.eventtalentid)
     const currentDate = new Date();
 
     // Add 2 years to the current date
@@ -18,6 +19,7 @@ router.post("/createpool", async (req, res) => {
     LEFT JOIN "Karyawan" k
     ON tc.nippos = k.nippos
     where tc."Id_Matriks_Kategori_Akhir" <= 4
+    and tc.eventtalentid = ${eventid}
     GROUP BY tc.nippos, k."job_level", k."rumpun_jabatan", tc.eventtalentid, tc."Id_Matriks_Kategori_Akhir";`;
     console.log(persons);
 

@@ -7,12 +7,12 @@ router.post("/createcluster", async (req, res) => {
   try {
     const eventid = parseInt(req.body.eventtalentid)
     const persons = await prisma.$queryRaw`
-    SELECT td.nippos, td.eventtalentid, et.nippos_ketua_komite
+    SELECT td.nippos, td.eventtalentid, et.nippos_ketua_komite, td.komite_unit
     FROM "Talent_Days" td
     LEFT JOIN "Event_Talent" et
     ON td.eventtalentid = et.id
-    where td.event_id = ${eventid}
-    GROUP BY td.nippos, td.eventtalentid ,et.nippos_ketua_komite;`;
+    where td.eventtalentid = ${eventid}
+    GROUP BY td.nippos, td.eventtalentid ,et.nippos_ketua_komite, td.komite_unit;`;
 
 for (const row of persons) {
   const eventId = row.eventtalentid;
@@ -31,7 +31,8 @@ for (const row of persons) {
             nippos: row.nippos,
             eventtalentid: row.eventtalentid,
             createdAt: new Date(),
-            ketua_komite_talent: row.nippos_ketua_komite 
+            ketua_komite_talent: row.nippos_ketua_komite,
+            komite_unit: row.komite_unit
           }
         })
       }}

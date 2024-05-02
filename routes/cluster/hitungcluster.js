@@ -5,9 +5,11 @@ const router = express.Router();
 
 router.post("/updateskorcluster", async (req, res) => {
   try {
+    const eventid = parseInt(req.body.eventtalentid)
     const updatenilaidays = await prisma.$queryRaw`
     select nippos, avg(skor) as skor
     FROM "Talent_Days" td
+    where td.eventtalentid = ${eventid}
     group by nippos`
 
     updatenilaidays.map(async (days) => {
@@ -59,6 +61,7 @@ FROM (
             tq.status = true
             and 
             tq.id_kriteria_penilaian != 5
+            AND tq.eventtalentid = ${eventid}
     ) AS subquery
     WHERE 
         nippos_count >= 3
@@ -66,7 +69,6 @@ FROM (
 GROUP BY 
     nippos;
 `
-console.log(nilai_capacity);
     const masukcapacity = await Promise.all(
       nilai_capacity.map(async (filter) => {
         const mapnilai = await prisma.talent_Cluster.updateMany({
@@ -87,6 +89,7 @@ from "Talent_Cluster" tq
 left join "Talent_Qualification" et
 on tq.nippos = et.nippos
 where et.id_kriteria_penilaian = 5
+and tq.eventtalentid = ${eventid}
 group by tq.nippos, et.skor;`
 
     const masukNilaiPerformance = await Promise.all(
@@ -133,7 +136,8 @@ UPDATE "Talent_Cluster"  AS tc
 SET "Id_Matriks_Kategori_Awal"  = mk."Id", "Id_Matriks_Kategori_Akhir"  = mk."Id" 
 FROM matriks_kategori  AS mk
 WHERE tc."Capacity_Axis"  = mk."Capacity_Axis" 
-AND tc."Performance_Axis"  = mk."Performance_Axis";`
+AND tc."Performance_Axis"  = mk."Performance_Axis"
+and tc.eventtalentid = ${eventid};`
 
     res.status(200).json({ message: "done" });
   } catch (err) {
