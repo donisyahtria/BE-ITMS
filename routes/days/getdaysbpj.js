@@ -13,7 +13,7 @@ et.nippos_ketua_komite as "nippos",
 concat(rj.nama_jabatan,' ',rb.nama_bagian) as "Posisi",
 1 as sort_order
 from "Event_Talent" et
-left join "Karyawan" k ON et.nippos_ketua_komite = k.nippos 
+join  "Karyawan" k ON et.nippos_ketua_komite = k.nippos 
 left join "Referensi_Jabatan" rj on k.kode_jabatan = rj.id
 left join "Referensi_Bagian" rb on k.kode_bagian = rb.id
 where et.id = ${eventid}
@@ -24,18 +24,18 @@ kte.nippos,
 concat(rj.nama_jabatan,' ',rb.nama_bagian) as "Posisi",
 2 as sort_order
 from "Komite_Talent_Event" kte
-left join "Karyawan" k ON kte.nippos = k.nippos 
+join "Karyawan" k ON kte.nippos = k.nippos 
 left join "Referensi_Jabatan" rj on k.kode_jabatan = rj.id
 left join "Referensi_Bagian" rb on k.kode_bagian = rb.id
 where eventid = ${eventid}
 union 
 select distinct 
 k.nama,
-td.nippos,
+td.komite_unit as "nippos",
 concat(rj.nama_jabatan,' ',rb.nama_bagian) as "Posisi",
 3 as sort_order
 from "Talent_Days" td
-left join "Karyawan" k ON td.komite_unit = k.nippos 
+join "Karyawan" k ON td.komite_unit = k.nippos 
 left join "Referensi_Jabatan" rj on k.kode_jabatan = rj.id
 left join "Referensi_Bagian" rb on k.kode_bagian = rb.id
 where td.eventtalentid =${eventid}

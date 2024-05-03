@@ -3,7 +3,7 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/getqualification", async (req, res) => {
+router.get("/getqualificationtidak", async (req, res) => {
   try {
 	const eventid = parseInt(req.query.eventtalentid)
     const detail = await prisma.$queryRaw`
@@ -23,7 +23,7 @@ router.get("/getqualification", async (req, res) => {
 	akhlak.status as "akhlakstatus",
 	la.skor as "Learning Agility",
 	la.status as "lastatus"
-from "Talent_Qualification" tq
+	from "Talent_Qualification" tq
 join "Karyawan" k on k.nippos = tq.nippos
 left join "Karyawan" k2 on tq.komite_unit = k2.nippos
 join "Referensi_Jabatan" rj on rj.id = k.kode_jabatan
@@ -43,7 +43,10 @@ left join(	select tq.nippos, tq.skor, tq.status
 			from "Talent_Qualification" tq
 			where tq.id_kriteria_penilaian = 7) as la on tq.nippos = la.nippos
 Where       tq.eventtalentid = ${eventid}
-group by k.nama, k.nippos,rj.nama_jabatan,rb.nama_bagian,k.job_level,rrj.nama_rumpun_jabatan,rk.nama_kantor,k2.nama,psy.skor,psy.status,pms.skor,pms.status,akhlak.skor,akhlak.status,la.skor,la.status;
+and         tq.status = true
+and         tq.id_kriteria_penilaian != 8
+group by k.nama, k.nippos,rj.nama_jabatan,rb.nama_bagian,k.job_level,rrj.nama_rumpun_jabatan,rk.nama_kantor,k2.nama,psy.skor,psy.status,pms.skor,pms.status,akhlak.skor,akhlak.status,la.skor,la.status
+having count(*) < 4
     `
     res.status(200).json(detail);
   } catch (err) {

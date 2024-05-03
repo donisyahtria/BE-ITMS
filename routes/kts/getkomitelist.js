@@ -19,6 +19,7 @@ router.get("/getkomiteunitlist", async (req, res) => {
             FROM "Kandidat_Talent_dan_Source" k
             WHERE k.komite_unit = k2.nippos
             AND k.status_talensource = true
+            and k.eventtalentid=${eventid}
         ) THEN 'Sudah Memilih'
         ELSE 'Belum Memilih'
     END AS "Status Memilih"
@@ -34,7 +35,7 @@ JOIN
     "Referensi_Rumpun_Jabatan" rrj ON rrj.kode_rumpun_jabatan = k2.rumpun_jabatan
 JOIN 
     "Referensi_Kantor" rk ON rk.nopend = k2.kode_nopend
-AND k.eventtalentid = ${eventid};
+where k.eventtalentid = ${eventid};
     `
     //const tabelsourceevent = detail.filter(detail => detail.eventtalentid === eventid);
 
