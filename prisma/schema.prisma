@@ -50,6 +50,8 @@ model Karyawan {
   nipposbumn              skor_BUMN[]
   nipposLA                skor_LA[]
   nippospotensi           skor_Potensi[]
+  nipposbpj               daftar_bpj_event[]
+  notifikasi              notifikasi_karyawan[]
 }
 
 model Referensi_Kantor {
@@ -231,6 +233,8 @@ model Event_Talent {
   profile             Talent_Profile[]
   qualification       Talent_Qualification[]
   pool                talent_pool[]
+  bpj                 daftar_bpj_event[]
+  notif               notifikasi_karyawan[]
 }
 
 model Komite_Talent_Event {
@@ -497,4 +501,34 @@ model talent_pool {
   relasievent         Event_Talent             @relation(fields: [eventtalentid], references: [id])
   refmatriks          matriks_kategori         @relation(fields: [id_matriks_kategori], references: [Id])
   refrumpun           Referensi_Rumpun_Jabatan @relation(fields: [rumpunjabatan], references: [kode_rumpun_jabatan])
+}
+
+model daftar_bpj_event {
+  id                  Int                      @id @default(autoincrement())
+  eventtalentid       Int
+  nippos              String                   @db.Char(9)
+
+  relasievent         Event_Talent             @relation(fields: [eventtalentid], references: [id])
+  relasinippos        Karyawan                 @relation(fields: [nippos], references: [nippos])
+}
+
+model notifikasi_karyawan{
+  id                      Int                      @id @default(autoincrement())
+  eventtalentid           Int
+  nippos                  String                   @db.Char(9)
+  id_referensi_notifikasi Int
+  dibuat_pada             DateTime                 @db.Timestamptz(6)
+  read_status             Boolean
+
+  relasinippos            Karyawan                @relation(fields: [nippos], references:[nippos])
+  relasievent             Event_Talent            @relation(fields: [eventtalentid], references:[id])
+  relasinotif             referensi_notifikasi    @relation(fields: [id_referensi_notifikasi], references:[id])
+}
+
+model referensi_notifikasi{
+  id                     Int                        @id @default(autoincrement())
+  keterangan             String                     @db.VarChar(255)
+  pesan                  String                     @db.VarChar(1000)
+
+  relasinotif             notifikasi_karyawan[]
 }

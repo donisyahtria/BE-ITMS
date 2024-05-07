@@ -3,9 +3,9 @@ import express from "express";
 
 const router = express.Router();
 
-router.post("/updatedeadline", async (req, res) => {
+router.post("/statusselesai", async (req, res) => {
   try {
-    const event_id = req.body.eventid;
+    const event_id = parseInt(req.body.eventid);
 
 
 const updatestatusevent = await prisma.event_Talent.updateMany({

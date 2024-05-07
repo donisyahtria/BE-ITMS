@@ -50,6 +50,13 @@ import getkkm         from "./routes/qualification/getnilaiminimal"
 import gettabledayskaryawan from "./routes/days/getdaystable"
 import gettabledaysbpj from "./routes/days/getdaysbpj"
 import clustertable from "./routes/cluster/clustertable"
+import posttablebpj from "./routes/days/posttablebpj"
+import hapusbpj from "./routes/days/hapusbpj"
+import updateevent from "./routes/event/updateevent"
+import selesaistatus from "./routes/Pool/selesaistatusevent"
+import notifkomiteunit from "./routes/kts/komiteunitnotif"
+import getkomiteunitevent from "./routes/event/getkomiteunitevent"
+import notifkaryawan from "./routes/talentprofile/notifikasikaryawan"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -88,6 +95,8 @@ app.use("/", commite);
 app.use("/", question);
 app.use("/", deadline);
 app.use("/", hapusevent);
+app.use("/", updateevent)
+app.use("/", getkomiteunitevent)
 
 // KTS
 app.use("/", filterkaryawan)
@@ -100,7 +109,7 @@ app.use("/", getsourcefalse)
 app.use("/", getsourcetrue)
 app.use("/", getkomiteunitlist)
 app.use("/", gettalentsource)
-
+app.use("/", notifkomiteunit)
 app.use("/", filterkaryawan);
 app.use("/", getkomiteunit);
 app.use("/", updatebool);
@@ -122,6 +131,7 @@ app.use("/", createqualalt);
 app.use("/", createprofile);
 app.use("/", getbelumlengkap);
 app.use("/", getlengkap);
+app.use("/", notifkaryawan)
 
 // Qualification
 app.use("/", getqualification);
@@ -134,12 +144,15 @@ app.use("/", clustertable)
 // Pool
 app.use("/", gettalentpool);
 app.use("/", gettabledayskaryawan);
+app.use("/",selesaistatus)
 
 // Days
 app.use("/", skordays);
 app.use("/", detailnilai);
 app.use("/", getalldays);
 app.use("/", gettabledaysbpj)
+app.use("/", posttablebpj)
+app.use("/", hapusbpj)
 
 // app.get("/*", (req,res)=>{
 //     res.status(200).json({message: 'Welcome To ITMS Back-End'})

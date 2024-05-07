@@ -5,6 +5,36 @@ const router = express.Router();
 
 router.post("/comparenilai", async (req, res) => {
   try {
+    const eventid = parseInt(req.query.eventtalentid)
+
+    const currentTrueUsers = await prisma.talent_Qualification.findMany({
+      where: {
+        eventtalentid: eventid,
+        status: true
+      }
+    });
+
+    // Your existing code for fetching KKM values goes here...
+
+    // Define a function to update user status back to false
+    async function updateUserStatusBackToFalse(users) {
+      for (const user of users) {
+        await prisma.talent_Qualification.updateMany({
+          where: {
+            eventtalentid: eventid,
+            nippos: user.nippos
+          },
+          data: {
+            status: false
+          }
+        });
+      }
+    }
+
+    // Compare currentTrueUsers with new KKM values to determine if they still meet the criteria
+    // If not, update their status back to false
+    await updateUserStatusBackToFalse(currentTrueUsers);
+
     const ambilNippos = await prisma.talent_Qualification.findMany({
       distinct: ['nippos']
     })
@@ -54,7 +84,7 @@ router.post("/comparenilai", async (req, res) => {
       }
     })
 
-    const kkmtech2 = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm learningagility
+    const kkmtech2 = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm technical
       where: {
         AND: [
           { id_komite_talent: 2 },
@@ -63,7 +93,7 @@ router.post("/comparenilai", async (req, res) => {
       }
     })
 
-    const kkmpotensi3 = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm learningagility
+    const kkmpotensi3 = await prisma.parameter_Talent_Qualification.findFirst({ //ambil kkm potensi
       where: {
         AND: [
           { id_komite_talent: 3 },
@@ -75,6 +105,7 @@ router.post("/comparenilai", async (req, res) => {
     async function lulusbumn(nilai) { //ambil karyawan yang lolos bumn
       const users = await prisma.talent_Qualification.findMany({
         where: {
+          eventtalentid: eventid,
           id_kriteria_penilaian: 1,
           skor: {
             gte: nilai // Get users with age greater than the specified value
@@ -88,6 +119,7 @@ router.post("/comparenilai", async (req, res) => {
     async function lulusperformance(nilai) { //ambil karyawan yang lolos performnace
       const users = await prisma.talent_Qualification.findMany({
         where: {
+          eventtalentid: eventid,
           id_kriteria_penilaian: 5,
           skor: {
             gte: nilai // Get users with age greater than the specified value
@@ -101,6 +133,7 @@ router.post("/comparenilai", async (req, res) => {
     async function lulusakhlak(nilai) { //ambil karyawan yang lolos akhlak
       const users = await prisma.talent_Qualification.findMany({
         where: {
+          eventtalentid: eventid,
           id_kriteria_penilaian: 6,
           skor: {
             gte: nilai // Get users with age greater than the specified value
@@ -114,6 +147,7 @@ router.post("/comparenilai", async (req, res) => {
     async function lulusla(nilai) { //ambil karyawan yang lolos learning agility
       const users = await prisma.talent_Qualification.findMany({
         where: {
+          eventtalentid: eventid,
           id_kriteria_penilaian: 7,
           skor: {
             gte: nilai // Get users with age greater than the specified value
@@ -127,6 +161,7 @@ router.post("/comparenilai", async (req, res) => {
     async function luluslead(nilai) { //ambil karyawan yang lolos learning agility
       const users = await prisma.talent_Qualification.findMany({
         where: {
+          eventtalentid: eventid,
           id_kriteria_penilaian: 2,
           skor: {
             gte: nilai // Get users with age greater than the specified value
@@ -140,6 +175,7 @@ router.post("/comparenilai", async (req, res) => {
     async function lulustechnical(nilai) { //ambil karyawan yang lolos learning agility
       const users = await prisma.talent_Qualification.findMany({
         where: {
+          eventtalentid: eventid,
           id_kriteria_penilaian: 3,
           skor: {
             gte: nilai // Get users with age greater than the specified value
@@ -153,6 +189,7 @@ router.post("/comparenilai", async (req, res) => {
     async function luluspotensi(nilai) { //ambil karyawan yang lolos learning agility
       const users = await prisma.talent_Qualification.findMany({
         where: {
+          eventtalentid: eventid,
           id_kriteria_penilaian: 4,
           skor: {
             gte: nilai // Get users with age greater than the specified value
@@ -175,6 +212,7 @@ router.post("/comparenilai", async (req, res) => {
       await prisma.talent_Qualification.updateMany({
         where: {
           AND: [
+            {eventtalentid: eventid},
             { nippos: lulus.nippos },
             { id_kriteria_penilaian: 1 }
           ]
@@ -189,6 +227,7 @@ router.post("/comparenilai", async (req, res) => {
       await prisma.talent_Qualification.updateMany({
         where: {
           AND: [
+            {eventtalentid: eventid},
             { nippos: lulus.nippos },
             { id_kriteria_penilaian: 5 }
           ]
@@ -203,6 +242,7 @@ router.post("/comparenilai", async (req, res) => {
       await prisma.talent_Qualification.updateMany({
         where: {
           AND: [
+            {eventtalentid: eventid},
             { nippos: lulus.nippos },
             { id_kriteria_penilaian: 6 }
           ]
@@ -217,6 +257,7 @@ router.post("/comparenilai", async (req, res) => {
       await prisma.talent_Qualification.updateMany({
         where: {
           AND: [
+            {eventtalentid: eventid},
             { nippos: lulus.nippos },
             { id_kriteria_penilaian: 7 }
           ]
@@ -231,6 +272,7 @@ router.post("/comparenilai", async (req, res) => {
       await prisma.talent_Qualification.updateMany({
         where: {
           AND: [
+            {eventtalentid: eventid},
             { nippos: lulus.nippos },
             { id_kriteria_penilaian: 2 }
           ]
@@ -245,6 +287,7 @@ router.post("/comparenilai", async (req, res) => {
       await prisma.talent_Qualification.updateMany({
         where: {
           AND: [
+            {eventtalentid: eventid},
             { nippos: lulus.nippos },
             { id_kriteria_penilaian: 3 }
           ]
@@ -259,6 +302,7 @@ router.post("/comparenilai", async (req, res) => {
       await prisma.talent_Qualification.updateMany({
         where: {
           AND: [
+            {eventtalentid: eventid},
             { nippos: lulus.nippos },
             { id_kriteria_penilaian: 4 }
           ]
