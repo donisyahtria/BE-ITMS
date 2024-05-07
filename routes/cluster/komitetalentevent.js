@@ -3,21 +3,22 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/getkaryawanevent", async (req, res) => {
+router.get("/getkomiteevent", async (req, res) => {
   try {
-    const nippos = "971351363"
-    console.log(nippos);
-    const eventperkomite = await prisma.talent_Profile.findMany({
+    const nippos = "451416105"
+
+    const eventperkomite = await prisma.talent_Cluster.findMany({
       select:{
         eventtalentid: true
       },
       where:{
-        nippos: nippos,
-      }
+        ketua_komite_talent: nippos,
+      },
+      distinct:  ['eventtalentid']
     })
 
     const eventIds = eventperkomite.map(event => event.eventtalentid);
-
+    console.log(eventIds);
 
     const event = await prisma.event_Talent.findMany({
         where: {

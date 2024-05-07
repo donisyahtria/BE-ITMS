@@ -57,6 +57,8 @@ import selesaistatus from "./routes/Pool/selesaistatusevent"
 import notifkomiteunit from "./routes/kts/komiteunitnotif"
 import getkomiteunitevent from "./routes/event/getkomiteunitevent"
 import notifkaryawan from "./routes/talentprofile/notifikasikaryawan"
+import getkaryawanevent from "./routes/talentprofile/getkaryawanevent"
+import getkomitetalentevent from "./routes/cluster/komitetalentevent"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -132,6 +134,7 @@ app.use("/", createprofile);
 app.use("/", getbelumlengkap);
 app.use("/", getlengkap);
 app.use("/", notifkaryawan)
+app.use("/", getkaryawanevent)
 
 // Qualification
 app.use("/", getqualification);
@@ -140,6 +143,7 @@ app.use("/", getkkm)
 
 //Cluster
 app.use("/", clustertable)
+app.use("/", getkomitetalentevent)
 
 // Pool
 app.use("/", gettalentpool);
