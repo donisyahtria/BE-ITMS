@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/getkaryawanevent", async (req, res) => {
   try {
-    const nippos = "971351363"
+    const nippos = req.query.nippos
     console.log(nippos);
     const eventperkomite = await prisma.talent_Profile.findMany({
       select:{
