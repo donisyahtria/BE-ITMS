@@ -6,6 +6,12 @@ const router = express.Router();
 router.delete("/hapusevent", async (req, res) => {
   try {
     // Delete rows from other tables (A, B, C) based on the provided ID
+    await prisma.deadline_Event_Step.deleteMany({
+      where: {
+        event_id: req.body.eventid, // Adjust the field name accordingly
+      },
+    });
+
     await prisma.event_Pertanyaan.deleteMany({
       where: {
         eventid: req.body.eventid, // Adjust the field name accordingly
@@ -15,6 +21,18 @@ router.delete("/hapusevent", async (req, res) => {
     await prisma.komite_Talent_Event.deleteMany({
       where: {
         eventid: req.body.eventid, // Adjust the field name accordingly
+      },
+    });
+
+    await prisma.daftar_bpj_event.deleteMany({
+      where: {
+        eventtalentid: req.body.eventid, // Adjust the field name accordingly
+      },
+    });
+
+    await prisma.notifikasi_karyawan.deleteMany({
+      where: {
+        eventtalentid: req.body.eventid, // Adjust the field name accordingly
       },
     });
 

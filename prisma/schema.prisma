@@ -322,6 +322,8 @@ model Talent_Profile {
   pakta_integritas Boolean
   commitmenletter  Boolean
   createdAt        DateTime     @db.Timestamptz(6)
+  status_submit    String?      @db.VarChar(20)
+
   idevent          Event_Talent @relation(fields: [eventtalentid], references: [id])
   relasiKomiteUnit Karyawan?    @relation("RelasiKomiteUnit", fields: [komite_unit], references: [nippos])
   relasiNippos     Karyawan     @relation("RelasiNippos", fields: [nippos], references: [nippos])
@@ -461,6 +463,8 @@ model Talent_Cluster {
   createdAt                 DateTime          @db.Timestamptz(6)
   ketua_komite_talent       String            @db.Char(9)
   komite_unit               String?           @db.Char(9)
+  alasan                    String?           @db.Char(1000)
+
   relasimatriksakhir        matriks_kategori? @relation("matriksakhir", fields: [Id_Matriks_Kategori_Akhir], references: [Id])
   relasimatriksawal         matriks_kategori? @relation("matriksawal", fields: [Id_Matriks_Kategori_Awal], references: [Id])
   idevent                   Event_Talent      @relation(fields: [eventtalentid], references: [id])

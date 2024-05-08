@@ -59,6 +59,10 @@ import getkomiteunitevent from "./routes/event/getkomiteunitevent"
 import notifkaryawan from "./routes/talentprofile/notifikasikaryawan"
 import getkaryawanevent from "./routes/talentprofile/getkaryawanevent"
 import getkomitetalentevent from "./routes/cluster/komitetalentevent"
+import loloskanprofile      from "./routes/talentprofile/loloskanprofile"
+import notifbpj             from "./routes/days/notifikasibpj"
+import loloskandays         from "./routes/days/loloskandays"
+import updatematriks        from "./routes/cluster/updatematriks"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -135,6 +139,7 @@ app.use("/", getbelumlengkap);
 app.use("/", getlengkap);
 app.use("/", notifkaryawan)
 app.use("/", getkaryawanevent)
+app.use("/", loloskanprofile)
 
 // Qualification
 app.use("/", getqualification);
@@ -144,6 +149,7 @@ app.use("/", getkkm)
 //Cluster
 app.use("/", clustertable)
 app.use("/", getkomitetalentevent)
+app.use("/", updatematriks)
 
 // Pool
 app.use("/", gettalentpool);
@@ -157,6 +163,8 @@ app.use("/", getalldays);
 app.use("/", gettabledaysbpj)
 app.use("/", posttablebpj)
 app.use("/", hapusbpj)
+app.use("/", notifbpj)
+app.use("/", loloskandays)
 
 // app.get("/*", (req,res)=>{
 //     res.status(200).json({message: 'Welcome To ITMS Back-End'})

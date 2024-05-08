@@ -24,14 +24,15 @@ router.post("/createtalentprofile", async (req, res) => {
       });
 
       if (!existingRow) {
-        const masukProfile = await prisma.talent_Profile.create({
+        const masukProfile = await prisma.talent_Profile.createMany({
           data: {
             nippos: row.nippos,
             eventtalentid: row.eventtalentid,
             komite_unit: row.komite_unit,
             pakta_integritas: false,
             commitmenletter: false,
-            createdAt: new Date()
+            createdAt: new Date(),
+            status_submit: null
           }
         })
       }}

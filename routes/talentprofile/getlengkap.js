@@ -14,7 +14,8 @@ router.get("/getlengkap", async (req, res) => {
 	rrj.nama_rumpun_jabatan as "Rumpun Jabatan", 
 	'Sudah Submit' as "Commitment Letter", 
 	'Sudah Submit' as "Pakta Integritas", 
-	k2.nama as "Komite Unit"
+	k2.nama as "Komite Unit",
+  tp.status_submit as "Status Submit"
     from "Talent_Profile" tp 
     join "Karyawan" k on k.nippos = tp.nippos
     left join "Karyawan" k2 on k2.nippos = tp.komite_unit 

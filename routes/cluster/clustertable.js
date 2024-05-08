@@ -24,7 +24,7 @@ router.get("/getclustertable", async (req, res) => {
     mk2."Nama_Matriks_Kategori" AS "Matriks Kategori Akhir",
     CASE
         WHEN tc."Id_Matriks_Kategori_Awal" = tc."Id_Matriks_Kategori_Akhir" THEN 'Tetap'
-        WHEN tc."Id_Matriks_Kategori_Awal" < tc."Id_Matriks_Kategori_Akhir" THEN 'Naik'
+        WHEN tc."Id_Matriks_Kategori_Awal" > tc."Id_Matriks_Kategori_Akhir" THEN 'Naik'
         ELSE 'Turun'
     END AS status
 FROM 
