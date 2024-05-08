@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/getkomiteevent", async (req, res) => {
   try {
-    const nippos = "451416105"
+    const nippos = req.query.nippos
 
     const eventperkomite = await prisma.talent_Cluster.findMany({
       select:{

@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/getkomiteunitevent", async (req, res) => {
   try {
-    const nippos = "971332058"
+    const nippos = req.query.nippos
     console.log(nippos);
     const eventperkomite = await prisma.notifikasi_karyawan.findMany({
       select:{
@@ -13,6 +13,7 @@ router.get("/getkomiteunitevent", async (req, res) => {
       },
       where:{
         nippos: nippos,
+        id_referensi_notifikasi:2
       }
     })
 
