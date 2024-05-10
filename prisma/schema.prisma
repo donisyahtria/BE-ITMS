@@ -536,3 +536,9 @@ model referensi_notifikasi{
 
   relasinotif             notifikasi_karyawan[]
 }
+
+model Parameter_Kuota {
+  id                  Int                           @id @default(autoincrement())
+  keterangan          String                        @db.VarChar(20)
+  bobot               Int
+}

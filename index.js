@@ -63,6 +63,12 @@ import loloskanprofile      from "./routes/talentprofile/loloskanprofile"
 import notifbpj             from "./routes/days/notifikasibpj"
 import loloskandays         from "./routes/days/loloskandays"
 import updatematriks        from "./routes/cluster/updatematriks"
+import qualparameter        from "./routes/parameter/qualparameter"
+import updateparameterqual  from "./routes/parameter/updateparameterqual"
+import getparameterkuota    from "./routes/parameter/getcurrentkuota"
+import updatekuota          from "./routes/parameter/updateparameterkuota"
+import getkomiteunitcandidate from "./routes/kts/getkomiteunitcandidate"
+import updatekomiteunit     from "./routes/kts/updatekomiteunit"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -77,6 +83,12 @@ app.use("/", getkaryawan);
 
 //general
 app.use("/", updatedeadline)
+
+//Parameter
+app.use("/", qualparameter)
+app.use("/", updateparameterqual)
+app.use("/", getparameterkuota)
+app.use("/", updatekuota)
 
 // Event
 app.use("/",getevent)
@@ -122,6 +134,8 @@ app.use("/", updatebool);
 app.use("/", talentprofile);
 app.use("/", carikomiteotomatis);
 app.use("/", joblevelfilter);
+app.use("/", getkomiteunitcandidate);
+app.use("/", updatekomiteunit)
 
 // Profile
 app.use("/", paktacommit);
