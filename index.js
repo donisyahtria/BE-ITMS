@@ -59,6 +59,7 @@ import getkomiteunitevent from "./routes/event/getkomiteunitevent"
 import notifkaryawan from "./routes/talentprofile/notifikasikaryawan"
 import getkaryawanevent from "./routes/talentprofile/getkaryawanevent"
 import getkomitetalentevent from "./routes/cluster/komitetalentevent"
+import getrole from "./routes/login/getrole"
 import loloskanprofile      from "./routes/talentprofile/loloskanprofile"
 import notifbpj             from "./routes/days/notifikasibpj"
 import loloskandays         from "./routes/days/loloskandays"
@@ -80,6 +81,7 @@ app.use(cors());
 // Login
 app.use("/", loginadmin);
 app.use("/", getkaryawan);
+app.use("/", getrole);
 
 //general
 app.use("/", updatedeadline)

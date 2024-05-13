@@ -12,8 +12,30 @@ router.post("/loginadmin", async (req, res) => {
     const user = await prisma.karyawan.findUnique({
       where: {
         nippos: username
+      },
+      include:{
+        nipposrole: 
+        {
+          select:{
+            roleid:{
+              select:{
+                nama_role: true
+              }
+            }
+          }
+        }
       }
     });
+
+    const userRole = await prisma.role_Karyawan.findMany({
+      where:{
+        nippos:username
+      },
+      select:{
+        nipposkaryawan:true,
+        roleid:{select:{nama_role:true}}
+      }
+    })
 
     if (!user || user.password !== password) {
       // Jika user tidak ditemukan atau password salah
