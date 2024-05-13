@@ -5,10 +5,10 @@ const router = express.Router();
 
 router.post("/getrole", async (req, res) => {
     try {
-
+        const nippos = String(req.body.nippos);
         const roles = await prisma.role_Karyawan.findMany({
             where: {
-                nippos: req.body.nippos
+                nippos: nippos
             },
             select: {
                 role_id: true
