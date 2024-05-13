@@ -70,6 +70,9 @@ import getparameterkuota    from "./routes/parameter/getcurrentkuota"
 import updatekuota          from "./routes/parameter/updateparameterkuota"
 import getkomiteunitcandidate from "./routes/kts/getkomiteunitcandidate"
 import updatekomiteunit     from "./routes/kts/updatekomiteunit"
+import getdatatalentrumpun from  "./routes/dashboard/talentrumpun"
+import getdatatalentjoblevel from "./routes/dashboard/talentjoblevel"
+import getdetailtalent from "./routes/dashboard/detailtalent"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -82,6 +85,11 @@ app.use(cors());
 app.use("/", loginadmin);
 app.use("/", getkaryawan);
 app.use("/", getrole);
+
+// Dashboard
+app.use("/", getdatatalentrumpun)
+app.use("/", getdatatalentjoblevel)
+app.use("/", getdetailtalent)
 
 //general
 app.use("/", updatedeadline)
