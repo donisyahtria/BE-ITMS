@@ -1,6 +1,8 @@
 import express from "express";
 import bodyParser, { json } from "body-parser";
 import cors from "cors";
+
+import loginadmin from "./routes/login/login";
 import getevent from "./routes/event/getallevent"
 import addevent from "./routes/event/createevent"
 import deadline from "./routes/event/createdeadline"
@@ -36,7 +38,7 @@ import getsourcefalse        from "./routes/kts/getkandidatfalse"
 import getsourcetrue        from "./routes/kts/getkandidattrue"
 import getkomiteunitlist from "./routes/kts/getkomitelist"
 import getjoblevelactive from "./routes/event/getactivejoblevel"
-import loginadmin from "./routes/login/login";
+
 import getkaryawan from "./routes/login/getkaryawan";
 import geteventbykaryawan from "./routes/event/geteventbykaryawan"
 import geteventbykomite from "./routes/event/geteventbykomite"
@@ -182,9 +184,9 @@ app.use("/", hapusbpj)
 app.use("/", notifbpj)
 app.use("/", loloskandays)
 
-// app.get("/*", (req,res)=>{
-//     res.status(200).json({message: 'Welcome To ITMS Back-End'})
-// })
+app.get("/*", (req,res)=>{
+    res.status(200).json({message: 'Welcome To ITMS Back-End'})
+})
 
 app.listen(port, () => {
   console.log(`server running on port ${port}`);
