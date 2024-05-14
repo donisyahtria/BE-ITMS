@@ -29,6 +29,8 @@ on k.kode_jabatan = rj.id
 left join "Referensi_Bagian" rb 
 on k.kode_bagian  = rb.id `
 
+//push lagee
+
 
     res.status(200).json(getdetailtalent);
   } catch (err) {

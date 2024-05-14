@@ -14,6 +14,8 @@ on tp.rumpunjabatan = rrj.kode_rumpun_jabatan
 left join matriks_kategori mk 
 on tp.id_matriks_kategori = mk."Id"
 group by tp.leveljabatan`
+//push lagee
+
 
 const formattedData = getdatatalentjoblevel.map(row => ({
     ...row,

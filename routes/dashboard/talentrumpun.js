@@ -25,6 +25,9 @@ left join matriks_kategori mk
 on tp.id_matriks_kategori = mk."Id"
 group by rrj.nama_rumpun_jabatan, mk."Nama_Matriks_Kategori"`
 
+//push lagee
+
+
 const formattedData = getdatatalentrumpun.map(row => ({
     ...row,
     count: row.count.toString()

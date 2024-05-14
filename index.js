@@ -73,6 +73,8 @@ import updatekomiteunit     from "./routes/kts/updatekomiteunit"
 import getdatatalentrumpun from  "./routes/dashboard/talentrumpun"
 import getdatatalentjoblevel from "./routes/dashboard/talentjoblevel"
 import getdetailtalent from "./routes/dashboard/detailtalent"
+import assignkaryawan from "./routes/usermanagement/assignkaryawan"
+import assignkomiteunit from "./routes/usermanagement/assignkomiteunit"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -93,6 +95,10 @@ app.use("/", getdetailtalent)
 
 //general
 app.use("/", updatedeadline)
+
+//usermanagement
+app.use("/", assignkaryawan)
+app.use("/", assignkomiteunit)
 
 //Parameter
 app.use("/", qualparameter)
