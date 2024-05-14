@@ -10,6 +10,7 @@ router.get("/getallevent", async (req, res) => {
             id: true,
             nama_event:true,
             deskripsi: true,
+            nippos_ketua_komite: true,
             tipekomite:{
                 select:{
                     tipe_komite_talent: true

@@ -7,11 +7,15 @@ router.get("/getallprofile", async (req, res) => {
   try {
     const detail = await prisma.talent_Profile.findMany({
       select: {
-        id: true,
-        nippos: true
+        pakta_integritas:true,
+        commitmenletter:true
       },
+      where:{
+        eventtalentid: parseInt(req.query.eventtalentid),
+        nippos: req.query.nippos
+      }
     });
-    res.status(200).json({ detail });
+    res.status(200).json(detail);
   } catch (err) {
     console.log({ err });
     res.status(500).json({ message: "Internal server error", err });

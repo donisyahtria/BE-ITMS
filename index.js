@@ -77,6 +77,13 @@ import getdatatalentjoblevel from "./routes/dashboard/talentjoblevel"
 import getdetailtalent from "./routes/dashboard/detailtalent"
 import assignkaryawan from "./routes/usermanagement/assignkaryawan"
 import assignkomiteunit from "./routes/usermanagement/assignkomiteunit"
+import assignkomiteunibybutton from "./routes/usermanagement/assignkomiteunitbybutton"
+import assignroleketuakomite from "./routes/usermanagement/assignroleketuakomite"
+import getnotification from "./routes/notification/getnotification"
+import updatestatusnotif from "./routes/notification/statusnotification"
+import getinforkaryawan from "./routes/talentprofile/getinfokaryawan"
+import updatepaktacommitpribadi from "./routes/talentprofile/updatepaktacommitpribadi"
+import getallprofile from "./routes/talentprofile/getallprofile"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -97,10 +104,14 @@ app.use("/", getdetailtalent)
 
 //general
 app.use("/", updatedeadline)
+app.use("/", getnotification)
+app.use("/",updatestatusnotif)
 
 //usermanagement
 app.use("/", assignkaryawan)
 app.use("/", assignkomiteunit)
+app.use("/", assignkomiteunibybutton)
+app.use("/", assignroleketuakomite)
 
 //Parameter
 app.use("/", qualparameter)
@@ -172,6 +183,9 @@ app.use("/", getlengkap);
 app.use("/", notifkaryawan)
 app.use("/", getkaryawanevent)
 app.use("/", loloskanprofile)
+app.use("/", getinforkaryawan)
+app.use("/", updatepaktacommitpribadi)
+app.use("/", getallprofile)
 
 // Qualification
 app.use("/", getqualification);
