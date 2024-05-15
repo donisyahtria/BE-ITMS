@@ -84,6 +84,8 @@ import updatestatusnotif from "./routes/notification/statusnotification"
 import getinforkaryawan from "./routes/talentprofile/getinfokaryawan"
 import updatepaktacommitpribadi from "./routes/talentprofile/updatepaktacommitpribadi"
 import getallprofile from "./routes/talentprofile/getallprofile"
+import getallroles   from "./routes/usermanagement/getallroles"
+import updaterolemanagement from "./routes/usermanagement/updaterolemanagement"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -112,6 +114,8 @@ app.use("/", assignkaryawan)
 app.use("/", assignkomiteunit)
 app.use("/", assignkomiteunibybutton)
 app.use("/", assignroleketuakomite)
+app.use("/", getallroles)
+app.use("/", updaterolemanagement)
 
 //Parameter
 app.use("/", qualparameter)
