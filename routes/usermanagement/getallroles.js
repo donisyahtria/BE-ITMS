@@ -7,7 +7,6 @@ router.get("/getallroles", async (req, res) => {
   try {
     const details = await prisma.$queryRaw`
       SELECT 
-    ROW_NUMBER() OVER () AS id,
     k.nama AS nama, 
     k.nippos AS nippos, 
     rrj.nama_rumpun_jabatan AS jobfam,
@@ -41,15 +40,7 @@ LEFT JOIN (
 
     `;
 
-    // Convert BigInt fields to strings
-    const convertedDetails = details.map(detail => ({
-      ...detail,
-      // Assuming id field is a BigInt, convert it to string
-      id: detail.id.toString(),
-      // Convert other BigInt fields similarly if needed
-    }));
-
-    res.status(200).json(convertedDetails);
+    res.status(200).json(details);
   } catch (err) {
     console.error({ err });
     res.status(500).json({ message: "Internal server error", err });

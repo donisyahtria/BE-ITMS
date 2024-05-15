@@ -7,7 +7,7 @@ router.get("/getclustertable", async (req, res) => {
   try {
 	const eventid = parseInt(req.query.eventtalentid)
     const detail = await prisma.$queryRaw`
-   SELECT 
+      select distinct
     k.nama, 
     tc.nippos,
     CONCAT(rj.nama_jabatan, ' ', rb.nama_bagian) AS "Posisi",
