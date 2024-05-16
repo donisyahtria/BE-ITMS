@@ -32,16 +32,21 @@ join "Referensi_Rumpun_Jabatan" rrj on rrj.kode_rumpun_jabatan = k.rumpun_jabata
 join "Referensi_Kantor" rk on rk.nopend = k.kode_nopend
 left join(	select tq.nippos, tq.skor, tq.status
 			from "Talent_Qualification" tq
-			where tq.id_kriteria_penilaian in (1,2,3,4)) as psy on tq.nippos = psy.nippos
+			where tq.id_kriteria_penilaian in (1,2,3,4)
+			and tq.eventtalentid = ${eventid}
+) as psy on tq.nippos = psy.nippos
 left join(	select tq.nippos, tq.skor, tq.status
 			from "Talent_Qualification" tq
-			where tq.id_kriteria_penilaian = 5) as pms on tq.nippos = pms.nippos
+			where tq.id_kriteria_penilaian = 5
+			and tq.eventtalentid = ${eventid}) as pms on tq.nippos = pms.nippos
 left join(	select tq.nippos, tq.skor, tq.status
 			from "Talent_Qualification" tq
-			where tq.id_kriteria_penilaian = 6) as akhlak on tq.nippos = akhlak.nippos
+			where tq.id_kriteria_penilaian = 6
+			and tq.eventtalentid = ${eventid}) as akhlak on tq.nippos = akhlak.nippos
 left join(	select tq.nippos, tq.skor, tq.status
 			from "Talent_Qualification" tq
-			where tq.id_kriteria_penilaian = 7) as la on tq.nippos = la.nippos
+			where tq.id_kriteria_penilaian = 7
+			and tq.eventtalentid = ${eventid}) as la on tq.nippos = la.nippos
 Where       tq.eventtalentid = ${eventid}
 and         tq.status = true
 and         tq.id_kriteria_penilaian != 8
