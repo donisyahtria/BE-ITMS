@@ -7,7 +7,7 @@ router.get("/getclustertable", async (req, res) => {
   try {
 	const eventid = parseInt(req.query.eventtalentid)
     const detail = await prisma.$queryRaw`
-      select distinct
+    select distinct
     k.nama, 
     tc.nippos,
     CONCAT(rj.nama_jabatan, ' ', rb.nama_bagian) AS "Posisi",
@@ -44,26 +44,31 @@ LEFT JOIN
 LEFT JOIN 
     (SELECT tq.nippos, tq.skor, tq.status
     FROM "Talent_Qualification" tq
-    WHERE tq.id_kriteria_penilaian IN (1,2,3,4)) AS psy ON tc.nippos = psy.nippos
+    WHERE tq.id_kriteria_penilaian IN (1,2,3,4)
+    and tq.eventtalentid = ${eventid}) AS psy ON tc.nippos = psy.nippos
 LEFT JOIN 
     (SELECT tq.nippos, tq.skor, tq.status
     FROM "Talent_Qualification" tq
-    WHERE tq.id_kriteria_penilaian = 5) AS pms ON tc.nippos = pms.nippos
+    WHERE tq.id_kriteria_penilaian = 5
+    and tq.eventtalentid = ${eventid}) AS pms ON tc.nippos = pms.nippos
 LEFT JOIN 
     (SELECT tq.nippos, tq.skor, tq.status
     FROM "Talent_Qualification" tq
-    WHERE tq.id_kriteria_penilaian = 6) AS akhlak ON tc.nippos = akhlak.nippos
+    WHERE tq.id_kriteria_penilaian = 6
+    and tq.eventtalentid = ${eventid}) AS akhlak ON tc.nippos = akhlak.nippos
 LEFT JOIN 
     (SELECT tq.nippos, tq.skor, tq.status
     FROM "Talent_Qualification" tq
-    WHERE tq.id_kriteria_penilaian = 7) AS la ON tc.nippos = la.nippos
+    WHERE tq.id_kriteria_penilaian = 7
+    and tq.eventtalentid = ${eventid}) AS la ON tc.nippos = la.nippos
 LEFT JOIN 
     (SELECT tq.nippos, tq.skor, tq.status
     FROM "Talent_Qualification" tq
-    WHERE tq.id_kriteria_penilaian = 8) AS days ON tc.nippos = days.nippos
-JOIN 
+    WHERE tq.id_kriteria_penilaian = 8
+    and tq.eventtalentid = ${eventid}) AS days ON tc.nippos = days.nippos
+LEFT JOIN 
     matriks_kategori mk ON tc."Id_Matriks_Kategori_Awal" = mk."Id"
-JOIN 
+LEFT JOIN 
     matriks_kategori mk2 ON tc."Id_Matriks_Kategori_Akhir" = mk2."Id"
 WHERE 
     tc.eventtalentid = ${eventid};`

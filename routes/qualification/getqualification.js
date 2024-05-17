@@ -33,8 +33,7 @@ join "Referensi_Kantor" rk on rk.nopend = k.kode_nopend
 left join(	select tq.nippos, tq.skor, tq.status
 			from "Talent_Qualification" tq
 			where tq.id_kriteria_penilaian in (1,2,3,4)
-			and tq.eventtalentid = ${eventid}
-) as psy on tq.nippos = psy.nippos
+			and tq.eventtalentid = ${eventid}) as psy on tq.nippos = psy.nippos
 left join(	select tq.nippos, tq.skor, tq.status
 			from "Talent_Qualification" tq
 			where tq.id_kriteria_penilaian = 5
