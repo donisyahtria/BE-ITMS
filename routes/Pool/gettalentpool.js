@@ -6,23 +6,36 @@ const router = express.Router();
 router.get("/gettalentpool", async (req, res) => {
   try {
     const eventid = parseInt(req.query.eventtalentid)
-    const detail = await prisma.$queryRaw`select 
-	k.nama as "Nama",
-	k.nippos as "Nippos",
-	concat(rj.nama_jabatan,' ',rb.nama_bagian) as "Posisi",
-	k.job_level as "Job Level", 
-	rrj.nama_rumpun_jabatan as "Rumpun Jabatan", 
-	rk.nama_kantor as "Nama Kantor",
-	mk."Nama_Matriks_Kategori" as "Kategori Matrix Akhir", 
-	tp.statustalent as "Status"
-    from talent_pool tp 
-    join "Karyawan" k on k.nippos = tp.nippos 
-    join "Referensi_Jabatan" rj on rj.id = k.kode_jabatan
-    join "Referensi_Bagian" rb on rb.id = k.kode_bagian
-    join "Referensi_Rumpun_Jabatan" rrj on rrj.kode_rumpun_jabatan = k.rumpun_jabatan
-    join "Referensi_Kantor" rk on rk.nopend = k.kode_nopend
-    join matriks_kategori mk on mk."Id" = tp.id_matriks_kategori
-    where tp.eventtalentid = ${eventid};
+    const detail = await prisma.$queryRaw`
+    SELECT 
+    k.nama AS "Nama",
+    k.nippos AS "Nippos",
+    CONCAT(rj.nama_jabatan, ' ', rb.nama_bagian) AS "Posisi",
+    k.job_level AS "Job Level", 
+    rrj.nama_rumpun_jabatan AS "Rumpun Jabatan", 
+    rk.nama_kantor AS "Nama Kantor",
+    mk."Nama_Matriks_Kategori" AS "Kategori Matrix Akhir", 
+    CASE 
+        WHEN tp.statustalent = true THEN 'Talent'
+        ELSE 'Non-Talent'
+    END AS "Status"
+FROM 
+    talent_pool tp 
+JOIN 
+    "Karyawan" k ON k.nippos = tp.nippos 
+JOIN 
+    "Referensi_Jabatan" rj ON rj.id = k.kode_jabatan
+JOIN 
+    "Referensi_Bagian" rb ON rb.id = k.kode_bagian
+JOIN 
+    "Referensi_Rumpun_Jabatan" rrj ON rrj.kode_rumpun_jabatan = k.rumpun_jabatan
+JOIN 
+    "Referensi_Kantor" rk ON rk.nopend = k.kode_nopend
+JOIN 
+    matriks_kategori mk ON mk."Id" = tp.id_matriks_kategori
+WHERE 
+    tp.eventtalentid = ${eventid};
+
     `
     res.status(200).json(detail);
   } catch (err) {
