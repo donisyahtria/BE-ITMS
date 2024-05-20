@@ -5,32 +5,32 @@ const router = express.Router();
 
 router.get("/getdetailtalent", async (req, res) => {
   try {
-    const getdetailtalent = await prisma.$queryRaw`
-select 
-CAST(ROW_NUMBER() OVER () AS VARCHAR) AS id,
-k.nama as "nama", 
-tp.nippos as "nippos", 
-CONCAT(rj.nama_jabatan, ' ', rb.nama_bagian) AS "posisi",
-tp.leveljabatan as "joblevel",
-rrj.nama_rumpun_jabatan as "jobfam",
-rk.nama_kantor as "nama_kantor",
-et.nama_event as "nama_event"
-from talent_pool tp 
-left join "Karyawan" k 
-on tp.nippos = k.nippos 
-left join "Referensi_Rumpun_Jabatan" rrj 
-on tp.rumpunjabatan = rrj.kode_rumpun_jabatan 
-left join "Referensi_Kantor" rk 
-on k.kode_nopend = rk.nopend
-left join "Event_Talent" et
-on tp.eventtalentid = et.id 
-left join "Referensi_Jabatan" rj 
-on k.kode_jabatan = rj.id
-left join "Referensi_Bagian" rb 
-on k.kode_bagian  = rb.id `
-
-//push lagee
-
+    const getdetailtalent = await prisma.$queryRaw` 
+SELECT 
+    CAST(ROW_NUMBER() OVER () AS VARCHAR) AS id,
+    k.nama AS "nama", 
+    tp.nippos AS "nippos", 
+    CONCAT(rj.nama_jabatan, ' ', rb.nama_bagian) AS "posisi",
+    tp.leveljabatan AS "joblevel",
+    rrj.nama_rumpun_jabatan AS "jobfam",
+    rk.nama_kantor AS "nama_kantor",
+    et.nama_event AS "nama_event",
+    EXTRACT(YEAR FROM tp.dibuat_pada) AS "year"
+FROM 
+    talent_pool tp 
+LEFT JOIN 
+    "Karyawan" k ON tp.nippos = k.nippos 
+LEFT JOIN 
+    "Referensi_Rumpun_Jabatan" rrj ON tp.rumpunjabatan = rrj.kode_rumpun_jabatan 
+LEFT JOIN 
+    "Referensi_Kantor" rk ON k.kode_nopend = rk.nopend
+LEFT JOIN 
+    "Event_Talent" et ON tp.eventtalentid = et.id 
+LEFT JOIN 
+    "Referensi_Jabatan" rj ON k.kode_jabatan = rj.id
+LEFT JOIN 
+    "Referensi_Bagian" rb ON k.kode_bagian  = rb.id;
+ `
 
     res.status(200).json(getdetailtalent);
   } catch (err) {
