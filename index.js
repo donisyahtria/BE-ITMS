@@ -86,6 +86,9 @@ import updatepaktacommitpribadi from "./routes/talentprofile/updatepaktacommitpr
 import getallprofile from "./routes/talentprofile/getallprofile"
 import getallroles   from "./routes/usermanagement/getallroles"
 import updaterolemanagement from "./routes/usermanagement/updaterolemanagement"
+import getquestion from "./routes/parameter/getquestion"
+import addquestion from "./routes/parameter/createquestion"
+import updatequestion from "./routes/parameter/updatequestion"
 import geteventdeadline from "./routes/event/geteventdeadlines"
 
 const port = process.env.PORT || 4000;
@@ -124,6 +127,9 @@ app.use("/", qualparameter)
 app.use("/", updateparameterqual)
 app.use("/", getparameterkuota)
 app.use("/", updatekuota)
+app.use("/", getquestion)
+app.use("/", addquestion)
+app.use("/", updatequestion)
 
 // Event
 app.use("/",getevent)
