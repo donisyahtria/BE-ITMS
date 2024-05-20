@@ -14,15 +14,12 @@ router.post("/createdeadline", async (req, res) => {
         deadline_4: new Date(req.body.deadline_4),
         deadline_5: new Date(req.body.deadline_5),
         deadline_6: new Date(req.body.deadline_6),
-
-        /*
-        deadline_1: req.body.deadline_1 ? new Date(req.body.deadline_1) : null,
-        deadline_2: req.body.deadline_2 ? new Date(req.body.deadline_2) : null,
-        deadline_3: req.body.deadline_3 ? new Date(req.body.deadline_3) : null,
-        deadline_4: req.body.deadline_4 ? new Date(req.body.deadline_4) : null,
-        deadline_5: req.body.deadline_5 ? new Date(req.body.deadline_5) : null,
-        deadline_6: req.body.deadline_6 ? new Date(req.body.deadline_6) : null 
-        */
+        startdate_1: new Date(req.body.startdate_1),
+        startdate_2: new Date(req.body.startdate_2),
+        startdate_3: new Date(req.body.startdate_3),
+        startdate_4: new Date(req.body.startdate_4),
+        startdate_5: new Date(req.body.startdate_5),
+        startdate_6: new Date(req.body.startdate_6),
       },
     });
 

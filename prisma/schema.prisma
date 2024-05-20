@@ -276,11 +276,17 @@ model Job_Level_Event {
 model Deadline_Event_Step {
   id          Int          @id @default(autoincrement())
   event_id    Int
+  startdate_1 DateTime?    @db.Date
   deadline_1  DateTime?    @db.Date
+  startdate_2 DateTime?    @db.Date
   deadline_2  DateTime?    @db.Date
+  startdate_3 DateTime?    @db.Date
   deadline_3  DateTime?    @db.Date
+  startdate_4 DateTime?    @db.Date
   deadline_4  DateTime?    @db.Date
+  startdate_5 DateTime?    @db.Date
   deadline_5  DateTime?    @db.Date
+  startdate_6 DateTime?    @db.Date
   deadline_6  DateTime?    @db.Date
   eventtalent Event_Talent @relation(fields: [event_id], references: [id])
 }

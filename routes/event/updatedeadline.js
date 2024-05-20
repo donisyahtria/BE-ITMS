@@ -30,8 +30,30 @@ router.post("/updatedeadline", async (req, res) => {
         throw new Error('Invalid deadline_id');
 }
 
+let startdatetoupdate;
+switch (status) {
+case 2:
+  startdatetoupdate = 'startdate_2';
+    break;
+case 3:
+    deadlineFieldToUpdate = 'startdate_3';
+    break;
+case 4:
+    deadlineFieldToUpdate = 'startdate_4';
+    break;
+case 5:
+    deadlineFieldToUpdate = 'startdate_5';
+    break;
+case 6:
+    deadlineFieldToUpdate = 'startdate_6';
+    break;
+default:
+    throw new Error('Invalid startdate_id');
+}
+
 const data = {
     [deadlineFieldToUpdate]: new Date(date),
+    [startdatetoupdate]: new Date()
 };
 console.log(deadlineFieldToUpdate);
 
