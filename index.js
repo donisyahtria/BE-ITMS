@@ -86,6 +86,7 @@ import updatepaktacommitpribadi from "./routes/talentprofile/updatepaktacommitpr
 import getallprofile from "./routes/talentprofile/getallprofile"
 import getallroles   from "./routes/usermanagement/getallroles"
 import updaterolemanagement from "./routes/usermanagement/updaterolemanagement"
+import geteventdeadline from "./routes/event/geteventdeadlines"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -107,7 +108,8 @@ app.use("/", getdetailtalent)
 //general
 app.use("/", updatedeadline)
 app.use("/", getnotification)
-app.use("/",updatestatusnotif)
+app.use("/", updatestatusnotif)
+app.use("/", geteventdeadline)
 
 //usermanagement
 app.use("/", assignkaryawan)

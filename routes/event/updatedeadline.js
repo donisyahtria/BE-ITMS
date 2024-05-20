@@ -36,16 +36,16 @@ case 2:
   startdatetoupdate = 'startdate_2';
     break;
 case 3:
-    deadlineFieldToUpdate = 'startdate_3';
+  startdatetoupdate = 'startdate_3';
     break;
 case 4:
-    deadlineFieldToUpdate = 'startdate_4';
+  startdatetoupdate = 'startdate_4';
     break;
 case 5:
-    deadlineFieldToUpdate = 'startdate_5';
+  startdatetoupdate = 'startdate_5';
     break;
 case 6:
-    deadlineFieldToUpdate = 'startdate_6';
+  startdatetoupdate = 'startdate_6';
     break;
 default:
     throw new Error('Invalid startdate_id');
