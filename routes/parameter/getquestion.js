@@ -3,7 +3,7 @@ import express from "express";
 
 const router = express.Router();
 
-router.get("/getquestion", async (req, res) => {
+router.get("/getquest", async (req, res) => {
     try {
         const getQuestions = await prisma.referensi_Pertanyaan.findMany({
             select: {
