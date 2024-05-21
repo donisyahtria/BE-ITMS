@@ -86,6 +86,8 @@ import updatepaktacommitpribadi from "./routes/talentprofile/updatepaktacommitpr
 import getallprofile from "./routes/talentprofile/getallprofile"
 import getallroles   from "./routes/usermanagement/getallroles"
 import updaterolemanagement from "./routes/usermanagement/updaterolemanagement"
+import getnilaiassessment from "./routes/parameter/getnilaiassessment"
+import uploadskorakhlak from "./routes/parameter/uploadskorakhlak"
 import getquestion from "./routes/parameter/getquestion"
 import addquestion from "./routes/parameter/createquestion"
 import updatequestion from "./routes/parameter/updatequestion"
@@ -129,6 +131,8 @@ app.use("/", qualparameter)
 app.use("/", updateparameterqual)
 app.use("/", getparameterkuota)
 app.use("/", updatekuota)
+app.use("/", getnilaiassessment)
+app.use("/", uploadskorakhlak)
 app.use("/", getquestion)
 app.use("/", addquestion)
 app.use("/", updatequestion)
