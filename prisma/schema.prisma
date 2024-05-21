@@ -12,6 +12,8 @@ model Karyawan {
   nippos                  String                       @unique @db.Char(9)
   nama                    String                       @db.VarChar(255)
   nik                     String                       @db.Char(16)
+  jenis_kelamin           String                       @db.Char(1)
+  tanggal_lahir           DateTime                     @db.Date()
   kode_jabatan            Int
   kode_bagian             Int
   rumpun_jabatan          Int?
@@ -219,6 +221,10 @@ model Event_Talent {
   evenstatus_id       Int
   createdAt           DateTime                     @db.Timestamptz(6)
   createdBy           String                       @db.VarChar(9)
+  jenis_bpj           String?                       @db.VarChar(25)
+  tanggal_bpj         DateTime?                     @db.Date
+  lokasi_bpj          String?                       @db.VarChar(255)
+
   deadline            Deadline_Event_Step[]
   eventpertanyaan     Event_Pertanyaan[]
   eventstatus         Event_Status                 @relation(fields: [evenstatus_id], references: [id])
@@ -338,9 +344,9 @@ model Talent_Profile {
 model Skor_Performance {
   id             Int       @id @default(autoincrement())
   nippos         String    @db.Char(9)
+  tahun          Int
   skor           Float?
-  Berlaku_Mulai  DateTime? @db.Date
-  Berlaku_Hingga DateTime? @db.Date
+
   nipposkaryawan Karyawan  @relation(fields: [nippos], references: [nippos])
 }
 
