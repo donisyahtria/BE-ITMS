@@ -90,6 +90,7 @@ import getquestion from "./routes/parameter/getquestion"
 import addquestion from "./routes/parameter/createquestion"
 import updatequestion from "./routes/parameter/updatequestion"
 import geteventdeadline from "./routes/event/geteventdeadlines"
+import assignasbpj from "./routes/days/assignasbpj"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -223,6 +224,7 @@ app.use("/", posttablebpj)
 app.use("/", hapusbpj)
 app.use("/", notifbpj)
 app.use("/", loloskandays)
+app.use("/", assignasbpj)
 
 app.get("/*", (req,res)=>{
     res.status(200).json({message: 'Welcome To ITMS Back-End'})
