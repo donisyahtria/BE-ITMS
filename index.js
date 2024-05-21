@@ -90,6 +90,7 @@ import getquestion from "./routes/parameter/getquestion"
 import addquestion from "./routes/parameter/createquestion"
 import updatequestion from "./routes/parameter/updatequestion"
 import geteventdeadline from "./routes/event/geteventdeadlines"
+import updatestatuspool from "./routes/Pool/updatestatus"
 import assignasbpj from "./routes/days/assignasbpj"
 
 const port = process.env.PORT || 4000;
@@ -214,6 +215,7 @@ app.use("/", updatematriks)
 app.use("/", gettalentpool);
 app.use("/", gettabledayskaryawan);
 app.use("/",selesaistatus)
+app.use("/", updatestatuspool)
 
 // Days
 app.use("/", skordays);
