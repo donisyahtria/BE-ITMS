@@ -6,6 +6,9 @@ const router = express.Router();
 router.get("/getallevent", async (req, res) => {
   try {
     const event = await prisma.event_Talent.findMany({
+      orderBy: {
+        createdAt: 'desc'
+      },
         select:{
             id: true,
             nama_event:true,
@@ -25,7 +28,12 @@ router.get("/getallevent", async (req, res) => {
             tanggal_mulai: true,
             tanggal_selesai: true,
             evenstatus_id: true,
-            kuota:true
+            kuota:true,
+            jobleve:{
+              select:{
+                level_jabatan:true
+              }
+            }
         }
     });
     res.status(200).json({ event });
