@@ -31,7 +31,9 @@ LEFT JOIN
     matriks_kategori mk ON tp.id_matriks_kategori = mk."Id"
 GROUP BY 
     rrj.nama_rumpun_jabatan, 
-    mk."Nama_Matriks_Kategori";
+    mk."Nama_Matriks_Kategori"
+ORDER BY
+    nama_rumpun_jabatan, "Nama_Matriks_Kategori" 
       `;
     } else {
       getdatatalentrumpun = await prisma.$queryRaw`
@@ -58,7 +60,9 @@ WHERE
     EXTRACT(YEAR FROM tp.dibuat_pada) = ${year}
 GROUP BY 
     rrj.nama_rumpun_jabatan, 
-    mk."Nama_Matriks_Kategori";
+    mk."Nama_Matriks_Kategori"
+ORDER BY
+    nama_rumpun_jabatan, "Nama_Matriks_Kategori" 
       `;
     }
 
