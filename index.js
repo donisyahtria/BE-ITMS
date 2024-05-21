@@ -136,7 +136,6 @@ app.use("/", uploadskorakhlak)
 app.use("/", getquestion)
 app.use("/", addquestion)
 app.use("/", updatequestion)
-app.use("/", upload)
 
 // Event
 app.use("/",getevent)
