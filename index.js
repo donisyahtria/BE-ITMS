@@ -95,6 +95,7 @@ import geteventdeadline from "./routes/event/geteventdeadlines"
 import updatestatuspool from "./routes/Pool/updatestatus"
 import assignasbpj from "./routes/days/assignasbpj"
 import getdatagender from "./routes/dashboard/genderdistribution"
+import getgendistribution from "./routes/dashboard/gendistribution"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -113,6 +114,7 @@ app.use("/", getdatatalentrumpun)
 app.use("/", getdatatalentjoblevel)
 app.use("/", getdetailtalent)
 app.use("/", getdatagender)
+app.use("/", getgendistribution)
 
 //general
 app.use("/", updatedeadline)
