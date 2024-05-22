@@ -96,6 +96,8 @@ import updatestatuspool from "./routes/Pool/updatestatus"
 import assignasbpj from "./routes/days/assignasbpj"
 import getdatagender from "./routes/dashboard/genderdistribution"
 import getgendistribution from "./routes/dashboard/gendistribution"
+import getquestionevent from "./routes/days/getquestionevent"
+import updatenilaibutton from "./routes/days/updatenilaibutton"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -235,6 +237,8 @@ app.use("/", hapusbpj)
 app.use("/", notifbpj)
 app.use("/", loloskandays)
 app.use("/", assignasbpj)
+app.use("/", getquestionevent)
+app.use("/", updatenilaibutton)
 
 app.get("/*", (req,res)=>{
     res.status(200).json({message: 'Welcome To ITMS Back-End'})
