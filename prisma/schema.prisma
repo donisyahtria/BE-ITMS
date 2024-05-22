@@ -394,7 +394,8 @@ model Skor_Technical {
 
 model Referensi_Kompetensi_Leadership {
   id           Int               @id @default(autoincrement())
-  kodekomplead String            @db.VarChar(10)
+  kodekomplead String?            @db.VarChar(10)
+  kodeassessment String          @db.VarChar(10)
   namakomplead String            @db.VarChar(255)
   desckomplead String            @db.VarChar(1000)
   relasilead   Skor_Leadership[]

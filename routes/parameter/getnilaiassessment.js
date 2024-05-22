@@ -100,7 +100,8 @@ left join (
 left join "Karyawan" k2 
 	on k2.kode_jabatan = ku.kode_jabatan_atasan
 	and k2.kode_bagian = ku.kode_bagian_atasan
-	and k.kode_nopend = k2.kode_nopend;
+	and k.kode_nopend = k2.kode_nopend
+order by k.nama;
     `
 
     res.status(200).json(resultObject);
