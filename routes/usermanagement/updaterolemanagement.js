@@ -10,7 +10,8 @@ router.post("/updaterolemanagement", async (req, res) => {
       "Admin Talent": 2,
       "Karyawan": 3,
       "Komite Unit": 4,
-      "Ketua Komite Talent": 5
+      "Ketua Komite Talent": 5,
+      "HCBP": 6
     };
     
     // Function to convert an array of role names to an array of corresponding integer IDs
