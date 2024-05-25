@@ -98,6 +98,9 @@ import getdatagender from "./routes/dashboard/genderdistribution"
 import getgendistribution from "./routes/dashboard/gendistribution"
 import getquestionevent from "./routes/days/getquestionevent"
 import updatenilaibutton from "./routes/days/updatenilaibutton"
+import getanggotakomitetalent from "./routes/parameter/getanggotakomitetalent"
+import gettotaladdedmember from "./routes/parameter/gettotaladdedmember"
+import assignaskomitetalent from "./routes/parameter/assignaskomitetalent"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -142,6 +145,9 @@ app.use("/", uploadskorakhlak)
 app.use("/", getquestion)
 app.use("/", addquestion)
 app.use("/", updatequestion)
+app.use("/", getanggotakomitetalent)
+app.use("/", gettotaladdedmember)
+app.use("/", assignaskomitetalent)
 
 // Event
 app.use("/",getevent)
