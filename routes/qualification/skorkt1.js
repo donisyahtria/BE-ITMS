@@ -5,10 +5,9 @@ const router = express.Router();
 
 router.post("/updateskor", async (req, res) => {
     try {
-
         const ambilNippos = await prisma.talent_Qualification.findMany({
             distinct: ['nippos']
-        })
+        });
 
         const masukNilaiPerformance = await Promise.all(
             ambilNippos.map(async (filter) => {
@@ -17,6 +16,7 @@ router.post("/updateskor", async (req, res) => {
                         nippos: filter.nippos,
                     }
                 });
+                const skor = nilaiPerform?.skor ?? 0;
                 const nilai = await prisma.talent_Qualification.updateMany({
                     where: {
                         AND: [
@@ -25,12 +25,12 @@ router.post("/updateskor", async (req, res) => {
                         ]
                     },
                     data: {
-                        skor: nilaiPerform.skor,
-                        berlaku_mulai: nilaiPerform.Berlaku_Mulai,
-                        berlaku_hingga: nilaiPerform.Berlaku_Hingga
+                        skor,
+                        berlaku_mulai: nilaiPerform?.Berlaku_Mulai,
+                        berlaku_hingga: nilaiPerform?.Berlaku_Hingga
                     }
-                })
-                return nilai
+                });
+                return nilai;
             })
         );
 
@@ -41,6 +41,7 @@ router.post("/updateskor", async (req, res) => {
                         nippos: filter.nippos,
                     }
                 });
+                const skor = nilaiLA?.skor ?? 0;
                 const nilai = await prisma.talent_Qualification.updateMany({
                     where: {
                         AND: [
@@ -49,12 +50,12 @@ router.post("/updateskor", async (req, res) => {
                         ]
                     },
                     data: {
-                        skor: nilaiLA.skor,
-                        berlaku_mulai: nilaiLA.Berlaku_Mulai,
-                        berlaku_hingga: nilaiLA.Berlaku_Hingga
+                        skor,
+                        berlaku_mulai: nilaiLA?.Berlaku_Mulai,
+                        berlaku_hingga: nilaiLA?.Berlaku_Hingga
                     }
-                })
-                return nilai
+                });
+                return nilai;
             })
         );
 
@@ -65,6 +66,7 @@ router.post("/updateskor", async (req, res) => {
                         nippos: filter.nippos,
                     }
                 });
+                const skor = nilaiakhlak?.skor ?? 0;
                 const nilai = await prisma.talent_Qualification.updateMany({
                     where: {
                         AND: [
@@ -73,12 +75,12 @@ router.post("/updateskor", async (req, res) => {
                         ]
                     },
                     data: {
-                        skor: nilaiakhlak.skor,
-                        berlaku_mulai: nilaiakhlak.Berlaku_Mulai,
-                        berlaku_hingga: nilaiakhlak.Berlaku_Hingga
+                        skor,
+                        berlaku_mulai: nilaiakhlak?.Berlaku_Mulai,
+                        berlaku_hingga: nilaiakhlak?.Berlaku_Hingga
                     }
-                })
-                return nilai
+                });
+                return nilai;
             })
         );
 
@@ -88,36 +90,37 @@ router.post("/updateskor", async (req, res) => {
              RIGHT JOIN "Talent_Qualification" tq
              on sb.nippos = tq.nippos
              WHERE sb.nippos is not null
-             GROUP BY sb.nippos, sb.avg_skor`
-            ;
+             GROUP BY sb.nippos, sb.avg_skor`;
 
-            const masukNilaiPotensi = await Promise.all(
-                ambilNippos.map(async (filter) => {
-                    const nilaipotensi = await prisma.skor_Potensi.findFirst({
-                        where: {
-                            nippos: filter.nippos,
-                        }
-                    });
-                    const nilai = await prisma.talent_Qualification.updateMany({
-                        where: {
-                            AND: [
-                                { nippos: filter.nippos },
-                                { id_kriteria_penilaian: 4 }
-                            ]
-                        },
-                        data: {
-                            skor: nilaipotensi.skor,
-                            berlaku_mulai: nilaipotensi.Berlaku_Mulai,
-                            berlaku_hingga: nilaipotensi.Berlaku_Hingga
-                        }
-                    })
-                    return nilai
-                })
-            );
+        const masukNilaiPotensi = await Promise.all(
+            ambilNippos.map(async (filter) => {
+                const nilaipotensi = await prisma.skor_Potensi.findFirst({
+                    where: {
+                        nippos: filter.nippos,
+                    }
+                });
+                const skor = nilaipotensi?.skor ?? 0;
+                const nilai = await prisma.talent_Qualification.updateMany({
+                    where: {
+                        AND: [
+                            { nippos: filter.nippos },
+                            { id_kriteria_penilaian: 4 }
+                        ]
+                    },
+                    data: {
+                        skor,
+                        berlaku_mulai: nilaipotensi?.Berlaku_Mulai,
+                        berlaku_hingga: nilaipotensi?.Berlaku_Hingga
+                    }
+                });
+                return nilai;
+            })
+        );
 
         const masukNilaibumn = await Promise.all(
-            nilaibumn.map(async (filter) => (
-                await prisma.talent_Qualification.updateMany({
+            nilaibumn.map(async (filter) => {
+                const skor = filter.avg_skor ?? 0;
+                return await prisma.talent_Qualification.updateMany({
                     where: {
                         AND: [
                             { nippos: filter.nippos },
@@ -125,27 +128,25 @@ router.post("/updateskor", async (req, res) => {
                         ]
                     },
                     data: {
-                        skor: filter.avg_skor,
+                        skor,
                         berlaku_mulai: new Date(),
                         berlaku_hingga: new Date()
                     }
-                }
-                )
-            )
-            )
-        )
+                });
+            })
+        );
 
         const nilaileadership = await prisma.$queryRaw`
              SELECT sl.nippos, avg(sl.skor) as avg_skor
              FROM "Skor_Leadership" sl
              RIGHT JOIN "Talent_Qualification" tq
              on sl.nippos = tq.nippos
-             GROUP BY sl.nippos`
-            ;
+             GROUP BY sl.nippos`;
 
         const masukNilaileader = await Promise.all(
-            nilaileadership.map(async (filter) => (
-                await prisma.talent_Qualification.updateMany({
+            nilaileadership.map(async (filter) => {
+                const skor = filter.avg_skor ?? 0;
+                return await prisma.talent_Qualification.updateMany({
                     where: {
                         AND: [
                             { nippos: filter.nippos },
@@ -153,15 +154,13 @@ router.post("/updateskor", async (req, res) => {
                         ]
                     },
                     data: {
-                        skor: filter.avg_skor,
+                        skor,
                         berlaku_mulai: new Date(),
                         berlaku_hingga: new Date()
                     }
-                }
-                )
-            )
-            )
-        )
+                });
+            })
+        );
 
         const nilaitechnical = await prisma.$queryRaw`
         WITH pre_talent_qualification AS (
@@ -212,28 +211,26 @@ SELECT
         MAX("Berlaku_Hingga") AS berlaku_hingga
 FROM ranked_scores
 WHERE rn <= 5
-GROUP BY nippos;`
-      console.log(nilaitechnical);
+GROUP BY nippos;`;
 
-const masukNilaitechnical = await Promise.all(
-    nilaitechnical.map(async (filter) => (
-        await prisma.talent_Qualification.updateMany({
-            where: {
-                AND: [
-                    { nippos: filter.nippos },
-                    { id_kriteria_penilaian: 3 }
-                ]
-            },
-            data: {
-                skor: filter.skor,
-                berlaku_mulai: filter.berlaku_mulai,
-                berlaku_hingga: filter.berlaku_hingga
-            }
-        }
-        )
-    )
-    )
-)
+        const masukNilaitechnical = await Promise.all(
+            nilaitechnical.map(async (filter) => {
+                const skor = filter.skor ?? 0;
+                return await prisma.talent_Qualification.updateMany({
+                    where: {
+                        AND: [
+                            { nippos: filter.nippos },
+                            { id_kriteria_penilaian: 3 }
+                        ]
+                    },
+                    data: {
+                        skor,
+                        berlaku_mulai: filter.berlaku_mulai,
+                        berlaku_hingga: filter.berlaku_hingga
+                    }
+                });
+            })
+        );
 
         res.status(200).json({ message: "done" });
     } catch (err) {
@@ -243,4 +240,3 @@ const masukNilaitechnical = await Promise.all(
 });
 
 export default router;
-
