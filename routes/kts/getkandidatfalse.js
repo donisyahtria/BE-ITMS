@@ -20,7 +20,9 @@ router.get("/getkandidatfalse", async (req, res) => {
             rk.nama_kantor as "Nama Kantor", 
             k3.nama as "Komite Unit",
             skor_competency.skor as "Competency/Psychotest",
-            sp2.skor as "PMS",
+            pms1.skor as "PMS2yearsago",
+            pms2.skor as "PMS1yearago",
+            pms3.skor as "PMSthisyear",
             sa.skor as "AKHLAK",
             sl.skor as "Learning Agility",
             case 
@@ -34,7 +36,21 @@ router.get("/getkandidatfalse", async (req, res) => {
         left join "Referensi_Bagian" rb on rb.id = k2.kode_bagian
         left join "Referensi_Rumpun_Jabatan" rrj on rrj.kode_rumpun_jabatan  = k2.rumpun_jabatan
         left join "Referensi_Kantor" rk on rk.nopend = k2.kode_nopend
-        left join "Skor_Performance" sp2 ON k.nippos = sp2.nippos
+        left join (
+            select * 
+            from "Skor_Performance"
+            where tahun = EXTRACT(YEAR FROM CURRENT_DATE) - 2
+              ) as pms1 on k.nippos = pms1.nippos
+        left join (
+            select * 
+            from "Skor_Performance"
+            where tahun = EXTRACT(YEAR FROM CURRENT_DATE) - 1
+              ) as pms2 on k.nippos = pms2.nippos
+        left join (
+            select * 
+            from "Skor_Performance"
+            where tahun = EXTRACT(YEAR FROM CURRENT_DATE)
+              ) as pms3 on k.nippos = pms3.nippos
         left join "skor_AKHLAK" sa ON k.nippos = sa.nippos
         left join "skor_LA" sl on k.nippos = sl.nippos
         left join (
@@ -70,7 +86,9 @@ router.get("/getkandidatfalse", async (req, res) => {
             rk.nama_kantor as "Nama Kantor", 
             k3.nama as "Komite Unit",
             skor_competency.skor as "Competency/Psychotest",
-            sp2.skor as "PMS",
+            pms1.skor as "PMS2yearsago",
+            pms2.skor as "PMS1yearago",
+            pms3.skor as "PMSthisyear",
             sa.skor as "AKHLAK",
             sl.skor as "Learning Agility",
             case 
@@ -84,7 +102,21 @@ router.get("/getkandidatfalse", async (req, res) => {
         left join "Referensi_Bagian" rb on rb.id = k2.kode_bagian
         left join "Referensi_Rumpun_Jabatan" rrj on rrj.kode_rumpun_jabatan  = k2.rumpun_jabatan
         left join "Referensi_Kantor" rk on rk.nopend = k2.kode_nopend
-        left join "Skor_Performance" sp2 ON k.nippos = sp2.nippos
+        left join (
+            select * 
+            from "Skor_Performance"
+            where tahun = EXTRACT(YEAR FROM CURRENT_DATE) - 2
+              ) as pms1 on k.nippos = pms1.nippos
+        left join (
+            select * 
+            from "Skor_Performance"
+            where tahun = EXTRACT(YEAR FROM CURRENT_DATE) - 1
+              ) as pms2 on k.nippos = pms2.nippos
+        left join (
+            select * 
+            from "Skor_Performance"
+            where tahun = EXTRACT(YEAR FROM CURRENT_DATE)
+              ) as pms3 on k.nippos = pms3.nippos
         left join "skor_AKHLAK" sa ON k.nippos = sa.nippos
         left join "skor_LA" sl on k.nippos = sl.nippos
         left join (
