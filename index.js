@@ -101,6 +101,7 @@ import updatenilaibutton from "./routes/days/updatenilaibutton"
 import getanggotakomitetalent from "./routes/parameter/getanggotakomitetalent"
 import gettotaladdedmember from "./routes/parameter/gettotaladdedmember"
 import assignaskomitetalent from "./routes/parameter/assignaskomitetalent"
+import getpopulasi from "./routes/dashboard/presentasepopulasi"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -120,6 +121,7 @@ app.use("/", getdatatalentjoblevel)
 app.use("/", getdetailtalent)
 app.use("/", getdatagender)
 app.use("/", getgendistribution)
+app.use("/", getpopulasi)
 
 //general
 app.use("/", updatedeadline)
