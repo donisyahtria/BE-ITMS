@@ -24,8 +24,9 @@ router.get("/getpopulasi", async (req, res) => {
     const jumlahkaryawan = karyawan.length;
     console.log("jumlah karyawan:", jumlahkaryawan);
     const total = jumlahpool / jumlahkaryawan;
+    const showTotal = jumlahpool + ' / ' + jumlahkaryawan
 
-    res.status(200).json(total);
+    res.status(200).json(showTotal);
   } catch (err) {
     console.log({ err });
     res.status(500).json({ message: "Internal server error", err });
