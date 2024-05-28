@@ -8,6 +8,9 @@ router.get("/getpopulasi", async (req, res) => {
     const pool = await prisma.talent_pool.findMany({
       where: {
         statustalent: true,
+        relasievent:{
+          evenstatus_id: 8
+        }
       },
     });
 

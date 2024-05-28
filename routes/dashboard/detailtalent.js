@@ -30,6 +30,7 @@ LEFT JOIN
     "Referensi_Jabatan" rj ON k.kode_jabatan = rj.id
 LEFT JOIN 
     "Referensi_Bagian" rb ON k.kode_bagian  = rb.id;
+    where et.evenstatus_id = 8;
  `
 
     res.status(200).json(getdetailtalent);
