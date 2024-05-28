@@ -102,6 +102,7 @@ import getanggotakomitetalent from "./routes/parameter/getanggotakomitetalent"
 import gettotaladdedmember from "./routes/parameter/gettotaladdedmember"
 import assignaskomitetalent from "./routes/parameter/assignaskomitetalent"
 import getpopulasi from "./routes/dashboard/presentasepopulasi"
+import getketuanames from "./routes/parameter/getketuanames"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -150,6 +151,7 @@ app.use("/", updatequestion)
 app.use("/", getanggotakomitetalent)
 app.use("/", gettotaladdedmember)
 app.use("/", assignaskomitetalent)
+app.use("/", getketuanames)
 
 // Event
 app.use("/",getevent)
