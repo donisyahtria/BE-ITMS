@@ -102,6 +102,7 @@ import getanggotakomitetalent from "./routes/parameter/getanggotakomitetalent"
 import gettotaladdedmember from "./routes/parameter/gettotaladdedmember"
 import assignaskomitetalent from "./routes/parameter/assignaskomitetalent"
 import getpopulasi from "./routes/dashboard/presentasepopulasi"
+import getnilaidays from "./routes/days/getallnilai"
 import getketuanames from "./routes/parameter/getketuanames"
 
 const port = process.env.PORT || 4000;
@@ -249,6 +250,7 @@ app.use("/", loloskandays)
 app.use("/", assignasbpj)
 app.use("/", getquestionevent)
 app.use("/", updatenilaibutton)
+app.use("/", getnilaidays)
 
 app.get("/*", (req,res)=>{
     res.status(200).json({message: 'Welcome To ITMS Back-End'})
