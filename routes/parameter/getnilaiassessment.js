@@ -9,20 +9,20 @@ router.get("/getnilaiassessment", async (req, res) => {
 select distinct 
 	k.nama as "nama",
 	k.nippos as "nippos",
-	concat(rj.nama_jabatan, ' ', rb.nama_bagian) as "posisi",
-	k.job_level as "joblevel", 
-	rrj.nama_rumpun_jabatan as "rumpunjabatan", 
-	rk.nama_kantor as "kantor",
-	k2.nama as "komiteunit",
-	sb.avg_skor as "kompbumn",
-	leadership.avg_leadership as "komplead",
-	kt.skor as "kompteknis",
-	sp.skor as "potensi",
-	sa.skor as "akhlak",
-	sl.skor as "learningagility",
-	pms1.skor as "PMS2yearsago",
-	pms2.skor as "PMS1yearago",
-	pms3.skor as "PMSthisyear"
+	COALESCE(cast(concat(rj.nama_jabatan, ' ', rb.nama_bagian) as text), '-') as "posisi",
+	COALESCE(cast(k.job_level as text), '-') as "joblevel", 
+	COALESCE(cast(rrj.nama_rumpun_jabatan as text), '-') as "rumpunjabatan", 
+	COALESCE(cast(rk.nama_kantor as text), '-') as "kantor",
+	COALESCE(cast(k2.nama as text), '-') as "komiteunit",
+	COALESCE(cast(ROUND(CAST(sb.avg_skor as numeric), 2) as text), '-') as "kompbumn",
+	COALESCE(cast(leadership.avg_leadership as text), '-') as "komplead",
+	COALESCE(cast(kt.skor as text), '-') as "kompteknis",
+	COALESCE(cast(ROUND(CAST(sp.skor as numeric), 2) as text), '-') as "potensi",
+	COALESCE(cast(sa.skor as text), '-') as "akhlak",
+	COALESCE(cast(sl.skor as text), '-') as "learningagility",
+	COALESCE(cast(pms1.skor as text), '-') as "PMS2yearsago",
+	COALESCE(cast(pms2.skor as text), '-') as "PMS1yearago",
+	COALESCE(cast(pms3.skor as text), '-') as "PMSthisyear"
 from "Karyawan" k 
 left join "Referensi_Jabatan" rj on rj.id = k.kode_jabatan
 left join "Referensi_Bagian" rb on rb.id = k.kode_bagian
