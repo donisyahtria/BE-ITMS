@@ -8,8 +8,12 @@ router.post("/updatenilaibutton", async (req, res) => {
     const nippos = req.body.nippos; // Assuming this is a single value, not an array
     const data = req.body.data; // This is an array of objects
     const eventtalentid = parseInt(req.body.eventid);
+
+    console.log(data);
     
-    const updatePromises = data.map(item => {
+    const updatePromises = data
+    .filter(item => item !== null) // Filter out null items
+    .map(item => {
         return prisma.talent_Days.updateMany({
             where: {
                 nippos: nippos, // Assuming nippos is not an array
@@ -21,6 +25,7 @@ router.post("/updatenilaibutton", async (req, res) => {
             }
         });
     });
+
 
     const updatestatus = await prisma.talent_Days.updateMany({
           where: {
