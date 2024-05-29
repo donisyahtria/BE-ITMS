@@ -103,6 +103,7 @@ import getpopulasi from "./routes/dashboard/presentasepopulasi"
 import getnilaidays from "./routes/days/getallnilai"
 import getketuanames from "./routes/parameter/getketuanames"
 import notifketuakomite from "./routes/cluster/notifikasiketuakomite"
+import notiftalent      from "./routes/Pool/notifikasitalentpool"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -234,8 +235,9 @@ app.use("/", notifketuakomite)
 // Pool
 app.use("/", gettalentpool);
 app.use("/", gettabledayskaryawan);
-app.use("/",selesaistatus)
+app.use("/", selesaistatus)
 app.use("/", updatestatuspool)
+app.use("/", notiftalent)
 
 // Days
 app.use("/", detailnilai);
