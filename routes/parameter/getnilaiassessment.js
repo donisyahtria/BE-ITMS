@@ -20,7 +20,9 @@ select distinct
 	sp.skor as "potensi",
 	sa.skor as "akhlak",
 	sl.skor as "learningagility",
-	sp2.skor as "performance"
+	pms1.skor as "PMS2yearsago",
+	pms2.skor as "PMS1yearago",
+	pms3.skor as "PMSthisyear"
 from "Karyawan" k 
 left join "Referensi_Jabatan" rj on rj.id = k.kode_jabatan
 left join "Referensi_Bagian" rb on rb.id = k.kode_bagian
@@ -37,7 +39,21 @@ left join (
 left join "skor_Potensi" sp on k.nippos = sp.nippos 
 left join "skor_AKHLAK" sa ON k.nippos = sa.nippos
 left join "skor_LA" sl on k.nippos = sl.nippos
-left join "Skor_Performance" sp2 ON k.nippos = sp2.nippos
+left join (
+	select * 
+	from "Skor_Performance"
+	where tahun = EXTRACT(YEAR FROM CURRENT_DATE) - 2
+	  ) as pms1 on k.nippos = pms1.nippos
+left join (
+	select * 
+	from "Skor_Performance"
+	where tahun = EXTRACT(YEAR FROM CURRENT_DATE) - 1
+	  ) as pms2 on k.nippos = pms2.nippos
+left join (
+	select * 
+	from "Skor_Performance"
+	where tahun = EXTRACT(YEAR FROM CURRENT_DATE)
+	  ) as pms3 on k.nippos = pms3.nippos
 left join (
 	SELECT 
 	    rs.nippos,
