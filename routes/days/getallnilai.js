@@ -8,6 +8,9 @@ router.post("/getnilaidays", async (req, res) => {
     const eventid = parseInt(req.body.eventtalentid)
   try {
     const nilai = await prisma.talent_Days.findMany({
+      orderBy: {
+        id_pertanyaan: 'asc'
+      },
         where:{
             nippos: nippos,
             eventtalentid: eventid,
@@ -16,7 +19,7 @@ router.post("/getnilaidays", async (req, res) => {
             // }
         },
       select: {
-        // id_pertanyaan: true,
+        id_pertanyaan: true,
         skor: true
       },
     });

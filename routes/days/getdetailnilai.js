@@ -5,13 +5,14 @@ const router = express.Router();
 
 router.get("/getdetailnilai", async (req, res) => {
     const nippos = req.body.nippos
+    const eventid = parseInt(req.body.eventtalentid)
   try {
     const detail = await prisma.talent_Days.findMany({
       where: {
-        nippos: nippos
+        nippos: nippos,
+        eventtalentid: eventid
       },
       select: {
-        id: true,
         nippos: true,
         id_pertanyaan: true,
         skor: true
