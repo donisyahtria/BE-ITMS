@@ -35,32 +35,33 @@ router.post("/createtdays", async (req, res) => {
             eventtalentid: row.eventtalentid,
             komite_unit: row.komite_unit,
             skor: 0
-,
+            ,
             id_pertanyaan: row.id_pertanyaan,
             createdAt: new Date(),
             eventtalentid: row.eventtalentid,
             status: false
           },
         });
-      }}
+      }
+    }
 
-//     const masukDays = await Promise.all(
-//       persons.map(async (filter) => {
-//         const loopmasukdays = await prisma.talent_Days.createMany({
-//           data: {
-//             nippos: filter.nippos,
-//             eventtalentid: filter.eventtalentid,
-//             komite_unit: filter.komite_unit,
-//             skor: 0
-// ,
-//             id_pertanyaan: filter.id_pertanyaan,
-//             createdAt: new Date(),
-//             eventtalentid: filter.eventtalentid
-//           },
-//         });
-//         return loopmasukdays
-//       })
-//     );
+    //     const masukDays = await Promise.all(
+    //       persons.map(async (filter) => {
+    //         const loopmasukdays = await prisma.talent_Days.createMany({
+    //           data: {
+    //             nippos: filter.nippos,
+    //             eventtalentid: filter.eventtalentid,
+    //             komite_unit: filter.komite_unit,
+    //             skor: 0
+    // ,
+    //             id_pertanyaan: filter.id_pertanyaan,
+    //             createdAt: new Date(),
+    //             eventtalentid: filter.eventtalentid
+    //           },
+    //         });
+    //         return loopmasukdays
+    //       })
+    //     );
 
     res.status(200).json({ message: "done" });
   } catch (error) {

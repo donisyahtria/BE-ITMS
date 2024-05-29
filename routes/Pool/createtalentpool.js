@@ -51,7 +51,7 @@ router.post("/createpool", async (req, res) => {
           }}
 
 
-    // const masukpool = await Promise.all(
+// const masukpool = await Promise.all(
     //   persons.map(async (filter) => {
     //     const loopmasukpool = await prisma.talent_pool.createMany({
     //       data: {

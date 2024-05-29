@@ -17,6 +17,17 @@ router.post("/notifbpj", async (req, res) => {
         distinct:  ['nippos']
     })
 
+    const updatebpjdetail = await prisma.event_Talent.updateMany({
+      where:{
+        id: eventid
+      },
+      data:{
+        jenis_bpj: req.body.jenis_bpj,
+        tanggal_bpj: req.body.tanggal_bpj,
+        lokasi_bpj: req.body.lokasi_bpj
+      }
+    })
+
     for (const row of detail) {
       const eventId = row.eventtalentid;
       // Check if the event_id exists in the insertedEventIds table
