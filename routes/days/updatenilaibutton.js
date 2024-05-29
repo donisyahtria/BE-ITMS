@@ -18,10 +18,19 @@ router.post("/updatenilaibutton", async (req, res) => {
             },
             data: {
                 skor: parseFloat(item.nilaiInput), // Use the current nilaiInput from the item
-                status: true
             }
         });
     });
+
+    const updatestatus = await prisma.talent_Days.updateMany({
+          where: {
+              nippos: nippos, // Assuming nippos is not an array
+              eventtalentid: eventtalentid
+          },
+          data: {
+              status: true
+          }
+      });
     
     await Promise.all(updatePromises);
 
