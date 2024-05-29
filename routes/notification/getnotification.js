@@ -15,7 +15,8 @@ left join referensi_notifikasi rn
 on nk.id_referensi_notifikasi = rn.id 
 left join "Event_Talent" et
 on nk.eventtalentid = et.id
-where nippos=${nippos}`
+where nippos=${nippos}
+order by dibuat_pada desc`
 
     res.status(200).json(getnotification);
   } catch (err) {
