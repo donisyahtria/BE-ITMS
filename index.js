@@ -102,6 +102,7 @@ import assignaskomitetalent from "./routes/parameter/assignaskomitetalent"
 import getpopulasi from "./routes/dashboard/presentasepopulasi"
 import getnilaidays from "./routes/days/getallnilai"
 import getketuanames from "./routes/parameter/getketuanames"
+import notifketuakomite from "./routes/cluster/notifikasiketuakomite"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -228,6 +229,7 @@ app.use("/", getkkm)
 app.use("/", clustertable)
 app.use("/", getkomitetalentevent)
 app.use("/", updatematriks)
+app.use("/", notifketuakomite)
 
 // Pool
 app.use("/", gettalentpool);
