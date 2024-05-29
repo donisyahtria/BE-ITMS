@@ -22,6 +22,7 @@ router.post("/notifkaryawan", async (req, res) => {
       const existingRow = await prisma.notifikasi_karyawan.findFirst({
         where: {
           eventtalentid: eventId,
+          id_referensi_notifikasi: 4,
           nippos: row.nippos
         }
       });

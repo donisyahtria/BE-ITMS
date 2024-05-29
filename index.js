@@ -21,12 +21,10 @@ import tqualification from "./routes/qualification/createqualification"
 import skorkt1 from "./routes/qualification/skorkt1"
 import comparenilai from "./routes/qualification/comparenilaikt1"
 import tdays from "./routes/days/createtalentdays"
-import updatedays from "./routes/days/updatenilai"
 import createqual from "./routes/cluster/createtalentcluster"
 import hitungcluster from "./routes/cluster/hitungcluster"
 import createpool    from "./routes/Pool/createtalentpool"
 import createqualalt from "./routes/qualification/createqual_alt"
-import skordays from "./routes/days/updatenilai"
 import joblevelfilter from "./routes/kts/getjoblevelfilter"
 import hapusevent       from "./routes/event/hapusevent"
 import createprofile    from "./routes/talentprofile/createtalentprofile"
@@ -207,7 +205,6 @@ app.use("/", tqualification);
 app.use("/", skorkt1);
 app.use("/", comparenilai);
 app.use("/", tdays);
-app.use("/", updatedays);
 app.use("/", createqual);
 app.use("/", hitungcluster);
 app.use("/", createpool);
@@ -239,7 +236,6 @@ app.use("/",selesaistatus)
 app.use("/", updatestatuspool)
 
 // Days
-app.use("/", skordays);
 app.use("/", detailnilai);
 app.use("/", getalldays);
 app.use("/", gettabledaysbpj)
