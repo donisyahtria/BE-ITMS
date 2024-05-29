@@ -15,13 +15,13 @@ router.get("/getqualificationtidak", async (req, res) => {
 	rrj.nama_rumpun_jabatan as "Rumpun Jabatan", 
 	rk.nama_kantor as "Nama Kantor",
 	k2.nama as "Komite Unit",
-	psy.skor as "Competency/Psychotest",
+	round(cast(psy.skor as numeric), 2) as "Competency/Psychotest",
 	psy.status as "compstatus",
-	pms.skor as "PMS",
+	round(cast(pms.skor as numeric), 2) as "PMS",
 	pms.status as "pmsstatus",
-	akhlak.skor as "AKHLAK",
+	round(cast(akhlak.skor as numeric), 2) as "AKHLAK",
 	akhlak.status as "akhlakstatus",
-	la.skor as "Learning Agility",
+	round(cast(la.skor as numeric), 2) as "Learning Agility",
 	la.status as "lastatus"
 	from "Talent_Qualification" tq
 join "Karyawan" k on k.nippos = tq.nippos

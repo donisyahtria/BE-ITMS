@@ -9,13 +9,17 @@ router.post("/updateskor", async (req, res) => {
             distinct: ['nippos']
         });
 
+        // Fetch average skor from prisma.skor_Performance grouped by nippos
+        const avgNilaiPerformance = await prisma.skor_Performance.groupBy({
+            by: ['nippos'],
+            _avg: {
+                skor: true,
+            },
+        });
+
         const masukNilaiPerformance = await Promise.all(
-            ambilNippos.map(async (filter) => {
-                const nilaiPerform = await prisma.skor_Performance.findFirst({
-                    where: { nippos: filter.nippos }
-                });
-                if (!nilaiPerform) return null;
-                const skor = nilaiPerform.skor ?? 0;
+            avgNilaiPerformance.map(async (filter) => {
+                const skor = filter._avg.skor ?? 0;
                 return await prisma.talent_Qualification.updateMany({
                     where: {
                         AND: [
@@ -25,8 +29,9 @@ router.post("/updateskor", async (req, res) => {
                     },
                     data: {
                         skor,
-                        berlaku_mulai: nilaiPerform.Berlaku_Mulai,
-                        berlaku_hingga: nilaiPerform.Berlaku_Hingga
+                        // Set these to suitable date values as needed
+                        berlaku_mulai: new Date(), 
+                        berlaku_hingga: new Date()
                     }
                 });
             })
