@@ -105,6 +105,7 @@ import getketuanames from "./routes/parameter/getketuanames"
 import createqualificationtable from "./routes/qualification/createqualification_new"
 import notifketuakomite from "./routes/cluster/notifikasiketuakomite"
 import notiftalent      from "./routes/Pool/notifikasitalentpool"
+import getsijabinfo     from "./routes/days/getsijabinfo"
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -253,6 +254,7 @@ app.use("/", assignasbpj)
 app.use("/", getquestionevent)
 app.use("/", updatenilaibutton)
 app.use("/", getnilaidays)
+app.use("/", getsijabinfo)
 
 app.get("/*", (req,res)=>{
     res.status(200).json({message: 'Welcome To ITMS Back-End'})
