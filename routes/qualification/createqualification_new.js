@@ -156,8 +156,8 @@ router.post("/createqualificationtable", async (req, res) => {
             and tp.eventtalentid = ${event_id}
         order by tp.nippos, temp.id_kriteria_penilaian;
         `
-        
-        let hasil=[]
+
+        let hasil = []
         for (const row of lolosprofile) {
             const eventId = row.eventtalentid;
             const existingRow = await prisma.talent_Qualification.findFirst({
@@ -167,10 +167,10 @@ router.post("/createqualificationtable", async (req, res) => {
                     id_kriteria_penilaian: row.id_kriteria_penilaian
                 }
             });
-        
+
             if (!existingRow) {
                 const masukqual = await prisma.talent_Qualification.create({
-                    data:{
+                    data: {
                         nippos: row.nippos,
                         id_kriteria_penilaian: row.id_kriteria_penilaian,
                         skor: row.skor,
@@ -183,6 +183,21 @@ router.post("/createqualificationtable", async (req, res) => {
                     }
                 })
                 hasil.push(masukqual)
+            } else {
+                const updatequal = await prisma.talent_Qualification.updateMany({
+                    where: {
+                        eventtalentid: eventId,
+                        nippos: row.nippos,
+                        id_kriteria_penilaian: row.id_kriteria_penilaian
+                    },
+                    data: {
+                        skor: row.skor,
+                        berlaku_mulai: row.berlaku_mulai,
+                        berlaku_hingga: row.berlaku_hingga,
+                        status: row.status
+                    }
+                })
+                hasil.push(updatequal)
             }
 
         }
