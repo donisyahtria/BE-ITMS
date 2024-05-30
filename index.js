@@ -102,6 +102,7 @@ import assignaskomitetalent from "./routes/parameter/assignaskomitetalent"
 import getpopulasi from "./routes/dashboard/presentasepopulasi"
 import getnilaidays from "./routes/days/getallnilai"
 import getketuanames from "./routes/parameter/getketuanames"
+import createqualificationtable from "./routes/qualification/createqualification_new"
 import notifketuakomite from "./routes/cluster/notifikasiketuakomite"
 import notiftalent      from "./routes/Pool/notifikasitalentpool"
 
@@ -225,6 +226,7 @@ app.use("/", getallprofile)
 app.use("/", getqualification);
 app.use("/", getquallolos)
 app.use("/", getkkm)
+app.use("/", createqualificationtable)
 
 //Cluster
 app.use("/", clustertable)
