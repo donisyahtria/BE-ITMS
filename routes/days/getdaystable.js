@@ -14,7 +14,7 @@ router.get("/gettablekaryawandays", async (req, res) => {
     k.job_level as "Job Level", 
     rrj.nama_rumpun_jabatan as "Rumpun Jabatan", 
     rk.nama_kantor as "Nama Kantor",
-    k2.nama as "Komite Unit",
+    COALESCE(cast(k2.nama as text), '-') as "Komite Unit",
         CASE
         WHEN td.status THEN 'Sudah Diisi'
         ELSE 'Belum Diisi'

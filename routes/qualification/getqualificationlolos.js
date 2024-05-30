@@ -14,7 +14,7 @@ router.get("/getquallolos", async (req, res) => {
 	k.job_level as "Job Level", 
 	rrj.nama_rumpun_jabatan as "Rumpun Jabatan", 
 	rk.nama_kantor as "Nama Kantor",
-	k2.nama as "Komite Unit",
+	COALESCE(cast(k2.nama as text), '-') as "Komite Unit",
 	round(cast(psy.skor as numeric), 2) as "Competency/Psychotest",
 	psy.status as "compstatus",
 	round(cast(pms.skor as numeric), 2) as "PMS",

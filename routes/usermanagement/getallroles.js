@@ -12,7 +12,7 @@ router.get("/getallroles", async (req, res) => {
     rrj.nama_rumpun_jabatan AS jobfam,
     CONCAT(rj.nama_jabatan, ' ', rb.nama_bagian) AS posisi, 
     k.job_level AS joblevel,
-    role_aggregated.peran AS "Peran"
+    COALESCE(cast(role_aggregated.peran as text), '-') AS "Peran"
 FROM 
     "Karyawan" k 
 LEFT JOIN 

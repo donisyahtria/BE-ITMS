@@ -14,7 +14,7 @@ router.get("/getclustertable", async (req, res) => {
     k.job_level AS "Job Level",
     rrj.nama_rumpun_jabatan AS "Rumpun Jabatan",
     rk.nama_kantor AS "Nama Kantor",
-    k2.nama AS "Komite Unit",
+    COALESCE(cast(k2.nama as text), '-') AS "Komite Unit",
     psy.skor AS "Competency/Psychotest",
     pms.skor AS "PMS",
     akhlak.skor AS "AKHLAK",

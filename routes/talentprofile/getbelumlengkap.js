@@ -14,9 +14,9 @@ router.get("/getbelumlengkap", async (req, res) => {
     rrj.nama_rumpun_jabatan as "Rumpun Jabatan", 
     CASE WHEN tp.commitmenletter = FALSE THEN 'Belum Submit' ELSE 'Sudah Submit' END AS "Commitment Letter",
     CASE WHEN tp.pakta_integritas = FALSE THEN 'Belum Submit' ELSE 'Sudah Submit' END AS "Pakta Integritas",
-    k2.nama as "Komite Unit",
+    COALESCE(cast(k2.nama as text), '-') as "Komite Unit",
     tp.eventtalentid as "eventid",
-    tp.status_submit as "Status Submit"
+    COALESCE(cast(tp.status_submit as text), '-') as "Status Submit"
   from "Talent_Profile" tp 
   left join "Karyawan" k on k.nippos = tp.nippos
   left join "Karyawan" k2 on k2.nippos = tp.komite_unit 
