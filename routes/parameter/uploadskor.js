@@ -4,8 +4,10 @@ import express from "express";
 const router = express.Router();
 
 router.post("/addskor", async (req, res) => {
-  const dataArray = req.body.data; 
+  const dataIncoming = req.body.data; 
   const kategori = parseInt(req.body.kategori)
+
+  const dataArray = dataIncoming.filter(data => data.nippos !== "");
 
   const groupedData = dataArray.reduce((acc, data) => {
     if (!acc[data.nippos]) {
