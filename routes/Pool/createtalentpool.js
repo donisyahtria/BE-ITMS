@@ -45,7 +45,7 @@ router.post("/createpool", async (req, res) => {
                 dibuat_pada: new Date(),
                 id_matriks_kategori: row.Id_Matriks_Kategori_Akhir,
                 Berlaku_Mulai: new Date(),
-                Berlaku_Hingga: twoYearsFromNow
+                Berlaku_Hingga: new Date(),
               }
             })
           }}

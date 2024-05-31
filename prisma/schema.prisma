@@ -294,6 +294,7 @@ model Deadline_Event_Step {
   deadline_5  DateTime?    @db.Date
   startdate_6 DateTime?    @db.Date
   deadline_6  DateTime?    @db.Date
+  eventselesai DateTime?   @db.Date
   eventtalent Event_Talent @relation(fields: [event_id], references: [id])
 }
 

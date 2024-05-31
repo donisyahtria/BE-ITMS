@@ -33,6 +33,12 @@ router.get("/getallevent", async (req, res) => {
               select:{
                 level_jabatan:true
               }
+            },
+            deadline:{
+              select:{
+                startdate_1:true,
+                eventselesai:true
+              }
             }
         }
     });

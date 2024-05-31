@@ -23,6 +23,7 @@ router.get("/geteventdeadline", async (req, res) => {
           deadline_5: true,
           startdate_6: true,
           deadline_6: true,
+          eventselesai:true
         }
       })
       res.status(200).json(eventtime)
