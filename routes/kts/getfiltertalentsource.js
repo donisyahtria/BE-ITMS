@@ -20,6 +20,11 @@ router.post("/getfilterkaryawan", async (req, res) => {
             },
           },
         },
+        relasipool:{
+          some:{
+            statustalent: false
+          }
+        },
         job_level: {
           in: jobLebel,
         },
