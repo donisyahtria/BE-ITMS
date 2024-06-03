@@ -6,7 +6,7 @@ const router = express.Router();
 router.get("/getdetailtalent", async (req, res) => {
   try {
     const getdetailtalent = await prisma.$queryRaw` 
-    SELECT 
+    SELECT
         CAST(ROW_NUMBER() OVER () AS VARCHAR) AS id,
         k.nama AS "nama", 
         tp.nippos AS "nippos", 
@@ -33,7 +33,8 @@ router.get("/getdetailtalent", async (req, res) => {
         "Referensi_Bagian" rb ON k.kode_bagian  = rb.id
     left join matriks_kategori mk  
         on tp.id_matriks_kategori = mk."Id" 
-    where et.evenstatus_id = 8;
+    where et.evenstatus_id = 8
+    and   tp.statustalent = true;
  `;
 
     res.status(200).json(getdetailtalent);
