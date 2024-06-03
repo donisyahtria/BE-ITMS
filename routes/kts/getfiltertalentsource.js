@@ -8,6 +8,8 @@ router.post("/getfilterkaryawan", async (req, res) => {
   const job_level = req.query.job_level;
   const eventid = req.body.eventtalentid;
   const jobLebel = job_level.split(",");
+  const tipekomitetalent = req.body.tipekomitetalent;
+
   try {
     const hasilFilterEvent = await prisma.karyawan.findMany({
       where: {
@@ -39,23 +41,26 @@ router.post("/getfilterkaryawan", async (req, res) => {
         }
       });
       // console.log(existingRow);
-      
-          if (!existingRow) {
-                await prisma.kandidat_Talent_dan_Source.create({
-                  data: {
-                    relasiNippos: {connect:{nippos: row.nippos,}},
-                    idevent: {connect:{id: eventid}},
-                    status_talensource: false,
-                    createdAt: new Date(),
-                    // relasiKomiteUnit: {connect:{nippos: null}},
-                  },
-                });
-            ;
-          }}
+
+      if (!existingRow) {
+        const statusTalensource = tipekomitetalent === 'Komite Talent 1';
+
+        await prisma.kandidat_Talent_dan_Source.create({
+          data: {
+            relasiNippos: { connect: { nippos: row.nippos, } },
+            idevent: { connect: { id: eventid } },
+            status_talensource: statusTalensource,
+            createdAt: new Date(),
+            // relasiKomiteUnit: {connect:{nippos: null}},
+          },
+        });
+        ;
+      }
+    }
 
 
 
-    res.status(200).json({hasilFilterEvent});
+    res.status(200).json({ hasilFilterEvent });
   } catch (err) {
     console.log({ err });
     res.status(500).json({ message: "Internal server error", err });
