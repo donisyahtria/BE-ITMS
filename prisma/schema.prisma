@@ -54,6 +54,7 @@ model Karyawan {
   nippospotensi           skor_Potensi[]
   nipposbpj               daftar_bpj_event[]
   notifikasi              notifikasi_karyawan[]
+  relasipool              talent_pool[]
 }
 
 model Referensi_Kantor {
@@ -395,8 +396,8 @@ model Skor_Technical {
 
 model Referensi_Kompetensi_Leadership {
   id           Int               @id @default(autoincrement())
-  kodekomplead String?            @db.VarChar(10)
-  kodeassessment String          @db.VarChar(10)
+  kodekomplead String            @db.VarChar(10)
+  kodeassessment String?          @db.VarChar(10)
   namakomplead String            @db.VarChar(255)
   desckomplead String            @db.VarChar(1000)
   relasilead   Skor_Leadership[]
@@ -516,6 +517,7 @@ model talent_pool {
   id_matriks_kategori Int
   Berlaku_Mulai       DateTime
   Berlaku_Hingga      DateTime
+  relasikaryawan      Karyawan                 @relation(fields: [nippos], references: [nippos])
   relasievent         Event_Talent             @relation(fields: [eventtalentid], references: [id])
   refmatriks          matriks_kategori         @relation(fields: [id_matriks_kategori], references: [Id])
   refrumpun           Referensi_Rumpun_Jabatan @relation(fields: [rumpunjabatan], references: [kode_rumpun_jabatan])

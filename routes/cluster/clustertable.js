@@ -26,7 +26,8 @@ router.get("/getclustertable", async (req, res) => {
         WHEN tc."Id_Matriks_Kategori_Awal" = tc."Id_Matriks_Kategori_Akhir" THEN 'Tetap'
         WHEN tc."Id_Matriks_Kategori_Awal" > tc."Id_Matriks_Kategori_Akhir" THEN 'Naik'
         ELSE 'Turun'
-    END AS status
+    END AS status,
+    tc.alasan AS "reason"
 FROM 
     "Talent_Cluster" tc 
 LEFT JOIN 
