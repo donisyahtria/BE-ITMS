@@ -21,7 +21,7 @@ router.post("/getfilterkaryawan", async (req, res) => {
           },
         },
         relasipool:{
-          some:{
+          every:{
             statustalent: false
           }
         },
