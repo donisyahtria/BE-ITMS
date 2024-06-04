@@ -44,7 +44,10 @@ router.get("/getkomiteevent", async (req, res) => {
             tanggal_mulai: true,
             tanggal_selesai: true,
             evenstatus_id: true
-        }
+        },
+        orderBy: {
+          createdAt: 'desc'
+      }
     });
 
     res.status(200).json({event});
