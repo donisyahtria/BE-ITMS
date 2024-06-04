@@ -1,6 +1,7 @@
 import prisma from "../../prisma/prisma";
 import express from "express";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 
 const router = express.Router();
 
@@ -37,8 +38,14 @@ router.post("/loginadmin", async (req, res) => {
       }
     })
 
-    if (!user || user.password !== password) {
-      // Jika user tidak ditemukan atau password salah
+    if (!user) {
+      // Jika user tidak ditemukan
+      return res.status(401).json({ message: "Username or password is incorrect" });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user.password);
+    if (!passwordMatch) {
+      // Jika password salah
       return res.status(401).json({ message: "Username or password is incorrect" });
     }
 
