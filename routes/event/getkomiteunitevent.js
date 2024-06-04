@@ -21,31 +21,34 @@ router.get("/getkomiteunitevent", async (req, res) => {
 
 
     const event = await prisma.event_Talent.findMany({
-        where: {
-            id: {
+      where: {
+          id: {
               in: eventIds
-            }
+          }
+      },
+      select: {
+          id: true,
+          nama_event: true,
+          deskripsi: true,
+          tipekomite: {
+              select: {
+                  tipe_komite_talent: true
+              }
           },
-        select:{
-            id: true,
-            nama_event:true,
-            deskripsi: true,
-            tipekomite:{
-                select:{
-                    tipe_komite_talent: true
-                }
-            },
-            kode_rumpun_jabatan:true,
-            rumpun:{
-                select:{
-                    nama_rumpun_jabatan: true
-                }
-            },
-            tanggal_mulai: true,
-            tanggal_selesai: true,
-            evenstatus_id: true
-        }
-    });
+          kode_rumpun_jabatan: true,
+          rumpun: {
+              select: {
+                  nama_rumpun_jabatan: true
+              }
+          },
+          tanggal_mulai: true,
+          tanggal_selesai: true,
+          evenstatus_id: true
+      },
+      orderBy: {
+          createdAt: 'desc'
+      }
+  });
 
     res.status(200).json({event});
   } catch (err) {
