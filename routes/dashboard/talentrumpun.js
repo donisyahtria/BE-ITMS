@@ -17,9 +17,9 @@ router.get("/getdatatalentrumpun", async (req, res) => {
         WHEN rrj.nama_rumpun_jabatan = 'Perencanaan dan Pengelolaan Strategis' THEN 'PP'
         WHEN rrj.nama_rumpun_jabatan = 'Manajemen Risiko dan Kepatuhan' THEN 'MR'
         WHEN rrj.nama_rumpun_jabatan = 'Pengelolaan Regulasi' THEN 'PR'
-        WHEN rrj.nama_rumpun_jabatan = 'Pengelolaan Teknologi' THEN 'TI'
+        WHEN rrj.nama_rumpun_jabatan = 'Pengelolaan Teknologi' THEN 'DI'
         WHEN rrj.nama_rumpun_jabatan = 'Keuangan' THEN 'KU'
-        WHEN rrj.nama_rumpun_jabatan = 'Sumber Daya Manusia' THEN 'SDM'
+        WHEN rrj.nama_rumpun_jabatan = 'Sumber Daya Manusia' THEN 'SD'
     END) AS nama_rumpun_jabatan,
     mk."Nama_Matriks_Kategori", 
     COUNT(tp.id_matriks_kategori) 
@@ -41,12 +41,12 @@ ORDER BY
     (CASE 
         WHEN rrj.nama_rumpun_jabatan = 'Operasi' THEN 'OP'
         WHEN rrj.nama_rumpun_jabatan = 'Bisnis' THEN 'B'
-        WHEN rrj.nama_rumpun_jabatan = 'Perencanaan dan Pengelolaan Strategis' THEN 'POP'
+        WHEN rrj.nama_rumpun_jabatan = 'Perencanaan dan Pengelolaan Strategis' THEN 'PP'
         WHEN rrj.nama_rumpun_jabatan = 'Manajemen Risiko dan Kepatuhan' THEN 'MR'
         WHEN rrj.nama_rumpun_jabatan = 'Pengelolaan Regulasi' THEN 'PR'
-        WHEN rrj.nama_rumpun_jabatan = 'Pengelolaan Teknologi' THEN 'TI'
+        WHEN rrj.nama_rumpun_jabatan = 'Pengelolaan Teknologi' THEN 'DI'
         WHEN rrj.nama_rumpun_jabatan = 'Keuangan' THEN 'KU'
-        WHEN rrj.nama_rumpun_jabatan = 'Sumber Daya Manusia' THEN 'SDM'
+        WHEN rrj.nama_rumpun_jabatan = 'Sumber Daya Manusia' THEN 'SD'
     END) AS nama_rumpun_jabatan,
     mk."Nama_Matriks_Kategori", 
     COUNT(tp.id_matriks_kategori) 
