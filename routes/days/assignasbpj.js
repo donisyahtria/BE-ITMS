@@ -15,17 +15,15 @@ router.post("/assignasbpj", async (req, res) => {
       }
     });
 
-    if (existingEntry) {
-      return res.status(400).json({ message: "Combination of nippos and eventtalentid already exists" });
-    }
-
     // Create new entry
+    if (!existingEntry){
     const tambahbpj = await prisma.daftar_bpj_event.create({
       data: {
         nippos: nippos,
         eventtalentid: parseInt(eventtalentid)
       }
     });
+  }
 
     res.status(200).json({ message: "Data berhasil ditambah" });
   } catch (err) {
