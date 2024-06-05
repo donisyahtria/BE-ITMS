@@ -42,9 +42,21 @@ router.get("/getkaryawanevent", async (req, res) => {
             },
             tanggal_mulai: true,
             tanggal_selesai: true,
-            evenstatus_id: true
+            evenstatus_id: true,
+            profile:{
+              where:{
+                nippos: nippos
+              },
+              select:{
+                pakta_integritas: true,
+                commitmenletter: true
+              }
+            }
+        },
+        orderBy: {
+          createdAt: 'desc'
         }
-    });
+      });
 
     res.status(200).json({event});
   } catch (err) {
