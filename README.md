@@ -29,6 +29,11 @@ git clone (paste link url nya tadi tanpa tanda kurung)
 # BE-ITMS - GITLAB
 
 # cara pertama kali push <br>
-git remote add original https://gitlab.posindonesia.co.id/donisyahtria/itms-fe.git
-git branch -M main
-git push -uf original main
+git remote add original https://gitlab.posindonesia.co.id/donisyahtria/itms-fe.git <br>
+git branch -M main <br>
+git push -uf original main <br>
+
+# cara push <br>
+git add . <br>
+git commit -m "<disini nama commit>" <br>
+git push original <br>
