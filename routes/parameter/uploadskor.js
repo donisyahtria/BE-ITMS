@@ -1,10 +1,11 @@
-import prisma from "../../prisma/prisma";
+import { PrismaClient, Prisma } from "@prisma/client";
 import express from "express";
 
+const prisma = new PrismaClient();
 const router = express.Router();
 
 router.post("/addskor", async (req, res) => {
-  const dataIncoming = req.body.data; 
+  const dataIncoming = req.body.data;
   const kategori = parseInt(req.body.kategori)
 
   const dataArray = dataIncoming.filter(data => data.nippos !== "");
@@ -37,9 +38,9 @@ router.post("/addskor", async (req, res) => {
       .json({ message: "Invalid input data format or empty array" });
   }
 
- try {
+  try {
     switch (kategori) {
-      case 1: 
+      case 1:
         for (const data of avgSkorData) {
           const existingRow = await prisma.skor_BUMN.findFirst({
             where: {
@@ -249,8 +250,93 @@ router.post("/addskor", async (req, res) => {
 
     res.status(200).json({ message: "True" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal Server Error" });
+    console.error("Error details:", error);
+
+    let missingNippos;
+    let missingKodeAssessment;
+    let findKompetensiId;
+    let missingIdKompetensiTechnical;
+    let missingJenisKompetensiTechnical;
+
+    for (const data of dataArray) {
+      const existingNippos = await prisma.karyawan.findFirst({
+        where: {
+          nippos: data.nippos,
+        },
+      })
+
+      if (!existingNippos) {
+        missingNippos = data.nippos;
+        break;
+      }
+
+      findKompetensiId = await prisma.referensi_Kompetensi_Leadership.findFirst({
+        where: {
+          kodeassessment: data.kodeassessment,
+        },
+      });;    
+
+      if (!findKompetensiId) {
+        missingKodeAssessment = data.kodeassessment;
+        break;
+      }
+
+      const existingIdKompetensiTechnical = await prisma.referensi_Kompetensi_Technical.findFirst({
+        where: {
+          id: parseInt(data.id_Kompetensi)
+        }
+      })
+      
+      if (!existingIdKompetensiTechnical) {
+        missingIdKompetensiTechnical = parseInt(data.id_Kompetensi)
+        break;
+      }
+
+      const existingJenisKompetensiTechnical = await prisma.jenis_Kompetensi.findFirst({
+        where: {
+          id: parseInt(data.id_jenis_kompetensi)
+        }
+      })
+      
+      if (!existingJenisKompetensiTechnical) {
+        missingJenisKompetensiTechnical = parseInt(data.id_jenis_kompetensi)
+        break;
+      }
+    }
+
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      if (error.code === 'P2003') {
+        if (error.meta.field_name === 'skor_BUMN_nippos_fkey (index)' ||
+          error.meta.field_name === 'Skor_Leadership_nippos_fkey (index)' ||
+          error.meta.field_name === 'Skor_Technical_nippos_fkey (index)' ||
+          error.meta.field_name === 'skor_Potensi_nippos_fkey (index)' ||
+          error.meta.field_name === 'skor_AKHLAK_nippos_fkey (index)' ||
+          error.meta.field_name === 'skor_LA_nippos_fkey (index)'
+        ) {
+          res.status(400).send({ error: `Nippos ${missingNippos} tidak terdaftar di data karyawan` });
+        } else if (error.meta.field_name === 'Skor_Technical_id_Kompetensi_fkey (index)') {
+          res.status(400).send({ error: `id_Kompetensi ${missingIdKompetensiTechnical} tidak terdaftar di referensi kompetensi technical` });
+        } else if (error.meta.field_name === 'Skor_Technical_id_jenis_kompetensi_fkey (index)') {
+          res.status(400).send({ error: `id_jenis_kompetensi ${missingJenisKompetensiTechnical} tidak terdaftar di referensi jenis kompetensi` });
+        } else {
+          res.status(500).send({ error: 'An unexpected error occurred' });
+        }
+      } else {
+        res.status(500).send({ error: 'An unexpected error occurred' });
+      }
+    } else if (error.message.split('\n')[0] === "Cannot read properties of null (reading 'id')" && (!findKompetensiId)) {
+      res.status(400).send({ error: `Assessment Code ${missingKodeAssessment} tidak ditemukan di referensi kompetensi Leadership` });
+    } else if (error instanceof Prisma.PrismaClientValidationError) {
+      const errorMessage = error.message.split(': ')[7];
+      if (errorMessage === 'Provided Date object is invalid. Expected Date.') {
+        const errorInfo = 'Provided Date object is invalid. Expected Date Format: YYYY-MM-DD'
+        res.status(400).json({ error: errorInfo });
+      } else {
+        res.status(400).json({ error: 'An unexpected error occurred' });
+      }
+    } else {
+      res.status(500).send({ error: 'An unexpected error occurred' });
+    }
   }
 });
 
