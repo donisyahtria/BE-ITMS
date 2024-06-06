@@ -1,4 +1,4 @@
-# BE-ITMS
+# BE-ITMS - GITHUB
 
 # …or create a new repository on the command line <br>
 echo "# BE-ITMS" >> README.md <br>
@@ -25,3 +25,10 @@ git push -u origin main <br>
 klik button code --> pilih HTTPS --> copy url to clipboard <br>
 buka terminal --> plih directory untuk menyimpan cloning --> ketik seperti dibawah<br>
 git clone (paste link url nya tadi tanpa tanda kurung)
+
+# BE-ITMS - GITLAB
+
+# cara pertama kali push <br>
+git remote add original https://gitlab.posindonesia.co.id/donisyahtria/itms-fe.git
+git branch -M main
+git push -uf original main
