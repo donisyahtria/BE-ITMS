@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "API Express ITMS",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "nodemon --exec babel-node index.js",
+    "prod": "babel-node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "farhan",
