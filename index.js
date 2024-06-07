@@ -107,6 +107,7 @@ import notifketuakomite from "./routes/cluster/notifikasiketuakomite"
 import notiftalent      from "./routes/Pool/notifikasitalentpool"
 import getsijabinfo     from "./routes/days/getsijabinfo"
 import gantipassword from './routes/login/gantipassword'
+import getprofile from './routes/userprofile/getprofile'
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -134,6 +135,7 @@ app.use("/", updatedeadline)
 app.use("/", getnotification)
 app.use("/", updatestatusnotif)
 app.use("/", geteventdeadline)
+app.use("/", getprofile)
 
 //usermanagement
 app.use("/", assignkaryawan)
