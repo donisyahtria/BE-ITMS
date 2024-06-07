@@ -28,7 +28,8 @@ router.get("/getoneevent", async (req, res) => {
             },
             tanggal_mulai: true,
             tanggal_selesai: true,
-            evenstatus_id: true
+            evenstatus_id: true,
+            kuota: true
         }
     });
     res.status(200).json({ event });
