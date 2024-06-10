@@ -5,8 +5,12 @@ const router = express.Router();
 
 router.post("/cariotomatis", async (req, res) => {
   try {
+    const eventid = parseInt(req.query.eventtalentid)
 
     const ambilNippos = await prisma.kandidat_Talent_dan_Source.findMany({
+      where:{
+      eventtalentid: eventid
+      },
         select: {
             id:true,
             nippos:true,

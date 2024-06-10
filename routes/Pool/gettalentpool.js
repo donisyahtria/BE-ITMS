@@ -34,7 +34,8 @@ JOIN
 JOIN 
     matriks_kategori mk ON mk."Id" = tp.id_matriks_kategori
 WHERE 
-    tp.eventtalentid = ${eventid};
+    tp.eventtalentid = ${eventid}
+ORDER BY k.nama;
 
     `
     res.status(200).json(detail);
