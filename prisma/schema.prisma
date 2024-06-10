@@ -11,11 +11,11 @@ model Karyawan {
   id                      Int                          @id @default(autoincrement())
   nippos                  String                       @unique @db.Char(9)
   nama                    String                       @db.VarChar(255)
-  nik                     String                       @db.Char(16)
+  nik                     String?                       @db.VarChar(16)
   jenis_kelamin           String                       @db.Char(1)
-  tanggal_lahir           DateTime                     @db.Date()
-  kode_jabatan            Int
-  kode_bagian             Int
+  tanggal_lahir           DateTime?                     @db.Date()
+  kode_jabatan            String                       @db.VarChar(10)
+  kode_bagian             String                       @db.VarChar(10)
   rumpun_jabatan          Int?
   personal_level          String?                      @db.Char(2)
   job_level               String?                      @db.Char(2)
@@ -112,8 +112,8 @@ model Role_Akses {
 }
 
 model Referensi_Jabatan {
-  id           Int                       @id @default(autoincrement())
-  kode_jabatan String                    @unique @db.Char(3)
+  id           String                    @unique @db.VarChar(10)  
+  kode_jabatan String                    @unique @db.VarChar(10)
   nama_jabatan String                    @db.VarChar(125)
   karyawan     Karyawan[]
   komite       Komite_Talent[]
@@ -122,8 +122,8 @@ model Referensi_Jabatan {
 }
 
 model Referensi_Bagian {
-  id           Int                       @id @default(autoincrement())
-  id_external  Int                       @unique
+  id           String                    @unique @db.VarChar(10)
+  kodebagian   String                    @unique @db.VarChar(10)
   nama_bagian  String                    @db.VarChar(255)
   status_aktif String                    @db.VarChar(1)
   karyawan     Karyawan[]
@@ -145,10 +145,10 @@ model Referensi_Rumpun_Jabatan {
 
 model Underperson_Komite_Unit {
   id                   Int               @id @default(autoincrement())
-  kode_jabatan_atasan  Int
-  kode_bagian_atasan   Int
-  kode_jabatan_bawahan Int
-  kode_bagian_bawahan  Int
+  kode_jabatan_atasan  String            @db.VarChar(10)
+  kode_bagian_atasan   String            @db.VarChar(10)
+  kode_jabatan_bawahan String            @db.VarChar(10)
+  kode_bagian_bawahan  String            @db.VarChar(10)
   bagatas              Referensi_Bagian  @relation("bagatas", fields: [kode_bagian_atasan], references: [id])
   bagbawah             Referensi_Bagian  @relation("bagbawah", fields: [kode_bagian_bawahan], references: [id])
   jabatas              Referensi_Jabatan @relation("jabatas", fields: [kode_jabatan_atasan], references: [id])
@@ -159,8 +159,8 @@ model Komite_Talent {
   id                   Int                     @id @default(autoincrement())
   id_komite_talent     Int
   posisi_komite_talent String                  @db.VarChar(255)
-  kode_jabatan         Int
-  kode_bagian          Int
+  kode_jabatan         String                  @db.VarChar(10)
+  kode_bagian          String                  @db.VarChar(10)
   idkomite             Referensi_Komite_Talent @relation(fields: [id_komite_talent], references: [id])
   bagian               Referensi_Bagian        @relation(fields: [kode_bagian], references: [id])
   jabatan              Referensi_Jabatan       @relation(fields: [kode_jabatan], references: [id])

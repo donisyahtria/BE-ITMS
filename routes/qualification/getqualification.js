@@ -47,10 +47,10 @@ left join(	select tq.nippos, tq.skor, tq.status
 			where tq.id_kriteria_penilaian = 7
 			and tq.eventtalentid = ${eventid}) as la on tq.nippos = la.nippos
 Where       tq.eventtalentid = ${eventid}
-and         tq.status = true
+and         tq.status = false
 and         tq.id_kriteria_penilaian != 8
 group by k.nama, k.nippos,rj.nama_jabatan,rb.nama_bagian,k.job_level,rrj.nama_rumpun_jabatan,rk.nama_kantor,k2.nama,psy.skor,psy.status,pms.skor,pms.status,akhlak.skor,akhlak.status,la.skor,la.status
-having count(*) < 4
+having count(*) <= 4
     `
     res.status(200).json(detail);
   } catch (err) {
