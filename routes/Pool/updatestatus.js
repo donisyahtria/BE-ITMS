@@ -13,6 +13,7 @@ router.post("/updatestatuspool", async (req, res) => {
     const updatestatus = await prisma.talent_pool.updateMany({
         where:{
             nippos: nippos,
+            eventtalentid: eventid
         },
         data:{
             statustalent: statustalentValue

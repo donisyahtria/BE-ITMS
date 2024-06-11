@@ -21,8 +21,8 @@ router.post("/assignaskomitetalent", async (req, res) => {
         const existingEntry = await prisma.komite_Talent.findFirst({
             where: {
                 id_komite_talent: parseInt(komiteTalentId),
-                kode_jabatan: parseInt(row.kode_jabatan),
-                kode_bagian: parseInt(row.kode_bagian)
+                kode_jabatan: row.kode_jabatan,
+                kode_bagian: row.kode_bagian
             }
         });
 
@@ -45,8 +45,8 @@ router.post("/assignaskomitetalent", async (req, res) => {
                 id: newId,
                 id_komite_talent: parseInt(komiteTalentId),
                 posisi_komite_talent: "Anggota",
-                kode_jabatan: parseInt(row.kode_jabatan),
-                kode_bagian: parseInt(row.kode_bagian)
+                kode_jabatan: row.kode_jabatan,
+                kode_bagian: row.kode_bagian
             }
         });
 
