@@ -108,6 +108,7 @@ import notiftalent      from "./routes/Pool/notifikasitalentpool"
 import getsijabinfo     from "./routes/days/getsijabinfo"
 import gantipassword from './routes/login/gantipassword'
 import getprofile from './routes/userprofile/getprofile'
+import loginsso from './routes/login/loginsso'
 
 const port = process.env.PORT || 4000;
 const app = express();
@@ -121,6 +122,7 @@ app.use("/", loginadmin);
 app.use("/", getkaryawan);
 app.use("/", getrole);
 app.use("/", gantipassword)
+app.use("/",loginsso)
 
 // Dashboard
 app.use("/", getdatatalentrumpun)
