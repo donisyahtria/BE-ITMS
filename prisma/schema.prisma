@@ -558,3 +558,5 @@ model Parameter_Kuota {
   keterangan          String                        @db.VarChar(20)
   bobot               Int
 }
+
+//lol
