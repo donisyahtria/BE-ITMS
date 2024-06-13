@@ -29,6 +29,9 @@ router.post("/getfilterkaryawan", async (req, res) => {
           in: jobLebel,
         },
         status_hukdis: "0",
+        tipe_jabatan: {
+          in: [1 , 2]
+        }
       },
       select: {
         id: true,
